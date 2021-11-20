@@ -75,14 +75,14 @@ class Profile(models.Model):
 
 
 # To create a Profile model when a User model is created.
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
+# @receiver(post_save, sender=User)
+# def create_user_profile(sender, instance, created, **kwargs):
+#     if created:
+#         Profile.objects.create(user=instance)
 
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
+# @receiver(post_save, sender=User)
+# def save_user_profile(sender, instance, **kwargs):
+#     instance.profile.save()
 
 
 #auto_now_add=True creates an unmodifiable date when the object is first created. To be able to modify the date, use "default=timezone.now" - from "django.utils.timezone.now()"
@@ -101,20 +101,20 @@ class Cause(models.Model):
     cost_breakdown = models.TextField()
     expiration = models.IntegerField(blank=True)
     investigated = models.BooleanField(default=False)
-    investigator = models.ForeignKey(User, blank=True, on_delete=models.SET_NULL)
+    investigator = models.ForeignKey(User, blank=True, on_delete=models.SET_NULL, null=True, related_name = 'investigator')
     investigation_note = models.CharField(max_length=255)
     approved = models.BooleanField(default=False)
-    approved_by = models.ForeignKey(User, blank=True, on_delete=models.SET_NULL)
+    approver = models.ForeignKey(User, blank=True, on_delete=models.SET_NULL, null=True, related_name = 'approver')
     approved_date = models.DateTimeField(blank=True)
-    creator = models.ForeignKey(User, on_delete=models.SET_NULL)
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     backers = models.ManyToManyField(User, blank=True, related_name = 'backers')
-    voters = models.ManyToManyField(User, blank=True)
+    voters = models.ManyToManyField(User, blank=True, related_name = 'voters')
     completed = models.BooleanField(default=False)
     closed = models.BooleanField(default=False)
     closed_note = models.TextField(blank=True)
-    closed_by = models.ForeignKey(User, blank=True, on_delete=models.SET_NULL)
-    supervisor = models.ForeignKey(User, blank=True, on_delete=models.SET_NULL)
-    coordinator = models.ForeignKey(User, blank=True, on_delete=models.SET_NULL)
+    closer = models.ForeignKey(User, blank=True, on_delete=models.SET_NULL, null=True, related_name = 'closer')
+    supervisor = models.ForeignKey(User, blank=True, on_delete=models.SET_NULL, null=True, related_name = 'supervisor')
+    coordinator = models.ForeignKey(User, blank=True, on_delete=models.SET_NULL, null=True, related_name = 'coordinator')
     volunteers = models.ManyToManyField(User, related_name = 'volunteers')
     date_added = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField(max_length=128)
