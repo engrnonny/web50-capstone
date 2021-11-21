@@ -7,12 +7,7 @@ from django.dispatch import receiver
 from django.shortcuts import reverse
 
 
-GENDER = (
-    # The first entry is what goes into the database, the second is what is displayed.
-    ('Male', 'Male'),
-    ('Female', 'Female')
-)
-
+# The first entry is what goes into the database, the second is what is displayed.
 CATEGORY = (
     ('Infrastructure', 'Infrastructure'),
     ('Health', 'Health')
@@ -23,31 +18,29 @@ CATEGORY_SLUGS = (
     ('health', 'health')
 )
 
+GENDER = (
+    ('Male', 'Male'),
+    ('Female', 'Female')
+)
+
+STATUS = (
+    ('Approved', 'Approved'),
+    ('Awaiting approval', 'Awaiting approval'),
+    ('Completed', 'Completed'),
+    ('Ongoing', 'Ongoing'),
+    ('Rejected', 'Rejected'),
+    ('Suspended', 'Suspended')
+)
+
 # Create your models here.
 
-class Cause_category(models.Model):
+class Cause_categorie(models.Model):
     name = models.CharField(choices=CATEGORY, max_length=64, null=True, blank=True)
     slug = models.SlugField(choices=CATEGORY_SLUGS)
     image = models.ImageField(null=True, blank=True)
 
     def __str__(self):
-        return f"{self.name}"
-
-    # Defining absolute category url for each product
-
-    def get_absolute_category_url(self):
-        return reverse("main:cause-category", kwargs={
-            'slug': self.slug
-        })
-
-    @property
-    def imageURL(self):
-        try:
-            url = self.image.url
-        except:
-            url = ''
-        return url
-
+        return f"{self.name}" 
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -61,7 +54,6 @@ class Profile(models.Model):
     state = models.CharField(max_length=32)
     country = models.CharField(max_length=32)
     occupation = models.CharField(max_length=64, blank=True)
-    location = models.CharField(max_length=30, blank=True)
     birth_date = models.DateField(null=True, blank=True)
     linkedin = models.URLField(blank=True)
     followers = models.ManyToManyField(User, related_name = 'followers', blank=True)
@@ -72,17 +64,6 @@ class Profile(models.Model):
     monthly_payment = models.BooleanField(default=False)
     monthly_vote = models.BooleanField(default=False)
     rank = models.CharField(max_length=32, blank=True)
-
-
-# To create a Profile model when a User model is created.
-# @receiver(post_save, sender=User)
-# def create_user_profile(sender, instance, created, **kwargs):
-#     if created:
-#         Profile.objects.create(user=instance)
-
-# @receiver(post_save, sender=User)
-# def save_user_profile(sender, instance, **kwargs):
-#     instance.profile.save()
 
 
 #auto_now_add=True creates an unmodifiable date when the object is first created. To be able to modify the date, use "default=timezone.now" - from "django.utils.timezone.now()"
@@ -100,6 +81,7 @@ class Cause(models.Model):
     cost = models.FloatField()
     cost_breakdown = models.TextField()
     expiration = models.IntegerField(blank=True)
+    status = models.CharField(choices=STATUS, max_length=32, null=True, blank=True)
     investigated = models.BooleanField(default=False)
     investigator = models.ForeignKey(User, blank=True, on_delete=models.SET_NULL, null=True, related_name = 'investigator')
     investigation_note = models.CharField(max_length=255)
@@ -124,7 +106,7 @@ def cause_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/cause_<id>/<filename>
     return 'causes/cause_{0}/{1}'.format(instance.cause.id, filename)
 
-class Cause_files(models.Model):
+class Cause_file(models.Model):
     cause = models.ForeignKey(Cause, on_delete=models.CASCADE)
     description = models.CharField(max_length=255)
     date_added = models.DateTimeField(auto_now_add=True)
