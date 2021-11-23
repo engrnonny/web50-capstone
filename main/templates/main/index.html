@@ -1,11 +1,169 @@
-{% extends "main/layout.html" %} -->
+{% extends "main/layout.html" %}
+
+{% block title %}
+    MAG
+{% endblock %}
 
 {% block body %}
-        
+        <!--  This is the homepage -->
         <main>
-            <h1>
-                Hello world!
-            </h1>
+            <div id="home">
+                <h1>
+                    Home!
+                </h1>
+            </div>
+            <div id="about">
+                <h1>
+                    About!
+                </h1>
+            </div>
+            {% if not user.is_authenticated %}
+            <div id="login">
+                <h1>
+                    Login
+                </h1>
+                <form action="{% url 'login' %}" autocomplete="on" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="login-email" class="form-label">
+                            Email address
+                        </label>
+                        <input type="email" class="form-control" id="login-email" aria-describedby="emailHelp" name="login-email">
+                        <div id="emailHelp" class="form-text">
+                            We'll never share your email with anyone else.
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="login-password" class="form-label">
+                            Password
+                        </label>
+                        <input type="password" class="form-control" id="login-password" name="login-password">
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                        <label class="form-check-label" for="exampleCheck1">
+                            Keep me signed in
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        Submit
+                    </button>
+                </form>
+
+            </div>
+            <div id="register">
+                <h1>
+                    Register
+                </h1>
+                <form action="{% url 'register' %}" autocomplete="on" method="post">
+                    {% csrf_token %}
+                    <h2>
+                        Become an Angel
+                    </h2>
+
+                    <div class="mb-3 row">
+
+                        <!-- First Name -->
+                        <div class="col">
+                            <label for="reg-firstname" class="form-label">
+                                First Name
+                            </label>
+                            <input type="text" class="form-control" id="reg-firstname" aria-describedby="firstNameHelp" name="reg-firstname" placeholder="Adaeze" required>
+                            <small id="firstNameHelp" class="form-text">
+                                Your first name.
+                            </small>
+                        </div>
+
+                        <!-- Last Name -->
+                        <div class="col">
+                            <label for="reg-lastname" class="form-label">
+                                Last Name
+                            </label>
+                            <input type="text" class="form-control" id="reg-lastname" aria-describedby="lastNameHelp" name="reg-lastname" placeholder="Obi" required>
+                            <small id="lastNameHelp" class="form-text">
+                                Your family name
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row">
+
+                        <!-- User Name -->
+                        <div class="col">
+                            <label for="reg-username" class="form-label">
+                                User Name
+                            </label>
+                            <input type="text" class="form-control" id="reg-username" aria-describedby="userNameHelp" name="reg-username" placeholder="Adaeze_obi" required>
+                            <small id="userNameHelp" class="form-text">
+                                A unique name just for you
+                            </small>
+                        </div>
+
+                        <!-- Phone number -->
+                        <div class="col">
+                            <label for="reg-phone" class="form-label">
+                                Mobile Phone no.
+                            </label>
+                            <input aria-describedby="phoneHelp" class="form-control" id="reg-phone" maxlength="11" name="reg-phone" pattern="[0]{1}[7-9]{1}[0-1]{1}[0-9]{8}" placeholder="07012345678" required type="tel">
+                            <small id="phoneHelp" class="form-text">
+                                Must begin with "0", then a "7", "8", or "9", then a "0" or "1", and 8 more digits.
+                            </small>
+                        </div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="mb-3">
+                        <label for="reg-email" class="form-label">
+                            Email address
+                        </label>
+                        <input type="email" class="form-control" id="reg-email" aria-describedby="emailHelp" name="reg-email" required>
+                        <small id="emailHelp" class="form-text">
+                            We'll never share your email with anyone else.
+                        </small>
+                    </div>
+
+                    <div class="mb-3 row">
+
+                        <!-- Password -->
+                        <div class="col">
+                            <label for="reg-password" class="form-label">
+                                Password
+                            </label>
+                            <input aria-describedby="passwordHelp" class="form-control" id="reg-password" minlength="8" name="reg-password" required type="password">
+                            <small id="passwordHelp" class="form-text">
+                                Must be a minimum of 8 characters.
+                            </small>
+                        </div>
+                        
+                    <!-- Password Confirmation -->
+                        <div class="col">
+                            <label for="reg-password-confirm" class="form-label">
+                                Password confirmation
+                            </label>
+                            <input aria-describedby="passwordConfirmHelp" class="form-control" id="reg-password-confirm" minlength="8" name="reg-password-confirm" required type="password">
+                            <small id="passwordConfirmHelp" class="form-text">
+                                Passwords must match
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                        <label class="form-check-label" for="exampleCheck1">
+                            Keep me signed in
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        Create
+                    </button>
+                </form>
+            </div>
+            {% endif %}
+            <div id="contact">
+                <h1>
+                    Contact Us!
+                </h1>
+            </div>
         </main>
 
 {% endblock %}

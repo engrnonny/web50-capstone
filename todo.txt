@@ -1,0 +1,5 @@
+BACKEND:
+    REGISTER: 
+        Email confirmation for new users before completion of registration
+
+FRONTEND:
