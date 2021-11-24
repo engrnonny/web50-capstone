@@ -1,5 +1,8 @@
 BACKEND:
     REGISTER: 
-        Email confirmation for new users before completion of registration
+        Email/phone number confirmation for new users before completion of registration
+
+    MODELS:
+        Saving phone numbers to profile.
 
 FRONTEND:

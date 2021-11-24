@@ -35,7 +35,7 @@ def login_view(request):
 
                 if user is not None:
                     auth_login(request, user)
-                    return redirect("user_profile", slug=user_id.username )
+                    return redirect("user-profile", slug=user_id.username )
                 else:
                     messages.info(request, "not logged in")
                     return render(request, "main/index.html")
