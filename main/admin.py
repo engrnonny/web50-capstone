@@ -6,7 +6,7 @@ from .models import *
 
 class ProfileAdmin(admin.ModelAdmin):
     list_display = [
-        'user', 'phone_no'
+        'user', 'phone'
     ]
 
 admin.site.register(Cause_categorie)

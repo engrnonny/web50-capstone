@@ -1,0 +1,13 @@
+{% extends "main/layout.html" %}
+
+{% block title %}
+    MAG | {{ user.username }}
+{% endblock %}
+
+{% block body %}
+    <main>
+        <h1>
+            Hi there {{user.username}}!
+        </h1>
+    </main>
+{% endblock %}

@@ -44,7 +44,7 @@ class Cause_categorie(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    phone_no = models.IntegerField(blank=True)
+    phone = models.IntegerField(blank=True)
     bio = models.TextField(max_length=500, blank=True)
     gender = models.CharField(choices=GENDER, max_length=8, null=True, blank=True)
     title = models.CharField(max_length=6, blank=True, null=True)

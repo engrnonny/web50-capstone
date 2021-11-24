@@ -25,10 +25,10 @@
                 <form action="{% url 'login' %}" autocomplete="on" method="post">
                     {% csrf_token %}
                     <div class="mb-3">
-                        <label for="login-email" class="form-label">
+                        <label for="login-user-id" class="form-label">
                             Email address
                         </label>
-                        <input type="email" class="form-control" id="login-email" aria-describedby="emailHelp" name="login-email">
+                        <input type="text" class="form-control" id="login-user-id" aria-describedby="emailHelp" name="login-user-id">
                         <div id="emailHelp" class="form-text">
                             We'll never share your email with anyone else.
                         </div>
@@ -138,7 +138,7 @@
                     <!-- Password Confirmation -->
                         <div class="col">
                             <label for="reg-password-confirm" class="form-label">
-                                Password confirmation
+                                Retype Password
                             </label>
                             <input aria-describedby="passwordConfirmHelp" class="form-control" id="reg-password-confirm" minlength="8" name="reg-password-confirm" required type="password">
                             <small id="passwordConfirmHelp" class="form-text">
