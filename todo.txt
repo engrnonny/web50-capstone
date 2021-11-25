@@ -6,3 +6,9 @@ BACKEND:
         Saving phone numbers to profile.
 
 FRONTEND:
+
+    CSS:
+        Nav links should be highlighted when clicked
+
+    HTML:
+        Automate LGA and State fields in Register page

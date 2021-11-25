@@ -1,0 +1,41 @@
+{% extends "main/layout.html" %}
+
+{% block title %}
+    MAG | Login
+{% endblock %}
+
+{% block body %}
+    <main id="login-page">
+        <h1>
+            Login
+        </h1>
+        <form action="{% url 'login' %}" autocomplete="on" method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="login-user-id" class="form-label">
+                    Email address
+                </label>
+                <input type="text" class="form-control" id="login-user-id" aria-describedby="emailHelp" name="login-user-id">
+                <div id="emailHelp" class="form-text">
+                    We'll never share your email with anyone else.
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="login-password" class="form-label">
+                    Password
+                </label>
+                <input type="password" class="form-control" id="login-password" name="login-password">
+            </div>
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">
+                    Keep me signed in
+                </label>
+            </div>
+            <button type="submit" class="btn btn-primary">
+                Login
+            </button>
+        </form>
+
+    </main>
+{% endblock %}

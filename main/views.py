@@ -16,11 +16,13 @@ from .models import *
 def index(request):
     return render(request, "main/index.html")
 
+def about(request):
+    return render(request, "main/about.html")
 
 def login_view(request):
     if request.user.is_authenticated:
         messages.info(request, "User already logged in")
-        return redirect("index")
+        return redirect("user-profile", slug=request.user.username)
 
     else:
         if request.method == "POST":
@@ -42,6 +44,8 @@ def login_view(request):
             else:
                 messages.info(request, "Incorrect information")
                 return redirect("index")
+        else:
+            return render(request, "main/login.html")
 
 
 def logout_view(request):
@@ -101,6 +105,9 @@ def register(request):
                                 messages.info(request, "Something went wrong. Please Try again later or contact the admin")
                                 return redirect("index")
 
+    else:
+        return render(request, "main/register.html")
+
 
 # User Profile Page
 # User Profile Page
@@ -125,3 +132,7 @@ def user_profile(request, slug):
     except ObjectDoesNotExist:
         messages.info(request, f"{slug} does not exist")
         return redirect("index")
+
+
+def contact(request):
+    return render(request, "main/contact.html")
