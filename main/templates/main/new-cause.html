@@ -1,0 +1,193 @@
+{% extends "main/layout.html" %}
+
+{% block title %}
+    MAG | New Cause
+{% endblock %}
+
+{% block body %}
+    {% if user.is_authenticated %}
+    <main id="new-cause-page">
+        <h1>
+            New Cause
+        </h1>
+        <form action="{% url 'new-cause' %}" method="post">
+            {% csrf_token %}
+            <h2>
+                Start a New Cause
+            </h2>
+
+            <!-- Name -->
+            <div>
+                <label class="form-label" for="cause-name">
+                    Name
+                </label>
+                <input aria-describedby="nameHelp" class="form-control" id="cause-name" maxlength="128" name="cause-name" placeholder="Save the Children of Ikorodu Primary School from poor education" required type="text">
+                <small id="nameHelp" class="form-text">
+                    The name of the cause (10 words or fewer)
+                </small>
+            </div>
+
+            <!-- Brief Description -->
+            <div>
+                <label class="form-label" for="cause-brief-description">
+                    Brief Description
+                </label>
+                <textarea aria-describedby="briefDescriptionHelp" class="form-control" cols="20" id="cause-brief-description" name="cause-brief-description" placeholder="The aim of this Cause is to save the students of the Ikorodu Primary School from very poor and inadequate educational environment and materials." required rows="5" wrap="hard"></textarea>
+                <small id="briefDescriptionHelp" class="form-text">
+                    Briefly describe the cause (50 words or fewer)
+                </small>
+            </div>
+
+            <div class="row">
+                
+                <!-- Country -->
+                <div class="col">
+                    <label for="cause-country" class="form-label">
+                        Country
+                    </label>
+                    <input aria-describedby="countryHelp" class="form-control" id="cause-country" name="cause-country" placeholder="Nigeria" required type="text">
+                    <small class="form-text" id="countryHelp">
+                        Country Cause is located in
+                    </small>
+                </div>
+
+                <!-- State -->
+                <div class="col">
+                    <label class="form-label" for="cause-state">
+                        State
+                    </label>
+                    <input aria-describedby="stateHelp" class="form-control" id="cause-state" name="cause-state" placeholder="Lagos" required type="text">
+                    <small class="form-text" id="stateHelp">
+                        State Cause is located in
+                    </small>
+                </div>
+            </div>
+
+            <div class="row">
+                
+                <!-- LGA -->
+                <div class="col">
+                    <label class="form-label" for="cause-lga">
+                        LGA
+                    </label>
+                    <input aria-describedby="lgaHelp" class="form-control" id="cause-lga" name="cause-lga" placeholder="Lagos Island" type="text">
+                    <small class="form-text" id="lgaHelp">
+                        Local Government Area Cause is located in
+                    </small>
+                </div>
+            
+                <!-- City -->
+                <div class="col">
+                    <label class="form-label" for="cause-city">
+                        City/Town
+                    </label>
+                    <input aria-describedby="cityHelp" class="form-control" id="cause-city" name="cause-city" placeholder="Victoria Island" type="text">
+                    <small class="form-text" id="cityHelp">
+                        City or Town Cause is located in
+                    </small>
+                </div>
+
+            </div>
+            
+            <!-- Address -->
+            <div>
+                <label class="form-label" for="cause-address">
+                    Address
+                </label>
+                <input aria-describedby="addressHelp" class="form-control" id="cause-address" name="cause-address" placeholder="No 1, First Street" type="text">
+                <small id="addressHelp" class="form-text">
+                    House number and Street name of Cause (if any)
+                </small>
+            </div>
+
+            <div class="mb-3 row">
+
+                <!-- Duration -->
+                <div class="col">
+                    <label class="form-label" for="cause-duration">
+                        Duration
+                    </label>
+                    <input type="number" class="form-control" id="cause-duration" aria-describedby="durationHelp" name="cause-duration" placeholder="1000" required>
+                    <small id="durationHelp" class="form-text">
+                        How long would it take to complete the Cause (in days)
+                    </small>
+                </div>
+
+                <!-- Cost -->
+                <div class="col">
+                    <label class="form-label" for="cause-cost">
+                        Cost
+                    </label>
+                    <input aria-describedby="costHelp" class="form-control" id="cause-cost" name="cause-cost" placeholder="10000000" required type="number">
+                    <small class="form-text" id="costHelp">
+                        Total estimated cost of the Cause (in Naira)
+                    </small>
+                </div>
+            </div>
+
+            <!-- Detail Description -->
+            <div class="mb-3">
+                <label class="form-label" for="cause-detail-description">
+                    Detail Description
+                </label>
+                <textarea aria-describedby="detailDescriptionHelp" class="form-control" cols="20" id="cause-detail-description" name="cause-detail-description" required rows="7.5" wrap="hard"></textarea>
+                <small class="form-text" id="detailDescriptionHelp">
+                    Give a detail description of the Cause
+                </small>
+            </div>
+            
+            <!-- Cost Breakdown -->
+            <div>
+                <label class="form-label" for="cause-cost-breakdown">
+                    Cost
+                </label>
+                <textarea aria-describedby="costBreakdownHelp" class="form-control" cols="20" id="cause-cost-breakdown" name="cause-cost-breakdown" placeholder="
+                Books (for 200 pupils) - 2,000,000
+                Construction of chairs and desks (100 pieces) - 1,000,000
+                Mechanical works (new toilets) - 200,000
+                New school bus - 3,000,000
+                Roof repair - 1,600,000
+                School Bags (for 200 pupils) - 1,000,000
+                Uniforms (for 200 pupils) - 1,200,000
+                " required rows="7.5" wrap="hard"></textarea>
+                <small class="form-text" id="costBreakdownHelp">
+                    Breakdown of Cost
+                </small>
+            </div>
+
+
+            <div class="mb-3 row">
+
+                <!-- Expiry -->
+                <div class="col">
+                    <label class="form-label" for="cause-expiry">
+                        Expiry Date
+                    </label>
+                    <input aria-describedby="expiryHelp" class="form-control" id="cause-expiry" name="cause-expiry" type="number">
+                    <small class="form-text" id="expiryHelp">
+                        In case of emergency, how long before the Cause MUST be undertaken
+                    </small>
+                </div>
+
+            <!-- Cause files -->
+                <div class="col">
+                    <label for="cause-files" class="form-label">
+                        Cause files
+                    </label>
+                    <input alt="Cause files" aria-describedby="filesHelp" class="form-control" id="cause-files" multiple name="cause-files" type="file">
+                    <small id="filesHelp" class="form-text">
+                        Upload files (documents, pictures, videos, etc.) as supporting evidences of Cause
+                    </small>
+                </div>
+            </div>
+
+            
+            <br>
+            <button type="submit" class="btn btn-primary">
+                Create
+            </button>
+
+        </form>
+    </main>
+    {% endif %}
+{% endblock %}

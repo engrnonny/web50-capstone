@@ -1,0 +1,18 @@
+{% extends "main/layout.html" %}
+
+{% block title %}
+    MAG | About
+{% endblock %}
+
+{% block body %}
+    <main id="">
+        <h1>
+            Test
+        </h1>
+        <form action="{% url 'test' %}" method="POST">
+			{% csrf_token %}
+            <input name="test" type="file">
+            <input type="submit" value="Test function">
+        </form>
+    </main>
+{% endblock %}

@@ -9,5 +9,96 @@
         <h1>
             Hi there {{user.username}}!
         </h1>
+        <div>
+            <img src="{{profile.profile_pic}}" alt="{{user.username}} profile picture">            
+        </div>
+        <div>
+            <span>
+                First Name: 
+            </span>
+            <span>
+                {{user.first_name}}
+            </span>
+        </div>
+        <div>
+            <span>
+                Last Name: 
+            </span>
+            <span>
+                {{user.last_name}}
+            </span>
+        </div>
+        <div>
+            <span>
+                Email Address: 
+            </span>
+            <span>
+                {{user.email}}
+            </span>
+        </div>
+        <div>
+            <span>
+                Phone Number: 
+            </span>
+            <span>
+                {{profile.phone}}
+            </span>
+        </div>
+        <div>
+            <span>
+                Gender: 
+            </span>
+            <span>
+                {{profile.gender}}
+            </span>
+        </div>
+        <div>
+            <span>
+                Date of Birth: 
+            </span>
+            <span>
+                {{profile.birthday}}
+            </span>
+        </div>
+        <div>
+            <span>
+                Biography: 
+            </span>
+            <span>
+                {{profile.bio}}
+            </span>
+        </div>
+        <div>
+            <span>
+                Address: 
+            </span>
+            <span>
+                {{profile.address}}, {{profile.city}}, {{profile.lga}}, {{profile.state}}, {{profile.country}}
+            </span>
+        </div>
+        <div>
+            <span>
+                Occupation: 
+            </span>
+            <span>
+                {{profile.occupation}}
+            </span>
+        </div>
+        <div>
+            <span>
+                Linkedin Profile: 
+            </span>
+            <span>
+                {{profile.linkedin}}
+            </span>
+        </div>
+        <div>
+            <span>
+                Joined MAG on: 
+            </span>
+            <span>
+                {{user.date_joined}}
+            </span>
+        </div>
     </main>
 {% endblock %}

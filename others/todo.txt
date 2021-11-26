@@ -1,0 +1,26 @@
+BACKEND:
+
+    MODELS:
+        Saving phone numbers to profile.
+
+    VIEWS: 
+        Email/phone number confirmation for new users before completion of registration
+        Check birthday data in Register that it is in date format before saving.
+        Create a Country dictionary for countries, states/counties, LGAs, cities. 
+        Check that Country, State/County, LGA, and City data in Register is in the Country dictionary.
+        Image upload in Register
+
+
+FRONTEND:
+
+    CSS:
+        Nav links should be highlighted when clicked
+
+    HTML:
+        Automate LGA and State fields in Register page
+
+
+FULLSTACK:
+
+    RANKING SYSTEM: 
+        A system that promotes user on a yearly basis, based on the date they joined MAG.

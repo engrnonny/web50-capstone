@@ -1,0 +1,21 @@
+{% extends "main/layout.html" %}
+
+{% block title %}
+    MAG | Causes
+{% endblock %}
+
+{% block body %}
+    <main id="">
+        <h1>
+            Causes
+        </h1>
+        <div>
+        {% for cause in causes %}
+            <div>
+                {{ cause.name }}
+            </div>
+        {% endfor %}
+        </div>
+
+    </main>
+{% endblock %}

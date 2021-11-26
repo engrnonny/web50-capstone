@@ -54,59 +54,137 @@ def logout_view(request):
 
 
 def register(request):
-    if request.method == "POST":
-
-        if User.objects.filter(username=request.POST["reg-username"]).exists():
-            messages.info(request, "Username already exists")
-            return redirect("index")
-
-        else: 
-            if User.objects.filter(email=request.POST["reg-email"]).exists():
-                messages.info(request, "Email already exists")
-                return redirect("index")
-
-            else:
-                if Profile.objects.filter(phone=request.POST["reg-phone"]).exists():
-                    messages.info(request, "Phone already exists")
-                    return redirect("index")
-
-                else:
-                    if len(request.POST["reg-password"] ) < 8:
-                        messages.info(request, "Password is too short")
-                        return redirect("index")
-                        
-                    else:
-                        if request.POST["reg-password"] != request.POST["reg-password-confirm"]:
-                            messages.info(request, "Passwords do not match")
-                            return redirect("index")
-
-                        else:
-                            first_name = request.POST["reg-firstname"]
-                            last_name = request.POST["reg-lastname"]
-                            username = request.POST["reg-username"]
-                            phone = request.POST["reg-phone"]
-                            email = request.POST["reg-email"]
-                            password = request.POST["reg-password"]
-
-
-                            try:
-                                user = User.objects.create_user(username, email, password)
-                                user.save()
-                                user.first_name = first_name
-                                user.save()
-                                user.last_name = last_name
-                                user.save()
-                                profile = Profile(user=user, phone=phone)
-                                profile.save()
-                                messages.info(request, "Your registration was successful. Please login to continue")
-                                return redirect("profile")
-
-                            except Error:
-                                messages.info(request, "Something went wrong. Please Try again later or contact the admin")
-                                return redirect("index")
+    if request.user.is_authenticated:
+        messages.info(request, "User already logged in")
+        return redirect("user-profile", slug=request.user.username)
 
     else:
-        return render(request, "main/register.html")
+        if request.method == "POST":
+
+            if User.objects.filter(username=request.POST["reg-username"]).exists():
+                messages.info(request, "Username already exists")
+                return redirect("register")
+
+            else: 
+                if User.objects.filter(email=request.POST["reg-email"]).exists():
+                    messages.info(request, "Email address already exists")
+                    return redirect("register")
+
+                else:
+                    if Profile.objects.filter(phone=request.POST["reg-phone"]).exists():
+                        messages.info(request, "Phone number already exists")
+                        return redirect("register")
+
+                    else:
+                        if len(request.POST["reg-password"] ) < 8:
+                            messages.info(request, "Password is too short")
+                            return redirect("register")
+                            
+                        else:
+                            if request.POST["reg-password"] != request.POST["reg-password-confirm"]:
+                                messages.info(request, "Passwords do not match")
+                                return redirect("register")
+
+                            else:
+                                first_name = request.POST["reg-firstname"]
+                                last_name = request.POST["reg-lastname"]
+                                username = request.POST["reg-username"]
+                                phone = request.POST["reg-phone"]
+                                email = request.POST["reg-email"]
+                                password = request.POST["reg-password"]
+
+
+                                try:
+                                    user = User.objects.create_user(username, email, password)
+                                    user.save()
+                                    user.first_name = first_name
+                                    user.save()
+                                    user.last_name = last_name
+                                    user.save()
+                                    profile = Profile(user=user, phone=phone)
+                                    profile.save()
+                                    print(1)
+
+                                    if request.POST["reg-gender"]:
+                                        print(2)
+                                        gender = request.POST["reg-gender"]
+                                        if gender == "male" or gender == "female":
+                                            profile.gender = gender
+                                            profile.save()
+                                        else: 
+                                            messages.info(request, "Your registration was successful. Please login to continue")
+                                            return redirect("register")
+
+                                    if request.POST["reg-birthday"]:
+                                        print(3)
+                                        birthday = request.POST["reg-birthday"]
+                                        profile.birthday = birthday
+                                        profile.save()
+
+                                    if request.POST["reg-country"]:
+                                        print(4)
+                                        country = request.POST["reg-country"]
+                                        profile.country = country
+                                        profile.save()
+
+                                    if request.POST["reg-state"]:
+                                        print(5)
+                                        state = request.POST["reg-state"]
+                                        profile.state = state
+                                        profile.save()
+
+                                    if request.POST["reg-lga"]:
+                                        print(6)
+                                        lga = request.POST["reg-lga"]
+                                        profile.lga = lga
+                                        profile.save()
+
+                                    if request.POST["reg-city"]:
+                                        print(7)
+                                        city = request.POST["reg-city"]
+                                        profile.city = city
+                                        profile.save()
+
+                                    if request.POST["reg-address"]:
+                                        print(8)
+                                        address = request.POST["reg-address"]
+                                        profile.address = address
+                                        profile.save()
+
+                                    if request.POST["reg-occupation"]:
+                                        print(9)
+                                        occupation = request.POST["reg-occupation"]
+                                        profile.occupation = occupation
+                                        profile.save()
+
+                                    if request.POST["reg-linkedin"]:
+                                        print(10)
+                                        linkedin = request.POST["reg-linkedin"]
+                                        profile.linkedin = linkedin
+                                        profile.save()
+
+                                    if request.POST["reg-bio"]:
+                                        print(11)
+                                        bio = request.POST["reg-bio"]
+                                        profile.bio = bio
+                                        profile.save()
+
+                                    if request.POST["reg-profile-pic"]:
+                                        print(12)
+                                        profile_pic = request.POST["reg-profile-pic"]
+                                        profile.profile_pic = profile_pic
+                                        profile.save()
+
+
+                                    messages.info(request, "Your registration was successful. Please login to continue")
+                                    return redirect("login")
+
+                                except Error:
+                                    messages.info(request, "Something went wrong. Please Try again later or contact the admin")
+                                    return redirect("index")
+
+        else:
+            return render(request, "main/register.html")
 
 
 # User Profile Page
@@ -134,5 +212,57 @@ def user_profile(request, slug):
         return redirect("index")
 
 
+# Causes Page
+# Causes Page
+# Causes Page
+def causes(request):
+    causes = Cause.objects.all()
+    context = {
+        'causes': causes
+    }
+    return render(request, "main/causes.html", context)
+
+
+# New Cause Page
+# New Cause Page
+# New Cause Page
+@login_required
+def new_cause(request):
+    if request.method == "POST":
+        pass
+    else:
+        return render(request, "main/new-cause.html")
+
+
+
+# Contact Page
+# Contact Page
+# Contact Page
 def contact(request):
     return render(request, "main/contact.html")
+
+
+
+
+# Test Page
+# Test Page
+# Test Page
+def test(request):
+    if request.method == "POST":
+        print(1)
+        new_image_name = "Test"
+        print(3)
+        request.FILES[new_image_name] = request.FILES.get('test')
+        print(5)
+        user = User.objects.get(username="test1")
+        print(6)
+        profile = Profile.objects.get(user=user)
+        print(7)
+        profile.profile_pic = request.FILES[new_image_name]
+        print(8)
+        profile.save()
+        print(9)
+        
+    else:
+        return render(request, "main/test.html")
+

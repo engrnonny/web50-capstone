@@ -107,22 +107,19 @@
                 <div class="row">
 
                     <!-- Gender Selection -->
-                    <fieldset class="col">
-                        <p>Gender</p>
-                        <input aria-describedby="genderHelp" class="form-check-input" id="reg-gender-male" name="reg-gender" type="radio" value="male">
-                        <label class="form-check-label" for="reg-gender-male">
-                            Male
-                        </label>
-                        <input aria-describedby="genderHelp" class="form-check-input" id="reg-gender-female" name="reg-gender" type="radio" value="female">
-                        <label class="form-check-label" for="reg-gender-female">
+                    <div class="col">
+                        <label class="form-check-label" for="reg-gender">
                             Female
                         </label>
-                        <div>
-                            <small id="genderHelp" class="form-text">
-                                Are you male or female?
-                            </small>
-                        </div>
-                    </fieldset>
+                        <select aria-describedby="genderHelp"  class="form-log form-control" id="reg-gender" name="reg-gender" list="gender" placeholder="Gender">
+                            <option value=""></option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                        <small id="genderHelp" class="form-text">
+                            Are you male or female?
+                        </small>
+                    </div>		
                     
                     <!-- Birthday -->
                     <div class="col">                    
@@ -224,6 +221,17 @@
 
                 </div>
 
+                <!-- Bio -->
+                <div>
+                    <label for="reg-bio" class="form-label">
+                        bio
+                    </label>
+                    <textarea aria-describedby="bioHelp" class="form-control" id="reg-bio" name="reg-bio" placeholder="I am a Civil Engineer with a deep passion to help humanity" type="text"></textarea>
+                    <small id="bioHelp" class="form-text">
+                        Tell us a little about you
+                    </small>
+                </div>
+
                 <!-- Profile Picture -->
                 <div>
                     <label for="reg-profile-pic" class="form-label">
@@ -231,7 +239,7 @@
                     </label>
                     <input alt="Profile Picture" aria-describedby="profilePicHelp" class="form-control" id="reg-profile-pic" name="reg-profile-pic" type="file">
                     <small id="profilePicHelp" class="form-text">
-                        A profile image of yourself
+                        A profile picture of you
                     </small>
                 </div>
 
