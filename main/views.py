@@ -13,12 +13,24 @@ from django.urls import reverse
 
 from .models import *
 
+
+# Homepage
+# Homepage
+# Homepage
 def index(request):
     return render(request, "main/index.html")
 
+
+# About Page
+# About Page
+# About Page
 def about(request):
     return render(request, "main/about.html")
 
+
+# User Login Page
+# User Login Page
+# User Login Page
 def login_view(request):
     if request.user.is_authenticated:
         messages.info(request, "User already logged in")
@@ -48,11 +60,17 @@ def login_view(request):
             return render(request, "main/login.html")
 
 
+# User Logout Page
+# User Logout Page
+# User Logout Page
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("index"))
 
 
+# User Registration Page
+# User Registration Page
+# User Registration Page
 def register(request):
     if request.user.is_authenticated:
         messages.info(request, "User already logged in")
@@ -190,7 +208,6 @@ def register(request):
 # User Profile Page
 # User Profile Page
 # User Profile Page
-
 @login_required
 def user_profile(request, slug):
     try:
@@ -212,6 +229,14 @@ def user_profile(request, slug):
         return redirect("index")
 
 
+# Payment Page
+# Payment Page
+# Payment Page
+@login_required
+def payment(request):
+    return render(request, "main/payment.html")
+
+
 # Causes Page
 # Causes Page
 # Causes Page
@@ -229,10 +254,33 @@ def causes(request):
 @login_required
 def new_cause(request):
     if request.method == "POST":
+        if Profile.objects.filter(user=request.user).exists():
+            profile = Profile.objects.get(user=request.user)
+            if profile.monthly_payment == False:
+                messages.info(request, "You have not made your monthly payment. Please do so to create a Cause")
+                return redirect("payment")
+            else:
+                if request.POST["cause-name"]:
+                    if Cause.objects.filter(name=request.POST["cause-name"]).exists():
+                        
+                        # Use JavaScript here later!!!
+                        messages.info(request, "Cause name already exists")
+                        return redirect("new-cause")
+                    else:
+                        name = request.POST["cause-name"]
+                        if len(name) <= 128:
+                            # Use JavaScript here later!!!
+                            messages.info(request, "Name too long")
+                            return redirect("new-cause")
+
+                else:
+                    # Use JavaScript here later!!!
+                    messages.info(request, "Please enter Cause name")
+                    return redirect("new-cause")
+
         pass
     else:
         return render(request, "main/new-cause.html")
-
 
 
 # Contact Page
@@ -249,19 +297,10 @@ def contact(request):
 # Test Page
 def test(request):
     if request.method == "POST":
-        print(1)
-        new_image_name = "Test"
-        print(3)
-        request.FILES[new_image_name] = request.FILES.get('test')
-        print(5)
-        user = User.objects.get(username="test1")
-        print(6)
-        profile = Profile.objects.get(user=user)
-        print(7)
-        profile.profile_pic = request.FILES[new_image_name]
-        print(8)
-        profile.save()
-        print(9)
+        if request.POST["cause-brief-description"]:
+            print('yes')
+        else:
+            print('no')
         
     else:
         return render(request, "main/test.html")

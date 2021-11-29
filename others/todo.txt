@@ -18,6 +18,7 @@ FRONTEND:
 
     HTML:
         Automate LGA and State fields in Register page
+        "You have not voted" prompt in Layout page
 
 
 FULLSTACK:

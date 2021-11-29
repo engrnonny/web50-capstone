@@ -11,8 +11,9 @@
         </h1>
         <form action="{% url 'test' %}" method="POST">
 			{% csrf_token %}
-            <input name="test" type="file">
-            <input type="submit" value="Test function">
+            <input name="cause-name" type="text">
+            <input name="cause-brief-description" type="text">
+            <input type="submit" value="Test Cause">
         </form>
     </main>
 {% endblock %}

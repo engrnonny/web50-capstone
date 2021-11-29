@@ -10,6 +10,14 @@
             Causes
         </h1>
         <div>
+            Start a new Cause!
+            <div>
+                <a class="btn btn-primary" href="{% url 'new-cause' %}">
+                    Create
+                </a>
+            </div>
+        </div>
+        <div>
         {% for cause in causes %}
             <div>
                 {{ cause.name }}
