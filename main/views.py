@@ -257,7 +257,7 @@ def new_cause(request):
         if Profile.objects.filter(user=request.user).exists():
             profile = Profile.objects.get(user=request.user)
             if profile.monthly_payment == False:
-                messages.info(request, "You have not made your monthly payment. Please do so to create a Cause")
+                messages.info(request, "You have not made your monthly donation. Please do so to create a Cause")
                 return redirect("payment")
             else:
                 if request.POST["cause-name"]:
@@ -272,13 +272,65 @@ def new_cause(request):
                             # Use JavaScript here later!!!
                             messages.info(request, "Name too long")
                             return redirect("new-cause")
+                        if request.POST["cause-brief-description"]:
+                            cause_brief_description = request.POST["cause-brief-description"]
+                        else:
+                            messages.info(request, "You must provide a brief description for the cause")
+                            return redirect("new-cause")
+                        if request.POST["cause-country"]:
+                            cause_country = request.POST["cause-country"]
+                        else:
+                            messages.info(request, "You must provide a country for the cause")
+                            return redirect("new-cause")
+                        if request.POST["cause-state"]:
+                            cause_state = request.POST["cause-state"]
+                        else:
+                            messages.info(request, "You must provide a state for the cause")
+                            return redirect("new-cause")
+                        if request.POST["cause-city"]:
+                            cause_city = request.POST["cause-city"]
+                        else:
+                            messages.info(request, "You must provide a city for the cause")
+                            return redirect("new-cause")
+                        if request.POST["cause-address"]:
+                            cause_address = request.POST["cause-address"]
+                        if request.POST["cause-duration"]:
+                            cause_duration = request.POST["cause-duration"]
+                        else:
+                            messages.info(request, "You must provide a duration for the cause")
+                            return redirect("new-cause")
+                        if request.POST["cause-cost"]:
+                            cause_cost = request.POST["cause-cost"]
+                        else:
+                            messages.info(request, "You must provide a cost for the cause")
+                            return redirect("new-cause")
+                        if request.POST["cause-detail-description"]:
+                            cause_detail_description = request.POST["cause-detail-description"]
+                        else:
+                            messages.info(request, "You must provide a detail description for the cause")
+                            return redirect("new-cause")
+                        if request.POST["cause-cost-breakdown"]:
+                            cause_cost_breakdown = request.POST["cause-cost-breakdown"]
+                        else:
+                            messages.info(request, "You must provide a cost breakdown for the cause")
+                            return redirect("new-cause")
+                        if request.POST["cause-expiry"]:
+                            cause_expiry = request.POST["cause-expiry"]
+                        if request.POST["cause-city"]:
+                            cause_city = request.POST["cause-city"]
+                        else:
+                            messages.info(request, "You must provide a city for the cause")
+                            return redirect("new-cause")
 
                 else:
                     # Use JavaScript here later!!!
                     messages.info(request, "Please enter Cause name")
                     return redirect("new-cause")
 
-        pass
+        else:
+            messages.info(request, "You do not have a profile with us. Please contact the admin")
+            return redirect("contact")
+            
     else:
         return render(request, "main/new-cause.html")
 
