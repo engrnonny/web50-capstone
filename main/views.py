@@ -200,17 +200,10 @@ def register(request):
 def user_profile(request, slug):
     try:
         user = User.objects.get(username=slug)
-        try:
-            profile = Profile.objects.get(user=user)
-            context = {
-                'profile': profile,
-                'user': user            
-            }
-            return render(request, "main/user-profile.html", context)
-        
-        except ObjectDoesNotExist:
-            messages.info(request, f"{slug} has no profile. Please contact the admin if this is your account")
-            return redirect("index")
+        context = {
+            'user': user            
+        }
+        return render(request, "main/user-profile.html", context)
             
     except ObjectDoesNotExist:
         messages.info(request, f"{slug} does not exist")

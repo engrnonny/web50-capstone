@@ -1,6 +1,6 @@
 
-
-from django.contrib.auth.models import User
+from django.conf import settings
+from django.contrib.auth.models import AbstractUser, User
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -37,27 +37,26 @@ class Cause_categorie(models.Model):
     def __str__(self):
         return f"{self.name}" 
 
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    phone = models.IntegerField(blank=True)
-    gender = models.CharField(max_length=8, blank=True)
+class User(AbstractUser):
+    phone = models.IntegerField(blank=True, null=True)
+    gender = models.CharField(max_length=8, blank=True, null=True)
     birthday = models.DateField(null=True, blank=True)
-    bio = models.TextField(max_length=500, blank=True)
-    address = models.CharField(max_length=255, blank=True)
-    city = models.CharField(max_length=32, blank=True)
-    lga = models.CharField(max_length=32, blank=True)
-    state = models.CharField(max_length=32, blank=True)
-    country = models.CharField(max_length=32, blank=True)
-    occupation = models.CharField(max_length=64, blank=True)
-    linkedin = models.URLField(blank=True)
-    followers = models.ManyToManyField(User, related_name = 'followers', blank=True)
-    following = models.ManyToManyField(User, related_name = 'following', blank=True)
-    profile_pic = models.ImageField(blank=True, upload_to="user-profile-pics")
+    bio = models.TextField(max_length=500, blank=True, null=True)
+    address = models.CharField(max_length=255, blank=True, null=True)
+    city = models.CharField(max_length=32, blank=True, null=True)
+    lga = models.CharField(max_length=32, blank=True, null=True)
+    state = models.CharField(max_length=32, blank=True, null=True)
+    country = models.CharField(max_length=32, blank=True, null=True)
+    occupation = models.CharField(max_length=64, blank=True, null=True)
+    linkedin = models.URLField(blank=True, null=True)
+    followers = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name = 'user_followers', blank=True)
+    following = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name = 'user_following', blank=True)
+    profile_pic = models.ImageField(blank=True, null=True, upload_to="user-profile-pics")
     amount_contributed = models.FloatField(default=0.0)
     amount_owed = models.FloatField(default=0.0)
     monthly_payment = models.BooleanField(default=False)
     monthly_vote = models.BooleanField(default=False)
-    rank = models.CharField(max_length=32, blank=True)
+    rank = models.CharField(max_length=32, blank=True, null=True)
 
 
 #auto_now_add=True creates an unmodifiable date when the object is first created. To be able to modify the date, use "default=timezone.now" - from "django.utils.timezone.now()"
@@ -76,21 +75,21 @@ class Cause(models.Model):
     expiration = models.IntegerField(blank=True)
     status = models.CharField(choices=STATUS, max_length=32, null=True, blank=True)
     investigated = models.BooleanField(default=False)
-    investigator = models.ForeignKey(User, blank=True, on_delete=models.SET_NULL, null=True, related_name = 'investigator')
+    investigator = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, on_delete=models.SET_NULL, null=True, related_name = 'investigator')
     investigation_note = models.CharField(max_length=255)
     approved = models.BooleanField(default=False)
-    approver = models.ForeignKey(User, blank=True, on_delete=models.SET_NULL, null=True, related_name = 'approver')
+    approver = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, on_delete=models.SET_NULL, null=True, related_name = 'approver')
     approved_date = models.DateTimeField(blank=True)
-    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    backers = models.ManyToManyField(User, blank=True, related_name = 'backers')
-    voters = models.ManyToManyField(User, blank=True, related_name = 'voters')
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
+    backers = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name = 'backers')
+    voters = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name = 'voters')
     completed = models.BooleanField(default=False)
     closed = models.BooleanField(default=False)
     closed_note = models.TextField(blank=True)
-    closer = models.ForeignKey(User, blank=True, on_delete=models.SET_NULL, null=True, related_name = 'closer')
-    supervisor = models.ForeignKey(User, blank=True, on_delete=models.SET_NULL, null=True, related_name = 'supervisor')
-    coordinator = models.ForeignKey(User, blank=True, on_delete=models.SET_NULL, null=True, related_name = 'coordinator')
-    volunteers = models.ManyToManyField(User, related_name = 'volunteers')
+    closer = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, on_delete=models.SET_NULL, null=True, related_name = 'closer')
+    supervisor = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, on_delete=models.SET_NULL, null=True, related_name = 'supervisor')
+    coordinator = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, on_delete=models.SET_NULL, null=True, related_name = 'coordinator')
+    volunteers = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name = 'volunteers')
     date_added = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField(max_length=128)
 

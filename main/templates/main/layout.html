@@ -56,8 +56,10 @@
                 </div>
             </div>
         </nav>
-{% if user.is_authenticated %}
-    {% if user.profile.}
+{% if user.is_authenticated and request.user.monthly_payment == False %}
+    <div>
+        You have not made your payment for this month. Please make payments to clear this message.
+    </div>
 {% endif %}
 <!--
 Popup messages

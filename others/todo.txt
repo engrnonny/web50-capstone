@@ -1,10 +1,13 @@
 BACKEND:
 
+
     API: 
         Payment function
 
+
     MODELS:
         Saving phone numbers to profile.
+
 
     VIEWS: 
         Email/phone number confirmation for new users before completion of registration
@@ -28,12 +31,19 @@ BACKEND:
 
 FRONTEND:
 
+
     CSS:
         Nav links should be highlighted when clicked
 
+
     HTML:
         Automate LGA and State fields in Register page
+
         "You have not voted" prompt in Layout page
+
+
+    JAVASCRIPT:
+        Collapsible optional part of registration form in Register page
 
 
 FULLSTACK:
