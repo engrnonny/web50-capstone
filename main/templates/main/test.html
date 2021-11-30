@@ -1,5 +1,7 @@
 {% extends "main/layout.html" %}
 
+{% load static %}
+
 {% block title %}
     MAG | About
 {% endblock %}
@@ -9,11 +11,21 @@
         <h1>
             Test
         </h1>
-        <form action="{% url 'test' %}" method="POST">
+        <div>
+            <img src="{{ test.pic.url }}" alt="" height="100rem" width="100rem">
+        </div>
+        <form action="{% url 'test' %}" enctype="multipart/form-data" method="POST">
 			{% csrf_token %}
-            <input name="cause-name" type="text">
-            <input name="cause-brief-description" type="text">
-            <input type="submit" value="Test Cause">
+            <div>
+                <label for="cause-files" class="form-label">
+                    Cause files
+                </label>
+                <input alt="Cause files" aria-describedby="filesHelp" class="form-control" id="cause-files" multiple name="test" type="file">
+                <small id="filesHelp" class="form-text">
+                    Upload files (documents, pictures, videos, etc.) as supporting evidences of Cause
+                </small>
+            </div>
+            <input type="submit" value="Test Upload">
         </form>
     </main>
 {% endblock %}

@@ -1,14 +1,29 @@
 BACKEND:
 
+    API: 
+        Payment function
+
     MODELS:
         Saving phone numbers to profile.
 
     VIEWS: 
         Email/phone number confirmation for new users before completion of registration
+
+        Remove white spaces from Username data before saving it to model in Register
+
+        Check that Number field contains only numbers, and begins with 0 in the Register view.
+
+        Check that Email field contains only email addresses, and begins with 0 in the Register view. Use Try/Catch method
+
         Check birthday data in Register that it is in date format before saving.
+
         Create a Country dictionary for countries, states/counties, LGAs, cities. 
+
         Check that Country, State/County, LGA, and City data in Register is in the Country dictionary.
-        Image upload in Register
+        
+        Reset function to reset all User Profile attributes; voted and paid, to false on the first of every month.
+
+        Function to update User Profile Paid attribute once payment has been successfully made, increase the grand total collected, and notify on homepage that the User has just made payment.
 
 
 FRONTEND:

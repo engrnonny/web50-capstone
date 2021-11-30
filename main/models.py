@@ -18,11 +18,6 @@ CATEGORY_SLUGS = (
     ('health', 'health')
 )
 
-GENDER = (
-    ('Male', 'Male'),
-    ('Female', 'Female')
-)
-
 STATUS = (
     ('Approved', 'Approved'),
     ('Awaiting approval', 'Awaiting approval'),
@@ -45,7 +40,7 @@ class Cause_categorie(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone = models.IntegerField(blank=True)
-    gender = models.CharField(choices=GENDER, max_length=8, null=True, blank=True)
+    gender = models.CharField(max_length=8, blank=True)
     birthday = models.DateField(null=True, blank=True)
     bio = models.TextField(max_length=500, blank=True)
     address = models.CharField(max_length=255, blank=True)
@@ -57,7 +52,7 @@ class Profile(models.Model):
     linkedin = models.URLField(blank=True)
     followers = models.ManyToManyField(User, related_name = 'followers', blank=True)
     following = models.ManyToManyField(User, related_name = 'following', blank=True)
-    profile_pic = models.ImageField(upload_to='main/users/profile-pics/', blank=True)
+    profile_pic = models.ImageField(blank=True, upload_to="user-profile-pics")
     amount_contributed = models.FloatField(default=0.0)
     amount_owed = models.FloatField(default=0.0)
     monthly_payment = models.BooleanField(default=False)
@@ -111,3 +106,5 @@ class Cause_file(models.Model):
     upload = models.FileField(upload_to=cause_directory_path)
 
 
+class Test(models.Model):
+    pic = models.ImageField(blank=True, upload_to="gallery")

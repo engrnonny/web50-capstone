@@ -121,76 +121,64 @@ def register(request):
                                     user.save()
                                     profile = Profile(user=user, phone=phone)
                                     profile.save()
-                                    print(1)
 
                                     if request.POST["reg-gender"]:
-                                        print(2)
                                         gender = request.POST["reg-gender"]
-                                        if gender == "male" or gender == "female":
+                                        if gender == "Male" or gender == "Female":
                                             profile.gender = gender
                                             profile.save()
                                         else: 
-                                            messages.info(request, "Your registration was successful. Please login to continue")
+                                            messages.info(request, "Please select Male or Female in the Gender field")
                                             return redirect("register")
 
                                     if request.POST["reg-birthday"]:
-                                        print(3)
                                         birthday = request.POST["reg-birthday"]
                                         profile.birthday = birthday
                                         profile.save()
 
                                     if request.POST["reg-country"]:
-                                        print(4)
                                         country = request.POST["reg-country"]
                                         profile.country = country
                                         profile.save()
 
                                     if request.POST["reg-state"]:
-                                        print(5)
                                         state = request.POST["reg-state"]
                                         profile.state = state
                                         profile.save()
 
                                     if request.POST["reg-lga"]:
-                                        print(6)
                                         lga = request.POST["reg-lga"]
                                         profile.lga = lga
                                         profile.save()
 
                                     if request.POST["reg-city"]:
-                                        print(7)
                                         city = request.POST["reg-city"]
                                         profile.city = city
                                         profile.save()
 
                                     if request.POST["reg-address"]:
-                                        print(8)
                                         address = request.POST["reg-address"]
                                         profile.address = address
                                         profile.save()
 
                                     if request.POST["reg-occupation"]:
-                                        print(9)
                                         occupation = request.POST["reg-occupation"]
                                         profile.occupation = occupation
                                         profile.save()
 
                                     if request.POST["reg-linkedin"]:
-                                        print(10)
                                         linkedin = request.POST["reg-linkedin"]
                                         profile.linkedin = linkedin
                                         profile.save()
 
                                     if request.POST["reg-bio"]:
-                                        print(11)
                                         bio = request.POST["reg-bio"]
                                         profile.bio = bio
                                         profile.save()
 
-                                    if request.POST["reg-profile-pic"]:
-                                        print(12)
-                                        profile_pic = request.POST["reg-profile-pic"]
-                                        profile.profile_pic = profile_pic
+                                    if "reg-profile-pic" in request.FILES:
+                                        profile.profile_pic = request.FILES["reg-profile-pic"]
+                                        
                                         profile.save()
 
 
@@ -343,17 +331,25 @@ def contact(request):
 
 
 
-
 # Test Page
 # Test Page
 # Test Page
 def test(request):
     if request.method == "POST":
-        if request.POST["cause-brief-description"]:
-            print('yes')
+        if "test" in request.FILES:
+            test = Test(pic=request.FILES['test'])
+            test.save()
+            messages.info(request, "Yes")
+            return redirect("test")
+
         else:
-            print('no')
+            messages.info(request, "No")
+            return redirect("test")
         
     else:
-        return render(request, "main/test.html")
+        test = Test.objects.all()[1]
+        context = {
+            'test': test
+        }
+        return render(request, "main/test.html", context)
 
