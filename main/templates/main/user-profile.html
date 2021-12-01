@@ -7,11 +7,11 @@
 {% block body %}
     <main>
         <h1>
-            Hi there {{user.username}}!
+            Hi {{user.username}}!
         </h1>
-        {% if profile.pic %}
+        {% if user.pic %}
         <div>
-            <img src="{{ profile.profile_pic.url }}" alt="{{user.username}} profile picture" height="100rem" width="100rem">            
+            <img src="{{ user.user_pic.url }}" alt="{{user.username}} user picture" height="100rem" width="100rem">            
         </div>
         {% endif %}
         <div>
@@ -43,7 +43,7 @@
                 Phone Number: 
             </span>
             <span>
-                {{profile.phone}}
+                {{user.phone}}
             </span>
         </div>
         <div>
@@ -51,7 +51,7 @@
                 Gender: 
             </span>
             <span>
-                {{profile.gender}}
+                {{user.gender}}
             </span>
         </div>
         <div>
@@ -59,7 +59,7 @@
                 Date of Birth: 
             </span>
             <span>
-                {{profile.birthday}}
+                {{user.birthday}}
             </span>
         </div>
         <div>
@@ -67,7 +67,7 @@
                 Biography: 
             </span>
             <span>
-                {{profile.bio}}
+                {{user.bio}}
             </span>
         </div>
         <div>
@@ -75,24 +75,24 @@
                 Address: 
             </span>
             <span>
-                {% if profile.address %}
-                    {{profile.address}}, 
+                {% if user.address %}
+                    {{user.address}}, 
                 {% endif %}
 
-                {% if profile.city %}
-                    {{profile.city}}, 
+                {% if user.city %}
+                    {{user.city}}, 
                 {% endif %}
 
-                {% if profile.lga %}
-                    {{profile.lga}} Local Government Area, 
+                {% if user.lga %}
+                    {{user.lga}} Local Government Area, 
                 {% endif %}
 
-                {% if profile.state %}
-                    {{profile.state}} State, 
+                {% if user.state %}
+                    {{user.state}} State, 
                 {% endif %}
 
-                {% if profile.country %}
-                    {{profile.country}}, 
+                {% if user.country %}
+                    {{user.country}}, 
                 {% endif %}
             </span>
         </div>
@@ -101,15 +101,15 @@
                 Occupation: 
             </span>
             <span>
-                {{profile.occupation}}
+                {{user.occupation}}
             </span>
         </div>
         <div>
             <span>
-                Linkedin Profile: 
+                Linkedin user: 
             </span>
             <span>
-                {{profile.linkedin}}
+                {{user.linkedin}}
             </span>
         </div>
         <div>

@@ -56,9 +56,24 @@
                 </div>
             </div>
         </nav>
+
+    
+<!--
+Warning message for Users who haven't made monthly contributions 
+-->    
 {% if user.is_authenticated and request.user.monthly_payment == False %}
-    <div>
+    <div class="card">
         You have not made your payment for this month. Please make payments to clear this message.
+    </div>
+{% endif %}
+
+<br>
+<!--
+Warning message for Users who haven't casted monthly vote 
+-->  
+{% if user.is_authenticated and request.user.monthly_vote == False %}
+    <div class="card">
+        You have not casted your vote for this month. Please cast your vote to clear this message.
     </div>
 {% endif %}
 <!--

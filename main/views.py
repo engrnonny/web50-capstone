@@ -73,121 +73,141 @@ def logout_view(request):
 # User Registration Page
 def register(request):
     if request.user.is_authenticated:
-        messages.info(request, "User already logged in")
+        messages.info(request, "Already logged in")
         return redirect("user-profile", slug=request.user.username)
 
     else:
         if request.method == "POST":
+            
+            if not request.POST["reg-firstname"]:
+                messages.info(request, "Please enter your First Name")
+                return redirect("register")
 
-            if User.objects.filter(username=request.POST["reg-username"]).exists():
+            if not request.POST["reg-lastname"]:
+                messages.info(request, "Please enter your Last Name")
+                return redirect("register")
+
+            if not request.POST["reg-username"]:
+                messages.info(request, "Please enter your Username")
+                return redirect("register")
+
+            elif User.objects.filter(username=request.POST["reg-username"]).exists():
                 messages.info(request, "Username already exists")
                 return redirect("register")
 
-            else: 
-                if User.objects.filter(email=request.POST["reg-email"]).exists():
+            if not request.POST["reg-phone"]:                
+                messages.info(request, "Please enter your Phone Number")
+                return redirect("register")
+
+            elif User.objects.filter(phone=request.POST["reg-phone"]).exists():
+                messages.info(request, "Phone number already exists")
+                return redirect("register")
+
+            if not request.POST["reg-email"]:
+                messages.info(request, "Please enter your Email Address")
+                return redirect("register")
+                
+            elif User.objects.filter(email=request.POST["reg-email"]).exists():
                     messages.info(request, "Email address already exists")
                     return redirect("register")
 
-                else:
-                    if Profile.objects.filter(phone=request.POST["reg-phone"]).exists():
-                        messages.info(request, "Phone number already exists")
-                        return redirect("register")
+            if not request.POST["reg-password"]:
+                messages.info(request, "Please enter your Password")
+                return redirect("register")
 
-                    else:
-                        if len(request.POST["reg-password"] ) < 8:
-                            messages.info(request, "Password is too short")
-                            return redirect("register")
-                            
-                        else:
-                            if request.POST["reg-password"] != request.POST["reg-password-confirm"]:
-                                messages.info(request, "Passwords do not match")
+            else:
+                if len(request.POST["reg-password"] ) < 8:
+                    messages.info(request, "Password is too short")
+                    return redirect("register")
+                    
+                elif request.POST["reg-password"] != request.POST["reg-password-confirm"]:
+                        messages.info(request, "Passwords do not match")
+                        return redirect("register")
+                
+                else:
+                    first_name = request.POST["reg-firstname"]
+                    last_name = request.POST["reg-lastname"]
+                    username = request.POST["reg-username"]
+                    phone = request.POST["reg-phone"]
+                    email = request.POST["reg-email"]
+                    password = request.POST["reg-password"]
+
+
+                    try:
+                        user = User.objects.create_user(username, email, password)
+                        user.save()
+                        user.first_name = first_name
+                        user.save()
+                        user.last_name = last_name
+                        user.save()
+                        user.phone = phone
+                        user.save()
+
+                        if request.POST["reg-gender"]:
+                            gender = request.POST["reg-gender"]
+                            if gender == "Male" or gender == "Female":
+                                user.gender = gender
+                                user.save()
+                            else: 
+                                messages.info(request, "Please select Male or Female in the Gender field")
                                 return redirect("register")
 
-                            else:
-                                first_name = request.POST["reg-firstname"]
-                                last_name = request.POST["reg-lastname"]
-                                username = request.POST["reg-username"]
-                                phone = request.POST["reg-phone"]
-                                email = request.POST["reg-email"]
-                                password = request.POST["reg-password"]
+                        if request.POST["reg-birthday"]:
+                            birthday = request.POST["reg-birthday"]
+                            user.birthday = birthday
+                            user.save()
+
+                        if request.POST["reg-country"]:
+                            country = request.POST["reg-country"]
+                            user.country = country
+                            user.save()
+
+                        if request.POST["reg-state"]:
+                            state = request.POST["reg-state"]
+                            user.state = state
+                            user.save()
+
+                        if request.POST["reg-lga"]:
+                            lga = request.POST["reg-lga"]
+                            user.lga = lga
+                            user.save()
+
+                        if request.POST["reg-city"]:
+                            city = request.POST["reg-city"]
+                            user.city = city
+                            user.save()
+
+                        if request.POST["reg-address"]:
+                            address = request.POST["reg-address"]
+                            user.address = address
+                            user.save()
+
+                        if request.POST["reg-occupation"]:
+                            occupation = request.POST["reg-occupation"]
+                            user.occupation = occupation
+                            user.save()
+
+                        if request.POST["reg-linkedin"]:
+                            linkedin = request.POST["reg-linkedin"]
+                            user.linkedin = linkedin
+                            user.save()
+
+                        if request.POST["reg-bio"]:
+                            bio = request.POST["reg-bio"]
+                            user.bio = bio
+                            user.save()
+
+                        if "reg-profile-pic" in request.FILES:
+                            user.profile_pic = request.FILES["reg-profile-pic"]
+                            user.save()
 
 
-                                try:
-                                    user = User.objects.create_user(username, email, password)
-                                    user.save()
-                                    user.first_name = first_name
-                                    user.save()
-                                    user.last_name = last_name
-                                    user.save()
-                                    profile = Profile(user=user, phone=phone)
-                                    profile.save()
+                        messages.info(request, "Your registration was successful. Please login to continue")
+                        return redirect("login")
 
-                                    if request.POST["reg-gender"]:
-                                        gender = request.POST["reg-gender"]
-                                        if gender == "Male" or gender == "Female":
-                                            profile.gender = gender
-                                            profile.save()
-                                        else: 
-                                            messages.info(request, "Please select Male or Female in the Gender field")
-                                            return redirect("register")
-
-                                    if request.POST["reg-birthday"]:
-                                        birthday = request.POST["reg-birthday"]
-                                        profile.birthday = birthday
-                                        profile.save()
-
-                                    if request.POST["reg-country"]:
-                                        country = request.POST["reg-country"]
-                                        profile.country = country
-                                        profile.save()
-
-                                    if request.POST["reg-state"]:
-                                        state = request.POST["reg-state"]
-                                        profile.state = state
-                                        profile.save()
-
-                                    if request.POST["reg-lga"]:
-                                        lga = request.POST["reg-lga"]
-                                        profile.lga = lga
-                                        profile.save()
-
-                                    if request.POST["reg-city"]:
-                                        city = request.POST["reg-city"]
-                                        profile.city = city
-                                        profile.save()
-
-                                    if request.POST["reg-address"]:
-                                        address = request.POST["reg-address"]
-                                        profile.address = address
-                                        profile.save()
-
-                                    if request.POST["reg-occupation"]:
-                                        occupation = request.POST["reg-occupation"]
-                                        profile.occupation = occupation
-                                        profile.save()
-
-                                    if request.POST["reg-linkedin"]:
-                                        linkedin = request.POST["reg-linkedin"]
-                                        profile.linkedin = linkedin
-                                        profile.save()
-
-                                    if request.POST["reg-bio"]:
-                                        bio = request.POST["reg-bio"]
-                                        profile.bio = bio
-                                        profile.save()
-
-                                    if "reg-profile-pic" in request.FILES:
-                                        profile.profile_pic = request.FILES["reg-profile-pic"]
-                                        
-                                        profile.save()
-
-
-                                    messages.info(request, "Your registration was successful. Please login to continue")
-                                    return redirect("login")
-
-                                except Error:
-                                    messages.info(request, "Something went wrong. Please Try again later or contact the admin")
-                                    return redirect("index")
+                    except Error:
+                        messages.info(request, "Something went wrong. Please Try again later or contact the admin")
+                        return redirect("index")
 
         else:
             return render(request, "main/register.html")
@@ -232,12 +252,10 @@ def causes(request):
 # New Cause Page
 # New Cause Page
 # New Cause Page
-@login_required
 def new_cause(request):
-    if request.method == "POST":
-        if Profile.objects.filter(user=request.user).exists():
-            profile = Profile.objects.get(user=request.user)
-            if profile.monthly_payment == False:
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            if request.user.monthly_payment == False:
                 messages.info(request, "You have not made your monthly donation. Please do so to create a Cause")
                 return redirect("payment")
             else:
@@ -308,12 +326,13 @@ def new_cause(request):
                     messages.info(request, "Please enter Cause name")
                     return redirect("new-cause")
 
+                
         else:
-            messages.info(request, "You do not have a profile with us. Please contact the admin")
-            return redirect("contact")
-            
+            return render(request, "main/new-cause.html")
+        
     else:
-        return render(request, "main/new-cause.html")
+        messages.info(request, "You must be logged in to create a Cause.")
+        return redirect("login")
 
 
 # Contact Page
