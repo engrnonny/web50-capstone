@@ -9,9 +9,9 @@
         <h1>
             Hi {{user.username}}!
         </h1>
-        {% if user.pic %}
+        {% if user.profile_pic %}
         <div>
-            <img src="{{ user.user_pic.url }}" alt="{{user.username}} user picture" height="100rem" width="100rem">            
+            <img src="{{ user.profile_pic.url }}" alt="{{user.username}} user picture" height="100rem" width="100rem">            
         </div>
         {% endif %}
         <div>

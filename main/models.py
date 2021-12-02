@@ -51,7 +51,7 @@ class User(AbstractUser):
     linkedin = models.URLField(blank=True, null=True)
     followers = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name = 'user_followers', blank=True)
     following = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name = 'user_following', blank=True)
-    profile_pic = models.ImageField(blank=True, null=True, upload_to="user/profile-pics")
+    profile_pic = models.ImageField(blank=True, null=True, upload_to="main/users/profile-pics")
     amount_contributed = models.FloatField(default=0.0)
     amount_owed = models.FloatField(default=0.0)
     monthly_payment = models.BooleanField(default=False)

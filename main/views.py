@@ -254,11 +254,11 @@ def causes(request):
 # New Cause Page
 def new_cause(request):
     if request.user.is_authenticated:
-        if request.method == "POST":
-            if request.user.monthly_payment == False:
-                messages.info(request, "You have not made your monthly donation. Please do so to create a Cause")
-                return redirect("payment")
-            else:
+        if request.user.monthly_payment == False:
+            messages.info(request, "You have not made your monthly donation. Please do so to create a Cause")
+            return redirect("payment")
+        else:
+            if request.method == "POST":
                 if request.POST["cause-name"]:
                     if Cause.objects.filter(name=request.POST["cause-name"]).exists():
                         
@@ -326,9 +326,9 @@ def new_cause(request):
                     messages.info(request, "Please enter Cause name")
                     return redirect("new-cause")
 
-                
-        else:
-            return render(request, "main/new-cause.html")
+                    
+            else:
+                return render(request, "main/new-cause.html")
         
     else:
         messages.info(request, "You must be logged in to create a Cause.")
