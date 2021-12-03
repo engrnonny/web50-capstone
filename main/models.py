@@ -64,10 +64,10 @@ class User(AbstractUser):
 class Cause(models.Model):
     name = models.CharField(max_length=128)
     brief_description = models.CharField(max_length=225)
-    address = models.CharField(max_length=255, blank=True)
-    city = models.CharField(max_length=32)
-    state = models.CharField(max_length=32)
     country = models.CharField(max_length=32)
+    state = models.CharField(max_length=32)
+    city = models.CharField(max_length=32)
+    address = models.CharField(max_length=255, blank=True)
     duration = models.IntegerField(default=0)
     detail_description = models.TextField()
     cost = models.FloatField()

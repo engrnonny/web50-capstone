@@ -259,72 +259,66 @@ def new_cause(request):
             return redirect("payment")
         else:
             if request.method == "POST":
-                if request.POST["cause-name"]:
-                    if Cause.objects.filter(name=request.POST["cause-name"]).exists():
-                        
-                        # Use JavaScript here later!!!
-                        messages.info(request, "Cause name already exists")
-                        return redirect("new-cause")
-                    else:
-                        name = request.POST["cause-name"]
-                        if len(name) <= 128:
+
+                if not request.POST["cause-name"]:
+                    messages.info(request, "Please enter Cause Name")
+                    return redirect("new-cause")
+
+                elif Cause.objects.filter(name=request.POST["cause-name"]).exists():                    
+                    # Use JavaScript here later!!!
+                    messages.info(request, "Cause name already exists")
+                    return redirect("new-cause")
+
+                elif len(request.POST["cause-name"]) > 128:
                             # Use JavaScript here later!!!
-                            messages.info(request, "Name too long")
-                            return redirect("new-cause")
-                        if request.POST["cause-brief-description"]:
-                            cause_brief_description = request.POST["cause-brief-description"]
-                        else:
-                            messages.info(request, "You must provide a brief description for the cause")
-                            return redirect("new-cause")
-                        if request.POST["cause-country"]:
-                            cause_country = request.POST["cause-country"]
-                        else:
-                            messages.info(request, "You must provide a country for the cause")
-                            return redirect("new-cause")
-                        if request.POST["cause-state"]:
-                            cause_state = request.POST["cause-state"]
-                        else:
-                            messages.info(request, "You must provide a state for the cause")
-                            return redirect("new-cause")
-                        if request.POST["cause-city"]:
-                            cause_city = request.POST["cause-city"]
-                        else:
-                            messages.info(request, "You must provide a city for the cause")
-                            return redirect("new-cause")
-                        if request.POST["cause-address"]:
-                            cause_address = request.POST["cause-address"]
-                        if request.POST["cause-duration"]:
-                            cause_duration = request.POST["cause-duration"]
-                        else:
-                            messages.info(request, "You must provide a duration for the cause")
-                            return redirect("new-cause")
-                        if request.POST["cause-cost"]:
-                            cause_cost = request.POST["cause-cost"]
-                        else:
-                            messages.info(request, "You must provide a cost for the cause")
-                            return redirect("new-cause")
-                        if request.POST["cause-detail-description"]:
-                            cause_detail_description = request.POST["cause-detail-description"]
-                        else:
-                            messages.info(request, "You must provide a detail description for the cause")
-                            return redirect("new-cause")
-                        if request.POST["cause-cost-breakdown"]:
-                            cause_cost_breakdown = request.POST["cause-cost-breakdown"]
-                        else:
-                            messages.info(request, "You must provide a cost breakdown for the cause")
-                            return redirect("new-cause")
-                        if request.POST["cause-expiry"]:
-                            cause_expiry = request.POST["cause-expiry"]
-                        if request.POST["cause-city"]:
-                            cause_city = request.POST["cause-city"]
-                        else:
-                            messages.info(request, "You must provide a city for the cause")
+                            messages.info(request, "Cause name too long. Please ensure it is not more than 128 characters.")
                             return redirect("new-cause")
 
-                else:
-                    # Use JavaScript here later!!!
-                    messages.info(request, "Please enter Cause name")
+                if not request.POST["cause-brief-description"]:
+                    messages.info(request, "Please enter a brief description of the Cause")
                     return redirect("new-cause")
+
+                if not request.POST["cause-country"]:
+                    messages.info(request, "Please enter the country the Cause is located in.")
+                    return redirect("new-cause")
+
+                if not request.POST["cause-state"]:
+                    messages.info(request, "Please enter the state the Cause is located in.")
+                    return redirect("new-cause")
+
+                if not request.POST["cause-city"]:
+                    messages.info(request, "Please enter the city the Cause is located in.")
+                    return redirect("new-cause")
+
+                if not request.POST["cause-duration"]:
+                    messages.info(request, "Please enter the duration the Cause would take to be completed (in days).")
+                    return redirect("new-cause")
+
+                if not request.POST["cause-cost"]:
+                    messages.info(request, "Please enter the total cost of the Cause (in Naira)")
+                    return redirect("new-cause")
+                    
+                if not request.POST["cause-detail-description"]:
+                    messages.info(request, "Please give detail description of the Cause")
+                    return redirect("new-cause")
+
+                if not request.POST["cause-cost-breakdown"]:
+                    messages.info(request, "Please give detail breakdown of the cost of the Cause")
+                    return redirect("new-cause")
+                                        
+                else:
+                    cause_name = request.POST["cause-name"]
+                    cause_brief_description = request.POST["cause-brief-description"]
+                    cause_country = request.POST["cause-country"]
+                    cause_state = request.POST["cause-state"]
+                    cause_city = request.POST["cause-city"]
+                    cause_address = request.POST["cause-address"]
+                    cause_duration = request.POST["cause-duration"]
+                    cause_cost = request.POST["cause-cost"]
+                    cause_detail_description = request.POST["cause-detail-description"]
+                    cause_cost_breakdown = request.POST["cause-cost-breakdown"]
+                    cause_expiry = request.POST["cause-expiry"]
+
 
                     
             else:
