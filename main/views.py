@@ -4,13 +4,14 @@ from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib.messages.api import error
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import Error, IntegrityError
 from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse
-
+from django.utils.text import slugify
 from .models import *
 
 
@@ -51,8 +52,8 @@ def login_view(request):
                     auth_login(request, user)
                     return redirect("user-profile", slug=user_id.username )
                 else:
-                    messages.info(request, "not logged in")
-                    return render(request, "main/index.html")
+                    messages.info(request, "Login unsuccessful. Incorrect username/email or password")
+                    return redirect("login")
             else:
                 messages.info(request, "Incorrect information")
                 return redirect("index")
@@ -207,7 +208,7 @@ def register(request):
 
                     except Error:
                         messages.info(request, "Something went wrong. Please Try again later or contact the admin")
-                        return redirect("index")
+                        return redirect("contact")
 
         else:
             return render(request, "main/register.html")
@@ -248,6 +249,26 @@ def causes(request):
     }
     return render(request, "main/causes.html", context)
 
+# Single Cause Page
+# Single Cause Page
+# Single Cause Page
+def cause(request, slug):
+
+    try:
+        cause = Cause.objects.get(slug=slug)
+        backers = User.objects.filter(backers__id=cause.id)
+        volunteers = User.objects.filter(volunteers__id=cause.id)
+        context = {
+            'backers': backers,
+            'cause': cause,
+            'volunteers': volunteers
+        }
+        return render(request, "main/cause.html", context)
+    
+    except ObjectDoesNotExist:
+        messages.info(request, f"{slug} does not exist as a Cause")
+        return redirect("causes")
+
 
 # New Cause Page
 # New Cause Page
@@ -261,7 +282,7 @@ def new_cause(request):
             if request.method == "POST":
 
                 if not request.POST["cause-name"]:
-                    messages.info(request, "Please enter Cause Name")
+                    messages.info(request, "Please enter a Cause Name")
                     return redirect("new-cause")
 
                 elif Cause.objects.filter(name=request.POST["cause-name"]).exists():                    
@@ -307,18 +328,28 @@ def new_cause(request):
                     return redirect("new-cause")
                                         
                 else:
-                    cause_name = request.POST["cause-name"]
-                    cause_brief_description = request.POST["cause-brief-description"]
-                    cause_country = request.POST["cause-country"]
-                    cause_state = request.POST["cause-state"]
-                    cause_city = request.POST["cause-city"]
-                    cause_address = request.POST["cause-address"]
-                    cause_duration = request.POST["cause-duration"]
-                    cause_cost = request.POST["cause-cost"]
-                    cause_detail_description = request.POST["cause-detail-description"]
-                    cause_cost_breakdown = request.POST["cause-cost-breakdown"]
-                    cause_expiry = request.POST["cause-expiry"]
+                    name = request.POST["cause-name"]
+                    brief_description = request.POST["cause-brief-description"]
+                    country = request.POST["cause-country"]
+                    state = request.POST["cause-state"]
+                    city = request.POST["cause-city"]
+                    address = request.POST["cause-address"]
+                    duration = request.POST["cause-duration"]
+                    cost = request.POST["cause-cost"]
+                    detail_description = request.POST["cause-detail-description"]
+                    cost_breakdown = request.POST["cause-cost-breakdown"]
+                    expiration = request.POST["cause-expiration"]
+                    cause_slug = slugify(name)
 
+                    try:
+                        cause = Cause(name=name.title(), brief_description=brief_description, country=country.title(), state=state.title(), city=city.title(), address=address, duration=duration, cost=cost, detail_description=detail_description, cost_breakdown=cost_breakdown, expiration=expiration, status="Awaiting approval", creator=request.user, slug=cause_slug)
+                        cause.save()
+
+                        return redirect("cause", slug=cause.slug )
+                    
+                    except Error:
+                        messages.info(request, "Something went wrong. Please Try again later or contact the admin")
+                        return redirect("contact")
 
                     
             else:

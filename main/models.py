@@ -18,6 +18,21 @@ CATEGORY_SLUGS = (
     ('health', 'health')
 )
 
+CAUSE_FILES_USAGE = (
+    ('Investigation Files', 'Investigation Files'),
+    ('Ongoing Report', 'Ongoing Report'),
+    ('Profile Picture', 'Profile Picture'),
+    ('Proof of Completion', 'Proof of Completion'),
+    ('Proof of Payment', 'Proof of Payment'),
+    ('Proof of Existence', 'Proof of Existence')
+)
+
+FILE_TYPES = (
+    ('Images', 'Images'),
+    ('Documents', 'Documents'),
+    ('Videos', 'Videos')
+)
+
 STATUS = (
     ('Approved', 'Approved'),
     ('Awaiting approval', 'Awaiting approval'),
@@ -73,13 +88,12 @@ class Cause(models.Model):
     cost = models.FloatField()
     cost_breakdown = models.TextField()
     expiration = models.IntegerField(blank=True)
-    status = models.CharField(choices=STATUS, max_length=32, null=True, blank=True)
     investigated = models.BooleanField(default=False)
     investigator = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, on_delete=models.SET_NULL, null=True, related_name = 'investigator')
-    investigation_note = models.CharField(max_length=255)
+    investigation_note = models.CharField(blank=True, max_length=255)
     approved = models.BooleanField(default=False)
     approver = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, on_delete=models.SET_NULL, null=True, related_name = 'approver')
-    approved_date = models.DateTimeField(blank=True)
+    approved_date = models.DateTimeField(blank=True, null=True)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     backers = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name = 'backers')
     voters = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name = 'voters')
@@ -87,19 +101,23 @@ class Cause(models.Model):
     closed = models.BooleanField(default=False)
     closed_note = models.TextField(blank=True)
     closer = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, on_delete=models.SET_NULL, null=True, related_name = 'closer')
+    closed_date = models.DateTimeField(blank=True, null=True)
     supervisor = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, on_delete=models.SET_NULL, null=True, related_name = 'supervisor')
     coordinator = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, on_delete=models.SET_NULL, null=True, related_name = 'coordinator')
-    volunteers = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name = 'volunteers')
+    volunteers = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name = 'volunteers')
+    status = models.CharField(max_length=32)
     date_added = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField(max_length=128)
 
 # A function to create directory where the files would be uploaded to.
 def cause_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/cause_<id>/<filename>
-    return 'causes/cause_{0}/{1}'.format(instance.cause.id, filename)
+    return 'main/causes/cause_{0}/{1}'.format(instance.cause.id, filename)
 
 class Cause_file(models.Model):
     cause = models.ForeignKey(Cause, on_delete=models.CASCADE)
+    file_type = models.CharField(choices=FILE_TYPES, max_length=32, null=True, blank=True)
+    usage = models.CharField(choices=CAUSE_FILES_USAGE, max_length=32, null=True, blank=True)
     description = models.CharField(max_length=255)
     date_added = models.DateTimeField(auto_now_add=True)
     upload = models.FileField(upload_to=cause_directory_path)

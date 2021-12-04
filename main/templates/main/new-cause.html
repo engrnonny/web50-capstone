@@ -10,7 +10,7 @@
         <h1>
             New Cause
         </h1>
-        <form action="{% url 'new-cause' %}" method="post">
+        <form action="{% url 'new-cause' %}" en method="post">
             {% csrf_token %}
             <h2>
                 Start a New Cause
@@ -21,7 +21,7 @@
                 <label class="form-label" for="cause-name">
                     Name
                 </label>
-                <input aria-describedby="nameHelp" class="form-control" id="cause-name" maxlength="128" name="cause-name" placeholder="Save the Children of Ikorodu Primary School from poor education" required type="text">
+                <input aria-describedby="nameHelp" class="form-control" id="cause-name" maxlength="128" name="cause-name" placeholder="Save the Children of Ikorodu Primary School from poor education"  type="text">
                 <small id="nameHelp" class="form-text">
                     The name of the cause (10 words or fewer)
                 </small>
@@ -32,7 +32,7 @@
                 <label class="form-label" for="cause-brief-description">
                     Brief Description
                 </label>
-                <textarea aria-describedby="briefDescriptionHelp" class="form-control" cols="20" id="cause-brief-description" name="cause-brief-description" placeholder="The aim of this Cause is to save the students of the Ikorodu Primary School from very poor and inadequate educational environment and materials." required rows="5" wrap="hard"></textarea>
+                <textarea aria-describedby="briefDescriptionHelp" class="form-control" cols="20" id="cause-brief-description" name="cause-brief-description" placeholder="The aim of this Cause is to save the students of the Ikorodu Primary School from very poor and inadequate educational environment and materials."  rows="5" wrap="hard"></textarea>
                 <small id="briefDescriptionHelp" class="form-text">
                     Briefly describe the cause (50 words or fewer)
                 </small>
@@ -45,7 +45,7 @@
                     <label for="cause-country" class="form-label">
                         Country
                     </label>
-                    <input aria-describedby="countryHelp" class="form-control" id="cause-country" name="cause-country" placeholder="Nigeria" required type="text">
+                    <input aria-describedby="countryHelp" class="form-control" id="cause-country" name="cause-country" placeholder="Nigeria"  type="text">
                     <small class="form-text" id="countryHelp">
                         Country Cause is located in
                     </small>
@@ -56,7 +56,7 @@
                     <label class="form-label" for="cause-state">
                         State
                     </label>
-                    <input aria-describedby="stateHelp" class="form-control" id="cause-state" name="cause-state" placeholder="Lagos" required type="text">
+                    <input aria-describedby="stateHelp" class="form-control" id="cause-state" name="cause-state" placeholder="Lagos"  type="text">
                     <small class="form-text" id="stateHelp">
                         State Cause is located in
                     </small>
@@ -70,7 +70,7 @@
                     <label class="form-label" for="cause-city">
                         City/Town
                     </label>
-                    <input aria-describedby="cityHelp" class="form-control" id="cause-city" name="cause-city" placeholder="Victoria Island"  required type="text">
+                    <input aria-describedby="cityHelp" class="form-control" id="cause-city" name="cause-city" placeholder="Victoria Island"   type="text">
                     <small class="form-text" id="cityHelp">
                         City or Town Cause is located in
                     </small>
@@ -96,7 +96,7 @@
                     <label class="form-label" for="cause-duration">
                         Duration
                     </label>
-                    <input type="number" class="form-control" id="cause-duration" aria-describedby="durationHelp" name="cause-duration" placeholder="1000" required>
+                    <input type="number" class="form-control" id="cause-duration" aria-describedby="durationHelp" name="cause-duration" placeholder="1000" >
                     <small id="durationHelp" class="form-text">
                         How long would it take to complete the Cause (in days)
                     </small>
@@ -107,7 +107,7 @@
                     <label class="form-label" for="cause-cost">
                         Cost
                     </label>
-                    <input aria-describedby="costHelp" class="form-control" id="cause-cost" name="cause-cost" placeholder="10000000" required type="number">
+                    <input aria-describedby="costHelp" class="form-control" id="cause-cost" name="cause-cost" placeholder="10000000"  type="number">
                     <small class="form-text" id="costHelp">
                         Total estimated cost of the Cause (in Naira)
                     </small>
@@ -119,7 +119,7 @@
                 <label class="form-label" for="cause-detail-description">
                     Detail Description
                 </label>
-                <textarea aria-describedby="detailDescriptionHelp" class="form-control" cols="20" id="cause-detail-description" name="cause-detail-description" required rows="7.5" wrap="hard"></textarea>
+                <textarea aria-describedby="detailDescriptionHelp" class="form-control" cols="20" id="cause-detail-description" name="cause-detail-description"  rows="7.5" wrap="hard"></textarea>
                 <small class="form-text" id="detailDescriptionHelp">
                     Give a detail description of the Cause
                 </small>
@@ -138,7 +138,7 @@
                 Roof repair - 1,600,000
                 School Bags (for 200 pupils) - 1,000,000
                 Uniforms (for 200 pupils) - 1,200,000
-                " required rows="7.5" wrap="hard"></textarea>
+                "  rows="7.5" wrap="hard"></textarea>
                 <small class="form-text" id="costBreakdownHelp">
                     Breakdown of Cost
                 </small>
@@ -149,23 +149,12 @@
 
                 <!-- Expiry -->
                 <div class="col">
-                    <label class="form-label" for="cause-expiry">
+                    <label class="form-label" for="cause-expiration">
                         Expiry Date
                     </label>
-                    <input aria-describedby="expiryHelp" class="form-control" id="cause-expiry" name="cause-expiry" type="number">
-                    <small class="form-text" id="expiryHelp">
+                    <input aria-describedby="expirationHelp" class="form-control" id="cause-expiration" name="cause-expiration" type="number">
+                    <small class="form-text" id="expirationHelp">
                         In case of emergency, how long before the Cause MUST be undertaken
-                    </small>
-                </div>
-
-            <!-- Cause files -->
-                <div class="col">
-                    <label for="cause-profile-pic" class="form-label">
-                        Cause Profile Picture
-                    </label>
-                    <input aria-describedby="profilePicHelp" class="form-control" id="cause-profile-pic" multiple name="cause-profile-pic" type="file">
-                    <small id="profilePicHelp" class="form-text">
-                        Upload profile picture for the Cause
                     </small>
                 </div>
             </div>

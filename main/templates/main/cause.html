@@ -1,0 +1,106 @@
+{% extends "main/layout.html" %}
+
+{% block title %}
+    MAG | Cause - {{ cause.name }}
+{% endblock %}
+
+{% block body %}
+    <main id="cause-page">
+        <h1>
+            {{ cause.name }}
+        </h1>
+        <div>
+            {{ cause.brief_description }}
+        </div>
+        <div>
+            {% if cause.address %}
+                {{cause.address}}, 
+            {% endif %}
+            {{ cause.city }}, {{ cause.state }}, {{ cause.country }}, 
+        </div>
+        <div>
+            {{ cause.duration }}
+        </div>
+        <div>
+            {{ cause.cost }}
+        </div>
+        <div>
+            {{ cause.detail_description }}
+        </div>
+        {% if cause.expiration %}
+            <div>
+                {{cause.expiration}}
+            </div>
+        {% endif %}
+        <div>
+            {{ cause.status }}
+        </div>
+        <div>
+            {{ cause.cost_breakdown }}
+        </div>
+        <div>
+            Submitted by: {{ cause.creator }}, on {{ cause.date_added}}
+        </div>
+        {% if backers %}
+            Backed by: <span>
+                <ul>
+                    {% for backer in backers %}
+                    <li>{{ backer.username }} - ({{ backer.rank }})</li>
+                    {% endfor %}
+                </ul>
+            </span> 
+        {% endif %}
+        {% if cause.investigated == True %}
+            <div>
+                Investigated by {{cause.investigator}}
+            </div>
+            <div>
+                Investigator's note: {{ cause.investigation_note }}
+            </div>
+        {% endif %}
+        {% if cause.approved == True %}
+            <div>
+                Approved by {{cause.approver}}, on {{cause.approved_date}}
+            </div>
+        {% endif %}
+        {% if cause.approved == True %}
+            <div>
+                Approved by {{cause.approver}}, on {{cause.approved_date}}
+            </div>
+        {% endif %}
+        {% if cause.completed == True %}
+            <div>
+                The Cause has been successfully completed. Congrats to all MAG members for a job well done.
+            </div>
+            <div>
+                Supervised by: {{ cause.supervisor }}
+            </div>
+            <div>
+                Coordinated by: {{ cause.coordinator }}
+            </div>
+            <div>
+                {% if volunteers %}
+                    Volunteers: <span>
+                        <ul>
+                            {% for volunteer in volunteers %}
+                            <li>{{ volunteer.username }} - ({{ volunteer.rank }})</li>
+                            {% endfor %}
+                        </ul>
+                    </span> 
+                {% endif %}
+            </div>
+        {% endif %}
+        {% if cause.closed == True %}
+            <div>
+                This Cause has been by {{cause.closer}}, on {{cause.closed_date}}
+            </div>
+            <div>
+                {{ cause.closed_note }}
+            </div>
+        {% endif %}
+            <div>
+                Votes {{ cause.voters|length }}
+            </div>
+
+    </main>
+{% endblock %}

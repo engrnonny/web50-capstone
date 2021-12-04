@@ -52,3 +52,10 @@ FULLSTACK:
 
     RANKING SYSTEM: 
         A system that promotes user on a yearly basis, based on the date they joined MAG.
+
+    
+SECURITY:
+
+    BACKEND:
+
+        Check forms' fields that the appropriate data, length of data, type of data, etc is passed.

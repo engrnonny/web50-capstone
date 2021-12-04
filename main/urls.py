@@ -12,6 +12,7 @@ urlpatterns =[
     path("users/p/<slug>", views.user_profile, name="user-profile"),
     path("payment", views.payment, name="payment"),
     path("causes", views.causes, name="causes"),
+    path("cause/<slug>", views.cause, name="cause"),
     path("causes/new/", views.new_cause, name="new-cause"),
     path("contact", views.contact, name="contact"),
     path("test", views.test, name="test"),
