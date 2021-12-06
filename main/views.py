@@ -257,12 +257,16 @@ def cause(request, slug):
     try:
         cause = Cause.objects.get(slug=slug)
         backers = User.objects.filter(backers__id=cause.id)
+        cause_files = Cause_file.objects.filter(cause=cause)
         volunteers = User.objects.filter(volunteers__id=cause.id)
         context = {
             'backers': backers,
             'cause': cause,
+            'cause_files': cause_files,
             'volunteers': volunteers
         }
+
+        print(len(cause_files))
         return render(request, "main/cause.html", context)
     
     except ObjectDoesNotExist:
@@ -372,21 +376,62 @@ def contact(request):
 # Test Page
 # Test Page
 def test(request):
+    file_purposes = [
+        "Investigation Files", 
+        "Ongoing Report", 
+        "Profile Picture", 
+        "Proof of Completion", 
+        "Proof of Payment", 
+        "Proof of Existence"
+        ]
+
+    file_types = [
+        "Image",
+        "Document",
+        "Video"
+    ]
+
     if request.method == "POST":
-        if "test" in request.FILES:
-            test = Test(pic=request.FILES['test'])
-            test.save()
-            messages.info(request, "Yes")
+        if "file-upload" not in request.FILES:
+            messages.info(request, "Please upload a file for the Cause")
+            return redirect("test")
+
+        if not request.POST["file-purpose"]:
+            messages.info(request, "Please choose the purpose of the file being uploaded for the Cause")
+            return redirect("test")
+
+        elif request.POST["file-purpose"] not in file_purposes:
+            messages.info(request, "Please choose the purpose of the file being uploaded for the Cause")
+            return redirect("test")
+
+        if not request.POST["file-type"]:
+            messages.info(request, "Please choose the type of the file being uploaded for the Cause")
+            return redirect("test")
+
+        elif request.POST["file-type"] not in file_types:
+            messages.info(request, "Please choose the type of the file being uploaded for the Cause")
+            return redirect("test")
+
+        if not request.POST["file-description"]:
+            messages.info(request, "Please describe the file being uploaded for the cause")
             return redirect("test")
 
         else:
-            messages.info(request, "No")
+            cause = Cause.objects.get(id=2)
+            file_type = request.POST["file-type"]
+            file_purpose = request.POST["file-purpose"]
+            file_description = request.POST["file-description"]
+            file_upload = request.FILES["file-upload"]
+            test = Cause_file(cause=cause, file_type=file_type, file_purpose=file_purpose, file_description=file_description, file_upload=file_upload)
+            test.save()
+            messages.info(request, "File successfully uploaded")
             return redirect("test")
+
         
     else:
-        test = Test.objects.all()[1]
         context = {
-            'test': test
+            'file_purposes': file_purposes,
+            'file_types': file_types
         }
         return render(request, "main/test.html", context)
 

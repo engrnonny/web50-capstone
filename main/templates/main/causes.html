@@ -17,11 +17,15 @@
                 </a>
             </div>
         </div>
+        <br>
         <div>
         {% for cause in causes %}
             <div>
-                {{ cause.name }}
+                <a class="btn btn-primary" href="{% url 'cause' cause.slug %}">
+                    {{ cause.name }}
+                </a>
             </div>
+            <br>
         {% endfor %}
         </div>
 

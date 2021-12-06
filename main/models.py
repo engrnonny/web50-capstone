@@ -18,21 +18,6 @@ CATEGORY_SLUGS = (
     ('health', 'health')
 )
 
-CAUSE_FILES_USAGE = (
-    ('Investigation Files', 'Investigation Files'),
-    ('Ongoing Report', 'Ongoing Report'),
-    ('Profile Picture', 'Profile Picture'),
-    ('Proof of Completion', 'Proof of Completion'),
-    ('Proof of Payment', 'Proof of Payment'),
-    ('Proof of Existence', 'Proof of Existence')
-)
-
-FILE_TYPES = (
-    ('Images', 'Images'),
-    ('Documents', 'Documents'),
-    ('Videos', 'Videos')
-)
-
 STATUS = (
     ('Approved', 'Approved'),
     ('Awaiting approval', 'Awaiting approval'),
@@ -116,11 +101,11 @@ def cause_directory_path(instance, filename):
 
 class Cause_file(models.Model):
     cause = models.ForeignKey(Cause, on_delete=models.CASCADE)
-    file_type = models.CharField(choices=FILE_TYPES, max_length=32, null=True, blank=True)
-    usage = models.CharField(choices=CAUSE_FILES_USAGE, max_length=32, null=True, blank=True)
-    description = models.CharField(max_length=255)
+    file_type = models.CharField(max_length=32, null=True, blank=True)
+    file_purpose = models.CharField(max_length=32, null=True, blank=True)
+    file_description = models.CharField(max_length=255)
     date_added = models.DateTimeField(auto_now_add=True)
-    upload = models.FileField(upload_to=cause_directory_path)
+    file_upload = models.FileField(upload_to=cause_directory_path)
 
 
 class Test(models.Model):

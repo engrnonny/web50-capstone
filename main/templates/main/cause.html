@@ -9,6 +9,17 @@
         <h1>
             {{ cause.name }}
         </h1>
+        
+        {% if cause_files %}
+            {% for cause_file in cause_files %}
+                {% if cause_file.file_type == "Image" and cause_file.file_purpose == "Profile Picture" %}
+                <div>
+                    <img src="{{ cause_file.file_upload.url }}" alt="{{ cause.name }}" height="100rem" width="100rem">
+                </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
         <div>
             {{ cause.brief_description }}
         </div>
@@ -101,6 +112,17 @@
             <div>
                 Votes {{ cause.voters|length }}
             </div>
+    
+        {% if cause_files %}
+            <div>
+            {% for cause_file in cause_files %}
+            <div>yes</div>
+                {% if cause_file.file_type == "Image" %}
+                <img src="{{ cause_file.file_upload.url }}" alt="{{ cause.name }}" height="100rem" width="100rem">
+                {% endif %}
+            {% endfor %}
+            </div>
+        {% endif %}
 
     </main>
 {% endblock %}
