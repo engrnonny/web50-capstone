@@ -7,17 +7,6 @@ from django.dispatch import receiver
 from django.shortcuts import reverse
 
 
-# The first entry is what goes into the database, the second is what is displayed.
-CATEGORY = (
-    ('Infrastructure', 'Infrastructure'),
-    ('Health', 'Health')
-)
-
-CATEGORY_SLUGS = (
-    ('infrastructure', 'infrastructure'),
-    ('health', 'health')
-)
-
 STATUS = (
     ('Approved', 'Approved'),
     ('Awaiting approval', 'Awaiting approval'),
@@ -26,16 +15,6 @@ STATUS = (
     ('Rejected', 'Rejected'),
     ('Suspended', 'Suspended')
 )
-
-# Create your models here.
-
-class Cause_categorie(models.Model):
-    name = models.CharField(choices=CATEGORY, max_length=64, null=True, blank=True)
-    slug = models.SlugField(choices=CATEGORY_SLUGS)
-    image = models.ImageField(null=True, blank=True)
-
-    def __str__(self):
-        return f"{self.name}" 
 
 class User(AbstractUser):
     phone = models.IntegerField(blank=True, null=True)
@@ -63,6 +42,7 @@ class User(AbstractUser):
 
 class Cause(models.Model):
     name = models.CharField(max_length=128)
+    category = models.CharField(max_length=32)
     brief_description = models.CharField(max_length=225)
     country = models.CharField(max_length=32)
     state = models.CharField(max_length=32)
@@ -107,6 +87,18 @@ class Cause_file(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
     file_upload = models.FileField(upload_to=cause_directory_path)
 
+
+class Comment(models.Model):
+    cause = models.ForeignKey(Cause, on_delete=models.CASCADE)
+    date_added = models.DateTimeField(auto_now_add=True)
+    member = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name = 'member')
+    comment = models.CharField(max_length=256)
+
+
+class Message(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    date_added = models.DateTimeField(auto_now_add=True)
+    
 
 class Test(models.Model):
     pic = models.ImageField(blank=True, upload_to="gallery")

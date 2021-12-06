@@ -278,6 +278,26 @@ def cause(request, slug):
 # New Cause Page
 # New Cause Page
 def new_cause(request):
+    cause_categories = [
+        'Health',
+        'Infrastructure'
+    ]
+
+    file_purposes = [
+        "Investigation Files", 
+        "Ongoing Report", 
+        "Profile Picture", 
+        "Proof of Completion", 
+        "Proof of Payment", 
+        "Proof of Existence"
+        ]
+
+    file_types = [
+        "Image",
+        "Document",
+        "Video"
+    ]
+
     if request.user.is_authenticated:
         if request.user.monthly_payment == False:
             messages.info(request, "You have not made your monthly donation. Please do so to create a Cause")
@@ -303,6 +323,25 @@ def new_cause(request):
                     messages.info(request, "Please enter a brief description of the Cause")
                     return redirect("new-cause")
 
+                if not request.POST["cause-category"]:
+                    messages.info(request, "Please choose a category for the Cause")
+                    return redirect("new-cause")
+
+                elif request.POST["cause-category"] not in cause_categories:
+                    messages.info(request, "Please choose a category for the Cause")
+                    return redirect("new-cause")
+
+                if not request.POST["cause-cost"]:
+                    messages.info(request, "Please enter the total cost of the Cause (in Naira)")
+                    return redirect("new-cause")
+
+                else:
+                    try:
+                        cost = int(request.POST["cause-cost"])
+                    except: 
+                        messages.info(request, "Please enter the total cost of the Cause in numbers only (in Naira)")
+                        return redirect("new-cause")
+
                 if not request.POST["cause-country"]:
                     messages.info(request, "Please enter the country the Cause is located in.")
                     return redirect("new-cause")
@@ -314,14 +353,25 @@ def new_cause(request):
                 if not request.POST["cause-city"]:
                     messages.info(request, "Please enter the city the Cause is located in.")
                     return redirect("new-cause")
+                
+                if request.POST["cause-expiration"]:
+                    try:
+                        cost = int(request.POST["cause-expiration"])
+                    except: 
+                        messages.info(request, "Please enter the expiration time of the the Cause in numbers only (in days)")
+                        return redirect("new-cause")
+
 
                 if not request.POST["cause-duration"]:
                     messages.info(request, "Please enter the duration the Cause would take to be completed (in days).")
                     return redirect("new-cause")
 
-                if not request.POST["cause-cost"]:
-                    messages.info(request, "Please enter the total cost of the Cause (in Naira)")
-                    return redirect("new-cause")
+                else:
+                    try:
+                        cost = int(request.POST["cause-duration"])
+                    except: 
+                        messages.info(request, "Please enter the duration the Cause would take to be completed in numbers only (in days)")
+                        return redirect("new-cause")
                     
                 if not request.POST["cause-detail-description"]:
                     messages.info(request, "Please give detail description of the Cause")
@@ -329,6 +379,30 @@ def new_cause(request):
 
                 if not request.POST["cause-cost-breakdown"]:
                     messages.info(request, "Please give detail breakdown of the cost of the Cause")
+                    return redirect("new-cause")
+
+                if "file-upload" not in request.FILES:
+                    messages.info(request, "Please upload a file for the Cause")
+                    return redirect("new-cause")
+
+                if not request.POST["file-purpose"]:
+                    messages.info(request, "Please choose the purpose of the file being uploaded for the Cause")
+                    return redirect("new-cause")
+
+                elif request.POST["file-purpose"] not in file_purposes:
+                    messages.info(request, "Please choose the purpose of the file being uploaded for the Cause")
+                    return redirect("new-cause")
+
+                if not request.POST["file-type"]:
+                    messages.info(request, "Please choose the type of the file being uploaded for the Cause")
+                    return redirect("new-cause")
+
+                elif request.POST["file-type"] not in file_types:
+                    messages.info(request, "Please choose the type of the file being uploaded for the Cause")
+                    return redirect("new-cause")
+
+                if not request.POST["file-description"]:
+                    messages.info(request, "Please describe the file being uploaded for the cause")
                     return redirect("new-cause")
                                         
                 else:
@@ -339,15 +413,23 @@ def new_cause(request):
                     city = request.POST["cause-city"]
                     address = request.POST["cause-address"]
                     duration = request.POST["cause-duration"]
-                    cost = request.POST["cause-cost"]
                     detail_description = request.POST["cause-detail-description"]
                     cost_breakdown = request.POST["cause-cost-breakdown"]
                     expiration = request.POST["cause-expiration"]
                     cause_slug = slugify(name)
+                    file_type = request.POST["file-type"]
+                    file_purpose = request.POST["file-purpose"]
+                    file_description = request.POST["file-description"]
+                    file_upload = request.FILES["file-upload"]
 
                     try:
                         cause = Cause(name=name.title(), brief_description=brief_description, country=country.title(), state=state.title(), city=city.title(), address=address, duration=duration, cost=cost, detail_description=detail_description, cost_breakdown=cost_breakdown, expiration=expiration, status="Awaiting approval", creator=request.user, slug=cause_slug)
                         cause.save()
+
+                        cause_file = Cause_file(cause=cause, file_type=file_type, file_purpose=file_purpose, file_description=file_description, file_upload=file_upload)
+                        cause_file.save()
+                        
+                        messages.info(request, "Cause successfully created")
 
                         return redirect("cause", slug=cause.slug )
                     
@@ -357,7 +439,12 @@ def new_cause(request):
 
                     
             else:
-                return render(request, "main/new-cause.html")
+                context = {
+                    'cause_categories': cause_categories,
+                    'file_purposes': file_purposes,
+                    'file_types': file_types
+                }
+                return render(request, "main/new-cause.html", context)
         
     else:
         messages.info(request, "You must be logged in to create a Cause.")
@@ -376,62 +463,6 @@ def contact(request):
 # Test Page
 # Test Page
 def test(request):
-    file_purposes = [
-        "Investigation Files", 
-        "Ongoing Report", 
-        "Profile Picture", 
-        "Proof of Completion", 
-        "Proof of Payment", 
-        "Proof of Existence"
-        ]
-
-    file_types = [
-        "Image",
-        "Document",
-        "Video"
-    ]
-
-    if request.method == "POST":
-        if "file-upload" not in request.FILES:
-            messages.info(request, "Please upload a file for the Cause")
-            return redirect("test")
-
-        if not request.POST["file-purpose"]:
-            messages.info(request, "Please choose the purpose of the file being uploaded for the Cause")
-            return redirect("test")
-
-        elif request.POST["file-purpose"] not in file_purposes:
-            messages.info(request, "Please choose the purpose of the file being uploaded for the Cause")
-            return redirect("test")
-
-        if not request.POST["file-type"]:
-            messages.info(request, "Please choose the type of the file being uploaded for the Cause")
-            return redirect("test")
-
-        elif request.POST["file-type"] not in file_types:
-            messages.info(request, "Please choose the type of the file being uploaded for the Cause")
-            return redirect("test")
-
-        if not request.POST["file-description"]:
-            messages.info(request, "Please describe the file being uploaded for the cause")
-            return redirect("test")
-
-        else:
-            cause = Cause.objects.get(id=2)
-            file_type = request.POST["file-type"]
-            file_purpose = request.POST["file-purpose"]
-            file_description = request.POST["file-description"]
-            file_upload = request.FILES["file-upload"]
-            test = Cause_file(cause=cause, file_type=file_type, file_purpose=file_purpose, file_description=file_description, file_upload=file_upload)
-            test.save()
-            messages.info(request, "File successfully uploaded")
-            return redirect("test")
-
-        
-    else:
-        context = {
-            'file_purposes': file_purposes,
-            'file_types': file_types
-        }
-        return render(request, "main/test.html", context)
+    
+    return render(request, "main/test.html")
 

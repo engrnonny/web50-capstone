@@ -10,7 +10,7 @@
         <h1>
             New Cause
         </h1>
-        <form action="{% url 'new-cause' %}" en method="post">
+        <form action="{% url 'new-cause' %}" enctype="multipart/form-data" method="post">
             {% csrf_token %}
             <h2>
                 Start a New Cause
@@ -36,6 +36,36 @@
                 <small id="briefDescriptionHelp" class="form-text">
                     Briefly describe the cause (50 words or fewer)
                 </small>
+            </div>
+
+            <div class="mb-3 row">
+
+                <!-- Category -->
+                <div class="col">
+                    <label class="form-label" for="cause-category">
+                        Category
+                    </label>
+                    <select aria-describedby="categoryHelp"  class="form-log form-control" id="cause-category" name="cause-category" list="type">
+                        <option>--select--</option>
+                        {% for category in cause_categories %}
+                            <option value="{{ category }}">{{ category }}</option>
+                        {% endfor %}
+                    </select>
+                    <small id="categoryHelp" class="form-text">
+                        What category does the Cause fall under?
+                    </small>
+                </div>
+
+                <!-- Cost -->
+                <div class="col">
+                    <label class="form-label" for="cause-cost">
+                        Cost
+                    </label>
+                    <input aria-describedby="costHelp" class="form-control" id="cause-cost" name="cause-cost" placeholder="10000000"  type="number">
+                    <small class="form-text" id="costHelp">
+                        Total estimated cost of the Cause (in Naira)
+                    </small>
+                </div>
             </div>
 
             <div class="row">
@@ -89,31 +119,6 @@
                 </small>
             </div>
 
-            <div class="mb-3 row">
-
-                <!-- Duration -->
-                <div class="col">
-                    <label class="form-label" for="cause-duration">
-                        Duration
-                    </label>
-                    <input type="number" class="form-control" id="cause-duration" aria-describedby="durationHelp" name="cause-duration" placeholder="1000" >
-                    <small id="durationHelp" class="form-text">
-                        How long would it take to complete the Cause (in days)
-                    </small>
-                </div>
-
-                <!-- Cost -->
-                <div class="col">
-                    <label class="form-label" for="cause-cost">
-                        Cost
-                    </label>
-                    <input aria-describedby="costHelp" class="form-control" id="cause-cost" name="cause-cost" placeholder="10000000"  type="number">
-                    <small class="form-text" id="costHelp">
-                        Total estimated cost of the Cause (in Naira)
-                    </small>
-                </div>
-            </div>
-
             <!-- Detail Description -->
             <div class="mb-3">
                 <label class="form-label" for="cause-detail-description">
@@ -157,20 +162,76 @@
                         In case of emergency, how long before the Cause MUST be undertaken
                     </small>
                 </div>
+
+                <!-- Duration -->
+                <div class="col">
+                    <label class="form-label" for="cause-duration">
+                        Duration
+                    </label>
+                    <input type="number" class="form-control" id="cause-duration" aria-describedby="durationHelp" name="cause-duration" placeholder="1000" >
+                    <small id="durationHelp" class="form-text">
+                        How long would it take to complete the Cause (in days)
+                    </small>
+                </div>
             </div>
 
-<!--             
+            <!-- File Upload -->
             <div>
-                <label for="cause-profile-pic" class="form-label">
-                    Cause files
+                <label for="file-upload" class="form-label">
+                    Cause file
                 </label>
-                <input aria-describedby="profilePicHelp" class="form-control" id="cause-profile-pic" multiple name="cause-profile-pic" type="file">
-                <small id="profilePicHelp" class="form-text">
-                    Upload files (documents, pictures, videos, etc.) as supporting evidences of Cause
+                <input alt="Cause files" aria-describedby="fileUploadHelp" class="form-control" id="file-upload" name="file-upload" type="file">
+                <small id="fileUploadHelp" class="form-text">
+                    Upload file (document, picture, video, etc.) as supporting evidence of the Cause
                 </small>
-            </div> -->
+            </div>
 
-            
+            <div class="row">
+
+                <!-- File Purpose -->
+                <div class="col">
+                    <label class="form-check-label" for="file-purpose">
+                        Purpose
+                    </label>
+                    <select aria-describedby="filePurposeHelp"  class="form-log form-control" id="file-purpose" name="file-purpose" list="purpose">
+                        <option>--select--</option>
+                        {% for file_purpose in file_purposes %}
+                            <option value="{{ file_purpose }}">{{ file_purpose }}</option>
+                        {% endfor %}
+                    </select>
+                    <small id="filePurposeHelp" class="form-text">
+                        What would the file be used for?
+                    </small>
+                </div>
+
+                <!-- File Type -->
+                <div class="col">
+                    <label class="form-check-label" for="file-type">
+                        File Type
+                    </label>
+                    <select aria-describedby="fileTypeHelp"  class="form-log form-control" id="file-type" name="file-type" list="type">
+                        <option>--select--</option>
+                        {% for file_type in file_types %}
+                            <option value="{{ file_type }}">{{ file_type }}</option>
+                        {% endfor %}
+                    </select>
+                    <small id="fileTypeHelp" class="form-text">
+                        What is the type of the file?
+                    </small>
+                </div>
+            </div>
+
+            <!-- File Description -->
+            <div>
+                <label for="file-description" class="form-label">
+                    Description of File
+                </label>
+                <input aria-describedby="fileDescriptionHelp" class="form-control" id="file-description" name="file-description" placeholder="Ex: Profile Picture of the Cause" type="text">
+                <small id="fileDescriptionHelp" class="form-text">
+                    Give brief description of the content of the file.
+                </small>
+            </div>
+
             <br>
             <button type="submit" class="btn btn-primary">
                 Create
