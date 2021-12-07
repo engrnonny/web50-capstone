@@ -8,8 +8,8 @@ from django.contrib.messages.api import error
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import Error, IntegrityError
 from django.db.models import Q
-from django.http import HttpResponseRedirect
-from django.shortcuts import redirect, render
+from django.http import HttpResponseRedirect, JsonResponse
+from django.shortcuts import HttpResponse, redirect, render
 from django.urls import reverse
 from django.utils.text import slugify
 from .models import *
@@ -259,14 +259,14 @@ def cause(request, slug):
         backers = User.objects.filter(backers__id=cause.id)
         cause_files = Cause_file.objects.filter(cause=cause)
         volunteers = User.objects.filter(volunteers__id=cause.id)
+        voters = User.objects.filter(voters__id=cause.id)
         context = {
             'backers': backers,
             'cause': cause,
             'cause_files': cause_files,
-            'volunteers': volunteers
+            'volunteers': volunteers,
+            'voters': voters
         }
-
-        print(len(cause_files))
         return render(request, "main/cause.html", context)
     
     except ObjectDoesNotExist:
@@ -408,6 +408,7 @@ def new_cause(request):
                 else:
                     name = request.POST["cause-name"]
                     brief_description = request.POST["cause-brief-description"]
+                    category = request.POST["cause-category"]
                     country = request.POST["cause-country"]
                     state = request.POST["cause-state"]
                     city = request.POST["cause-city"]
@@ -423,7 +424,7 @@ def new_cause(request):
                     file_upload = request.FILES["file-upload"]
 
                     try:
-                        cause = Cause(name=name.title(), brief_description=brief_description, country=country.title(), state=state.title(), city=city.title(), address=address, duration=duration, cost=cost, detail_description=detail_description, cost_breakdown=cost_breakdown, expiration=expiration, status="Awaiting approval", creator=request.user, slug=cause_slug)
+                        cause = Cause(name=name.title(), category=category, brief_description=brief_description, country=country.title(), state=state.title(), city=city.title(), address=address, duration=duration, cost=cost, detail_description=detail_description, cost_breakdown=cost_breakdown, expiration=expiration, status="Awaiting Approval", creator=request.user, slug=cause_slug)
                         cause.save()
 
                         cause_file = Cause_file(cause=cause, file_type=file_type, file_purpose=file_purpose, file_description=file_description, file_upload=file_upload)
@@ -449,6 +450,32 @@ def new_cause(request):
     else:
         messages.info(request, "You must be logged in to create a Cause.")
         return redirect("login")
+
+
+# Vote of Unvote
+# Vote of Unvote
+# Vote of Unvote
+@login_required
+def vote(request, cause_id):
+    if request.user.monthly_vote == True:
+        return JsonResponse({"error": "You have already voted this month."}, status=400)
+
+    else:
+        if request.method == "PUT":
+            try:
+                cause = Cause.objects.get(id=cause_id)
+                voted = User.objects.filter(voters__id=cause.id, id=request.user.id)
+                if voted:
+                    cause.voters.remove(request.user)
+                else:
+                    cause.voters.add(request.user)
+                    return HttpResponse(status=204)
+            
+            except IntegrityError:
+                return JsonResponse({"error": "Cause not found."}, status=400)
+
+        else:
+            pass
 
 
 # Contact Page

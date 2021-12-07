@@ -9,6 +9,7 @@
         <h1>
             {{ cause.name }}
         </h1>
+        <span hidden id="cause-id">{{ cause.id }}</span>
         
         {% if cause_files %}
             {% for cause_file in cause_files %}
@@ -16,42 +17,53 @@
                 <div>
                     <img src="{{ cause_file.file_upload.url }}" alt="{{ cause.name }}" height="100rem" width="100rem">
                 </div>
+                <br>
                 {% endif %}
             {% endfor %}
         {% endif %}
 
         <div>
-            {{ cause.brief_description }}
+            Brief Description: {{ cause.brief_description }}
         </div>
+        <br>
         <div>
+            Location:
             {% if cause.address %}
                 {{cause.address}}, 
             {% endif %}
             {{ cause.city }}, {{ cause.state }}, {{ cause.country }}, 
         </div>
+        <br>
         <div>
-            {{ cause.duration }}
+            Duration: {{ cause.duration }}
         </div>
+        <br>
         <div>
-            {{ cause.cost }}
+            Total Cost: {{ cause.cost }}
         </div>
+        <br>
         <div>
-            {{ cause.detail_description }}
+            Detail Description: {{ cause.detail_description }}
         </div>
+        <br>
         {% if cause.expiration %}
             <div>
-                {{cause.expiration}}
+                Expires in: {{cause.expiration}} days
             </div>
+            <br>
         {% endif %}
         <div>
-            {{ cause.status }}
+            Current Status: {{ cause.status }}
         </div>
+        <br>
         <div>
-            {{ cause.cost_breakdown }}
+            Cost Breakdown: {{ cause.cost_breakdown }}
         </div>
+        <br>
         <div>
             Submitted by: {{ cause.creator }}, on {{ cause.date_added}}
         </div>
+        <br>
         {% if backers %}
             Backed by: <span>
                 <ul>
@@ -60,37 +72,39 @@
                     {% endfor %}
                 </ul>
             </span> 
+        <br>
         {% endif %}
         {% if cause.investigated == True %}
             <div>
                 Investigated by {{cause.investigator}}
             </div>
+            <br>
             <div>
                 Investigator's note: {{ cause.investigation_note }}
             </div>
+            <br>
         {% endif %}
         {% if cause.approved == True %}
             <div>
                 Approved by {{cause.approver}}, on {{cause.approved_date}}
             </div>
-        {% endif %}
-        {% if cause.approved == True %}
-            <div>
-                Approved by {{cause.approver}}, on {{cause.approved_date}}
-            </div>
+            <br>
         {% endif %}
         {% if cause.completed == True %}
             <div>
                 The Cause has been successfully completed. Congrats to all MAG members for a job well done.
             </div>
+            <br>
             <div>
                 Supervised by: {{ cause.supervisor }}
             </div>
+            <br>
             <div>
                 Coordinated by: {{ cause.coordinator }}
             </div>
-            <div>
-                {% if volunteers %}
+            <br>
+            {% if volunteers %}
+                <div>
                     Volunteers: <span>
                         <ul>
                             {% for volunteer in volunteers %}
@@ -98,25 +112,40 @@
                             {% endfor %}
                         </ul>
                     </span> 
-                {% endif %}
-            </div>
+                </div>
+                <br>
+            {% endif %}
         {% endif %}
         {% if cause.closed == True %}
             <div>
-                This Cause has been by {{cause.closer}}, on {{cause.closed_date}}
+                This Cause has been closed by {{cause.closer}}, on {{cause.closed_date}}
             </div>
+            <br>
             <div>
                 {{ cause.closed_note }}
             </div>
+            <br>
         {% endif %}
+        {% if cause.status != "Awaiting Approval" %}
             <div>
-                Votes {{ cause.voters|length }}
+                Votes {{ cause.voters|length }} <span>
+                    {% if user.is_authenticated %}
+                        <button id="vote">
+                        {% if user in voters %}
+                            Unvote
+                        {% else %}
+                            Vote
+                        {% endif %}
+                        </button>
+                    {% endif %}
+                </span>
             </div>
+            <br>
+        {% endif %}
     
         {% if cause_files %}
             <div>
             {% for cause_file in cause_files %}
-            <div>yes</div>
                 {% if cause_file.file_type == "Image" %}
                 <img src="{{ cause_file.file_upload.url }}" alt="{{ cause.name }}" height="100rem" width="100rem">
                 {% endif %}

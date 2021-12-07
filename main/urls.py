@@ -14,6 +14,7 @@ urlpatterns =[
     path("causes", views.causes, name="causes"),
     path("causes/<slug>", views.cause, name="cause"),
     path("causes/new/", views.new_cause, name="new-cause"),
+    path("causes/v/<int:cause_id>", views.vote, name="vote"),
     path("contact", views.contact, name="contact"),
     path("test", views.test, name="test"),
 ]
