@@ -30,18 +30,39 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function vote() {
     let cause_id = document.querySelector('#cause-id').innerHTML.trim();
-    fetch(`causes/v/${cause_id}`, {
-        method: 'PUT',
+    console.log(cause_id)
+    fetch(`/causes/v/${cause_id}`, {
+        method: 'POST',
         body: JSON.stringify({
             cause_id: cause_id
         })
     })
+    .then(response => response.json())
+        .then(result => {
+            if ("success" in result) {          
+                if (document.querySelector('#vote').innerHTML.trim() == "Vote") {
+                    document.querySelector('#vote').innerHTML = "Unvote"
+                    ++document.querySelector('#vote-count').innerHTML
+                }
+
+                else if (document.querySelector('#vote').innerHTML.trim() == "Unvote") {
+                    document.querySelector('#vote').innerHTML = "Vote"
+                    if (document.querySelector('#vote-count').innerHTML.trim() != 0) {
+                        --document.querySelector('#vote-count').innerHTML
+                    }
+                }
+            }
+
+            else if ("error" in result) {
+                document.querySelector('#js-error').innerHTML = result['error']
+
+            }
+        })
+            .catch(error => {
+                console.log(error);
+            });
+
+    return false;
     
-    if (document.querySelector('#vote').innerHTML == "Vote") {
-        document.querySelector('#vote').innerHTML = "Unvote"
-    }
-    else if (document.querySelector('#vote').innerHTML == "Unvote") {
-        document.querySelector('#vote').innerHTML = "Vote"
-    }
 }
 

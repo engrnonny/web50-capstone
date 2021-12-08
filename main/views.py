@@ -12,6 +12,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import HttpResponse, redirect, render
 from django.urls import reverse
 from django.utils.text import slugify
+from django.views.decorators.csrf import csrf_exempt
 from .models import *
 
 
@@ -455,27 +456,35 @@ def new_cause(request):
 # Vote of Unvote
 # Vote of Unvote
 # Vote of Unvote
+@csrf_exempt
 @login_required
 def vote(request, cause_id):
     if request.user.monthly_vote == True:
+        print(1)
         return JsonResponse({"error": "You have already voted this month."}, status=400)
 
     else:
-        if request.method == "PUT":
+        if request.method == "POST":
+            print(2)
             try:
                 cause = Cause.objects.get(id=cause_id)
+                print(3)
                 voted = User.objects.filter(voters__id=cause.id, id=request.user.id)
+                print(4)
                 if voted:
+                    print(5)
                     cause.voters.remove(request.user)
                 else:
+                    print(6)
                     cause.voters.add(request.user)
-                    return HttpResponse(status=204)
+                return JsonResponse({"success": "Voted or Unvoted successfully"}, status=201)
             
             except IntegrityError:
+                print(7)
                 return JsonResponse({"error": "Cause not found."}, status=400)
 
         else:
-            pass
+            return JsonResponse({"error": "PUT method required."}, status=400)
 
 
 # Contact Page

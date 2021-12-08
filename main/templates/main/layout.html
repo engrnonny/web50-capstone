@@ -76,8 +76,9 @@ Warning message for Users who haven't casted monthly vote
         You have not casted your vote for this month. Please cast your vote to clear this message.
     </div>
 {% endif %}
+
 <!--
-Popup messages
+Popup messages - Django
 -->
 {% if messages %}
     {% for message in messages %}
@@ -89,6 +90,10 @@ Popup messages
     {% endfor %}
 {% endif %}
 
+<!--
+Popup messages - JavaScript
+-->
+<div hidden id="js-error"></div>
 
     {% block body %}
     {% endblock %}

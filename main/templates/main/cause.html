@@ -128,7 +128,8 @@
         {% endif %}
         {% if cause.status != "Awaiting Approval" %}
             <div>
-                Votes {{ cause.voters|length }} <span>
+                Votes <span id="vote-count">{{ cause.voters|length }}</span> 
+                <span>
                     {% if user.is_authenticated %}
                         <button id="vote">
                         {% if user in voters %}
