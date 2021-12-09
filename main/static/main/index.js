@@ -53,10 +53,10 @@ function vote() {
                 }
             }
 
-            else if ("error" in result) {
-                document.querySelector('#js-error').innerHTML = result['error']
-
-            }
+            // else if ("error" in result) {
+            //     document.querySelector('#js-error').style.display = 'block';
+            //     document.querySelector('#js-error').innerHTML = result['error']
+            // }
         })
             .catch(error => {
                 console.log(error);

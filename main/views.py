@@ -459,36 +459,32 @@ def new_cause(request):
 @csrf_exempt
 @login_required
 def vote(request, cause_id):
-    if request.user.monthly_vote == True:
-        return JsonResponse({"error": "You have already voted this month."}, status=400)
-
-    else:
-        if request.method == "PUT":
-            try:
-                cause = Cause.objects.get(id=cause_id)
-                voted = User.objects.filter(voters__id=cause.id, id=request.user.id)
-                if request.user.monthly_vote == True:
-                    if voted:
-                        cause.voters.remove(request.user)
-                        request.user.monthly_vote = False
-                        request.user.save()
-                        return JsonResponse({"success": "Unvoted successfully"}, status=201)
-                        
-                    else:
-                        return JsonResponse({"error": "You have already voted on another Cause."}, status=400)
+    if request.method == "PUT":
+        try:
+            cause = Cause.objects.get(id=cause_id)
+            voted = User.objects.filter(voters__id=cause.id, id=request.user.id)
+            if request.user.monthly_vote == True:
+                if voted:
+                    cause.voters.remove(request.user)
+                    request.user.monthly_vote = False
+                    request.user.save()
+                    return JsonResponse({"success": "Unvoted successfully"}, status=201)
 
                 else:
-                    cause.voters.add(request.user)
-                    request.user.monthly_vote = True
-                    request.user.save()
-                    return JsonResponse({"success": "Voted successfully"}, status=201)
+                    return JsonResponse({"error": "You have already voted on another Cause."}, status=400)
 
-            
-            except IntegrityError:
-                return JsonResponse({"error": "Cause not found."}, status=400)
+            else:
+                cause.voters.add(request.user)
+                request.user.monthly_vote = True
+                request.user.save()
+                return JsonResponse({"success": "Voted successfully"}, status=201)
 
-        else:
-            return JsonResponse({"error": "PUT method required."}, status=400)
+        
+        except IntegrityError:
+            return JsonResponse({"error": "Cause not found."}, status=400)
+
+    else:
+        return JsonResponse({"error": "PUT method required."}, status=400)
 
 
 # Contact Page

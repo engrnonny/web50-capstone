@@ -21,6 +21,25 @@
                 {% endif %}
             {% endfor %}
         {% endif %}
+        <span>            
+        {% if cause.status != "Awaiting Approval" %}
+            <div>
+                Votes <span id="vote-count">{{ voters|length }}</span> 
+                <span>
+                    {% if user.is_authenticated %}
+                        <button id="vote">
+                        {% if user in voters %}
+                            Unvote
+                        {% else %}
+                            Vote
+                        {% endif %}
+                        </button>
+                    {% endif %}
+                </span>
+            </div>
+            <br>
+        {% endif %}
+        </span>
 
         <div>
             Brief Description: {{ cause.brief_description }}
@@ -123,23 +142,6 @@
             <br>
             <div>
                 {{ cause.closed_note }}
-            </div>
-            <br>
-        {% endif %}
-        {% if cause.status != "Awaiting Approval" %}
-            <div>
-                Votes <span id="vote-count">{{ voters|length }}</span> 
-                <span>
-                    {% if user.is_authenticated %}
-                        <button id="vote">
-                        {% if user in voters %}
-                            Unvote
-                        {% else %}
-                            Vote
-                        {% endif %}
-                        </button>
-                    {% endif %}
-                </span>
             </div>
             <br>
         {% endif %}
