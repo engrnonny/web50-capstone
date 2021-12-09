@@ -32,7 +32,7 @@ function vote() {
     let cause_id = document.querySelector('#cause-id').innerHTML.trim();
     console.log(cause_id)
     fetch(`/causes/v/${cause_id}`, {
-        method: 'POST',
+        method: 'PUT',
         body: JSON.stringify({
             cause_id: cause_id
         })

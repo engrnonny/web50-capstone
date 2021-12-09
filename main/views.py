@@ -460,27 +460,31 @@ def new_cause(request):
 @login_required
 def vote(request, cause_id):
     if request.user.monthly_vote == True:
-        print(1)
         return JsonResponse({"error": "You have already voted this month."}, status=400)
 
     else:
-        if request.method == "POST":
-            print(2)
+        if request.method == "PUT":
             try:
                 cause = Cause.objects.get(id=cause_id)
-                print(3)
                 voted = User.objects.filter(voters__id=cause.id, id=request.user.id)
-                print(4)
-                if voted:
-                    print(5)
-                    cause.voters.remove(request.user)
+                if request.user.monthly_vote == True:
+                    if voted:
+                        cause.voters.remove(request.user)
+                        request.user.monthly_vote = False
+                        request.user.save()
+                        return JsonResponse({"success": "Unvoted successfully"}, status=201)
+                        
+                    else:
+                        return JsonResponse({"error": "You have already voted on another Cause."}, status=400)
+
                 else:
-                    print(6)
                     cause.voters.add(request.user)
-                return JsonResponse({"success": "Voted or Unvoted successfully"}, status=201)
+                    request.user.monthly_vote = True
+                    request.user.save()
+                    return JsonResponse({"success": "Voted successfully"}, status=201)
+
             
             except IntegrityError:
-                print(7)
                 return JsonResponse({"error": "Cause not found."}, status=400)
 
         else:
