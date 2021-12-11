@@ -8,13 +8,14 @@ from django.contrib.messages.api import error
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import Error, IntegrityError
 from django.db.models import Q
+from django.db.utils import load_backend
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import HttpResponse, redirect, render
 from django.urls import reverse
 from django.utils.text import slugify
 from django.views.decorators.csrf import csrf_exempt
 from .models import *
-
+import json
 
 # Homepage
 # Homepage
@@ -104,6 +105,17 @@ def register(request):
             elif User.objects.filter(phone=request.POST["reg-phone"]).exists():
                 messages.info(request, "Phone number already exists")
                 return redirect("register")
+            
+            else: 
+                try:
+                    test_phone = int(request.POST["reg-phone"])
+                    if len(request.POST["reg-phone"]) < 11 or len(request.POST["reg-phone"]) > 11:
+                        messages.info(request, "Please enter the 11 digits of your phone number")
+                        return redirect("register")
+
+                except Error: 
+                    messages.info(request, "Please enter your phone number in numbers only")
+                    return redirect("register")
 
             if not request.POST["reg-email"]:
                 messages.info(request, "Please enter your Email Address")
@@ -259,12 +271,14 @@ def cause(request, slug):
         cause = Cause.objects.get(slug=slug)
         backers = User.objects.filter(backers__id=cause.id)
         cause_files = Cause_file.objects.filter(cause=cause)
+        comments = Comment.objects.filter(cause=cause).order_by('-date_added')
         volunteers = User.objects.filter(volunteers__id=cause.id)
         voters = User.objects.filter(voters__id=cause.id)
         context = {
             'backers': backers,
             'cause': cause,
             'cause_files': cause_files,
+            'comments': comments,
             'volunteers': volunteers,
             'voters': voters
         }
@@ -486,6 +500,36 @@ def vote(request, cause_id):
     else:
         return JsonResponse({"error": "PUT method required."}, status=400)
 
+
+# Comment on a Cause
+# Comment on a Cause
+# Comment on a Cause
+@csrf_exempt
+@login_required
+def comment(request, cause_id):
+    if request.method == "POST":
+        
+        if not request.POST["comment"]:
+            return JsonResponse({"error": "Please type in a message in the text field."}, status=400)
+            
+        else:
+            try:
+                cause = Cause.objects.get(id=cause_id)
+                data = json.loads(request.body)
+                comment = data.get("comment", "")
+                new_comment = Comment(cause=cause, comment=comment, user=request.user)
+                new_comment.save()
+                return JsonResponse({
+                    "success": "Comment posted successfully",
+                    "username": request.user.username
+                    }, status=201)
+            
+            except IntegrityError:
+                return JsonResponse({"error": "Cause not found."}, status=400)
+
+    else:
+        return JsonResponse({"error": "POST method required."}, status=400)
+    
 
 # Contact Page
 # Contact Page

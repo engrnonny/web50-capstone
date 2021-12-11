@@ -57,7 +57,7 @@
             </div>
         </nav>
 
-    
+<div id="warnings">
 <!--
 Warning message for Users who haven't made monthly contributions 
 -->    
@@ -72,7 +72,7 @@ Warning message for Users who haven't made monthly contributions
 Warning message for Users who haven't casted monthly vote 
 -->  
 {% if user.is_authenticated and request.user.monthly_vote == False %}
-    <div class="card">
+    <div class="card" id="vote-warning">
         You have not casted your vote for this month. Please cast your vote to clear this message.
     </div>
 {% endif %}
@@ -90,6 +90,7 @@ Popup messages - Django
     {% endfor %}
 {% endif %}
 
+</div>
 <!--
 Popup messages - JavaScript
 -->

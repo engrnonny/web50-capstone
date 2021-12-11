@@ -17,7 +17,7 @@ STATUS = (
 )
 
 class User(AbstractUser):
-    phone = models.IntegerField(blank=True, null=True)
+    phone = models.CharField(max_length=11, blank=True, null=True)
     gender = models.CharField(max_length=8, blank=True, null=True)
     birthday = models.DateField(null=True, blank=True)
     bio = models.TextField(max_length=500, blank=True, null=True)
@@ -91,7 +91,7 @@ class Cause_file(models.Model):
 class Comment(models.Model):
     cause = models.ForeignKey(Cause, on_delete=models.CASCADE)
     date_added = models.DateTimeField(auto_now_add=True)
-    member = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name = 'member')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name = 'user', null=True)
     comment = models.CharField(max_length=256)
 
 
