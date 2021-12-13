@@ -52,6 +52,8 @@ FRONTEND:
     JAVASCRIPT:
         Collapsible optional part of registration form in Register page
 
+        Create a button to add more <input> fields to upload more files in New-Cause page.
+
 
 FULLSTACK:
 

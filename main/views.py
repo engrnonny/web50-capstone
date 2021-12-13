@@ -21,7 +21,19 @@ import json
 # Homepage
 # Homepage
 def index(request):
-    causes = Cause.objects.filter(status="Approved").order_by("-votes")[:2]
+    filtered_causes = Cause.objects.filter(status="Approved").order_by("-votes")[:2]
+    causes = []
+    for cause in filtered_causes:
+        try:
+            profile_pic = Cause_file.objects.filter(cause=cause, file_purpose="Profile Picture")
+            new_object = {
+                'cause': cause,
+                'profile_pic': profile_pic
+            }
+            causes.append(new_object)
+        except Error:
+            pass
+
     context = {
         'causes': causes
     }
@@ -113,8 +125,12 @@ def register(request):
             else: 
                 try:
                     test_phone = int(request.POST["reg-phone"])
-                    if len(request.POST["reg-phone"]) < 11 or len(request.POST["reg-phone"]) > 11:
+                    if len(test_phone) < 11 or len(test_phone) > 11:
                         messages.info(request, "Please enter the 11 digits of your phone number")
+                        return redirect("register")
+                    
+                    if test_phone < 0:
+                        messages.info(request, "Please enter positive 11 digits of your phone number")
                         return redirect("register")
 
                 except Error: 
@@ -314,7 +330,7 @@ def new_cause(request):
             'Innovation and Technology',
             'Job Creation'
         ],
-        
+
     }
 
     file_purposes = [
@@ -372,6 +388,10 @@ def new_cause(request):
                 else:
                     try:
                         cost = int(request.POST["cause-cost"])
+                        if cost <= 0:
+                            messages.info(request, "Please enter the total cost of the Cause in positive numbers greater than 0 only (in Naira)")
+                            return redirect("new-cause")
+
                     except: 
                         messages.info(request, "Please enter the total cost of the Cause in numbers only (in Naira)")
                         return redirect("new-cause")
