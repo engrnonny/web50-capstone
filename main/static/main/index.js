@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // Post Comment function
 // Post Comment function
 function post_comment() {
-    let cause_id = document.querySelector('#cause-id').innerHTML.trim();
+    const cause_id = document.querySelector('#cause-id').innerHTML;
     const comment = document.querySelector('#comment').value.trim();
     fetch(`/causes/c/${cause_id}`, {
         method: 'POST',
@@ -45,31 +45,31 @@ function post_comment() {
         .then(response => response.json())
             .then(result => {
             if ("success" in result) {
-            //     document.querySelector('#comments').innerHTML += `<div>
-            //     <span>${result['username']}:</span> <span class="float-right">${comment}}</span>
-            //     <br>
-            //     <br>
-            //     <br>
-            // </div>`;
+                let parentElement = document.getElementById('comments')
+                let theFirstChild = parentElement.firstChild
+                let new_comment = document.createElement('div');
+                parentElement.insertBefore(new_comment, theFirstChild);
+                new_comment.innerHTML = `
+                    <span>${result['username']}:</span> <span class="float-right">${comment}</span>
+                    <br>
+                    <br>`;
+            
                 console.log("Successful!")
 
             }
     
             if ("error" in result) {
-                // There was an error in sending the email
-                // Display the error next to the "To:"
                 document.querySelector('#to-text-error-message').innerHTML = result['error']
     
             }
             console.log(result);
-            console.log("message" in result);
-            console.log("error" in result);
             })
+
             .catch(error => {
                 console.log(error);
             });
         return false;
-    }
+}
 
 // Vote Function
 // Vote Function

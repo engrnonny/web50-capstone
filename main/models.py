@@ -62,6 +62,7 @@ class Cause(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     backers = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name = 'backers')
     voters = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name = 'voters')
+    votes = models.IntegerField(blank=True, default=0)
     completed = models.BooleanField(default=False)
     closed = models.BooleanField(default=False)
     closed_note = models.TextField(blank=True)

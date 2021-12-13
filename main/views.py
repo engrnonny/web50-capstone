@@ -21,7 +21,11 @@ import json
 # Homepage
 # Homepage
 def index(request):
-    return render(request, "main/index.html")
+    causes = Cause.objects.filter(status="Approved").order_by("-votes")[:2]
+    context = {
+        'causes': causes
+    }
+    return render(request, "main/index.html", context)
 
 
 # About Page
@@ -294,9 +298,24 @@ def cause(request, slug):
 # New Cause Page
 def new_cause(request):
     cause_categories = [
+        'Economic Growth',
+        'Education',
+        'Environmental Sanitation',
+        'Food,'
         'Health',
-        'Infrastructure'
+        'Human Rights',
+        'Infrastructure',
+        'Skill Acquisition'
     ]
+
+    sub_categories = {
+        'Economic Growth': [
+            'Industry',
+            'Innovation and Technology',
+            'Job Creation'
+        ],
+        
+    }
 
     file_purposes = [
         "Investigation Files", 
@@ -480,6 +499,8 @@ def vote(request, cause_id):
             if request.user.monthly_vote == True:
                 if voted:
                     cause.voters.remove(request.user)
+                    cause.votes -= 1
+                    cause.save()
                     request.user.monthly_vote = False
                     request.user.save()
                     return JsonResponse({"success": "Unvoted successfully"}, status=201)
@@ -489,6 +510,8 @@ def vote(request, cause_id):
 
             else:
                 cause.voters.add(request.user)
+                cause.votes += 1
+                cause.save()
                 request.user.monthly_vote = True
                 request.user.save()
                 return JsonResponse({"success": "Voted successfully"}, status=201)
@@ -507,24 +530,26 @@ def vote(request, cause_id):
 @csrf_exempt
 @login_required
 def comment(request, cause_id):
+
     if request.method == "POST":
-        
-        if not request.POST["comment"]:
-            return JsonResponse({"error": "Please type in a message in the text field."}, status=400)
-            
-        else:
+
             try:
                 cause = Cause.objects.get(id=cause_id)
                 data = json.loads(request.body)
                 comment = data.get("comment", "")
-                new_comment = Comment(cause=cause, comment=comment, user=request.user)
-                new_comment.save()
-                return JsonResponse({
-                    "success": "Comment posted successfully",
-                    "username": request.user.username
-                    }, status=201)
+
+                if not comment:
+                    return JsonResponse({"error": "Please type in a message in the text field."}, status=400)
+
+                else:
+                    new_comment = Comment(cause=cause, comment=comment, user=request.user)
+                    new_comment.save()
+                    return JsonResponse({
+                        "success": "Comment posted successfully",
+                        "username": request.user.username
+                        }, status=201)
             
-            except IntegrityError:
+            except Error:
                 return JsonResponse({"error": "Cause not found."}, status=400)
 
     else:

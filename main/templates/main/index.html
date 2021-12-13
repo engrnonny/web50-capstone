@@ -16,9 +16,17 @@
             <h2 class="card">
                 Brief About MAG
             </h2>
-            <h2 class="card">
-                SlideShow of recent/popular causes
-            </h2>
+            <div class="card">
+                {% if causes %}
+                    {% for cause in causes %}
+                    <span>
+                        <a href="{% url 'cause' cause.slug %}">
+                            {{cause.name}}
+                        </a>
+                        </span>
+                    {% endfor %}
+                {% endif %}
+            </div>
             <div class="row">
                 <h2 class="card col">
                     Account Total

@@ -24,7 +24,7 @@
         <span>            
         {% if cause.status != "Awaiting Approval" %}
             <div>
-                Votes <span id="vote-count">{{ voters|length }}</span> 
+                Votes: <span id="vote-count">{{ voters|length }}</span> 
                 <span>
                     {% if user.is_authenticated %}
                         <button id="vote">
@@ -160,54 +160,71 @@
             <h3>
                 Comments:
             </h3>
-            <form action="#" method="post">
-                {% csrf_token %}
 
-                <!-- Comment -->
-                <div class="mb-3">
-                    <label for="comment" class="form-label">
-                        Your Comment
-                    </label>
-                    <textarea class="form-control" id="comment" aria-describedby="commentHelp" name="comment" placeholder="Hi everyone! Nice work." required type="text"></textarea>
-                    <small id="commentHelp" class="form-text">
-                        What would you like to say about this Cause?
-                    </small>
+            {% if user.is_authenticated %}
+
+                <form action="#">
+                    {% csrf_token %}
+
+                    <!-- Comment -->
+                    <div class="mb-3">
+                        <label for="comment" class="form-label">
+                            Your Comment
+                        </label>
+                        <textarea class="form-control" id="comment" aria-describedby="commentHelp" name="comment" placeholder="Hi everyone! Nice work." required type="text"></textarea>
+                        <small id="commentHelp" class="form-text">
+                            What would you like to say about this Cause?
+                        </small>
+                    </div>
+
+                    <button class="btn btn-primary" id="post-comment" type="button">
+                        Post
+                    </button>
+                    
+                </form>
+
+            {% else %}
+
+            <div>
+                Please 
+                <a class="btn btn-primary" href="{% url 'login' %}">
+                    Login
+                </a> 
+                to post a comment.
+            </div>
+
+            {% endif %}
+
+            {% if not comments %}
+
+                <br>
+                <div>
+                    There are no comments for this Cause.
+                </div>
+                <br>
+                <br>
+                <br>
+
+            {% else %}
+
+                <div id="comments">
+
+                {% for comment in comments %}
+
+                    <div>
+                        <span>{{ comment.user.username }}:</span> <span class="float-right">{{ comment.comment }}</span>
+                        <br>
+                        <br>
+                    </div>
+
+                {% endfor %}
+
                 </div>
 
-                <button type="submit" class="btn btn-primary" id="post-comment">
-                    Post
-                </button>
+            {% endif %}
                 
-            </form>
 
-        </div>
 
-        <div>
-            
-
-    {% if comments %}
-    <br>
-    <h3>Comments</h3>
-        <div id="comments">
-        {% for comment in comments %}
-            <div>
-                <span>{{ comment.user.username }}:</span> <span class="float-right">{{ comment.comment }}</span>
-                <br>
-                <br>
-                <br>
-            </div>
-        {% endfor %}
-        </div>
-
-    {% else %}
-    <br>
-        <div>
-            There are no comments for this Cause.
-        </div>
-        <br>
-        <br>
-        <br>
-    {% endif %}
         </div>
 
     </main>
