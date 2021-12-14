@@ -51,7 +51,7 @@
                         <a href="{% url 'cause' cause.cause.slug %}">
                             {{cause.cause.name}}
                         </a>
-                        <img src="{{ cause.profile_pic }}" alt="{{ cause.cause.name }}" height="100rem" width="100rem">
+                        <img src="{{ cause.profile_pic.file_upload.url }}" alt="{{ cause.cause.name }}" height="100rem" width="100rem">
                     </span>
                     {% endfor %}
                 {% endif %}

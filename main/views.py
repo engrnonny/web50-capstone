@@ -25,7 +25,7 @@ def index(request):
     causes = []
     for cause in filtered_causes:
         try:
-            profile_pic = Cause_file.objects.filter(cause=cause, file_purpose="Profile Picture")
+            profile_pic = Cause_file.objects.get(cause=cause, file_purpose="Profile Picture")
             new_object = {
                 'cause': cause,
                 'profile_pic': profile_pic
@@ -37,6 +37,8 @@ def index(request):
     context = {
         'causes': causes
     }
+
+    print(causes[0]["profile_pic"])
     return render(request, "main/index.html", context)
 
 
