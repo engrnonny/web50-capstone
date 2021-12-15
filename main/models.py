@@ -33,7 +33,7 @@ class User(AbstractUser):
     profile_pic = models.ImageField(blank=True, null=True, upload_to="main/users/profile-pics")
     amount_contributed = models.FloatField(default=0.0)
     amount_owed = models.FloatField(default=0.0)
-    monthly_payment = models.BooleanField(default=False)
+    monthly_donation = models.BooleanField(default=False)
     monthly_vote = models.BooleanField(default=False)
     rank = models.CharField(max_length=32, blank=True, null=True)
 

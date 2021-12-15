@@ -1,0 +1,20 @@
+{% extends "main/layout.html" %}
+
+{% block title %}
+    MAG | Donation
+{% endblock %}
+
+{% block body %}
+    <main id="">
+        <h1>
+            Payment Portal
+        </h1>
+        <div>
+            100 is about to be charged to your account.
+        </div>
+        <div>
+            <a class="btn btn-primary" href="{% url 'pay' %}">Pay</a>
+            <a class="btn btn-danger" href="{% url 'pay' %}">Cancel</a>
+        </div>
+    </main>
+{% endblock %}

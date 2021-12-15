@@ -26,7 +26,7 @@
             <div>
                 Votes: <span id="vote-count">{{ voters|length }}</span> 
                 <span>
-                    {% if user.is_authenticated %}
+                    {% if user.is_authenticated and request.user.monthly_donation == True %}
                         <button id="vote">
                         {% if user in voters %}
                             Unvote

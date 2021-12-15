@@ -279,12 +279,61 @@ def user_profile(request, slug):
         return redirect("index")
 
 
-# Payment Page
-# Payment Page
-# Payment Page
+# Donation Page
+# Donation Page
+# Donation Page
 @login_required
-def payment(request):
-    return render(request, "main/payment.html")
+def donate(request):
+    return render(request, "main/donate.html")
+
+# Payment Portal
+# Payment Portal
+# Payment Portal
+@login_required
+def pay(request):
+    user = request.user
+    user.monthly_donation = True
+    user.save()
+    messages.info(request, "Payment successful. You can now vote for a Cause.")
+    return redirect("causes")
+
+
+# Vote of Unvote
+# Vote of Unvote
+# Vote of Unvote
+@csrf_exempt
+@login_required
+def vote(request, cause_id):
+    if request.method == "PUT":
+        try:
+            cause = Cause.objects.get(id=cause_id)
+            voted = User.objects.filter(voters__id=cause.id, id=request.user.id)
+            if request.user.monthly_vote == True:
+                if voted:
+                    cause.voters.remove(request.user)
+                    cause.votes -= 1
+                    cause.save()
+                    request.user.monthly_vote = False
+                    request.user.save()
+                    return JsonResponse({"success": "Unvoted successfully"}, status=201)
+
+                else:
+                    return JsonResponse({"error": "You have already voted on another Cause."}, status=400)
+
+            else:
+                cause.voters.add(request.user)
+                cause.votes += 1
+                cause.save()
+                request.user.monthly_vote = True
+                request.user.save()
+                return JsonResponse({"success": "Voted successfully"}, status=201)
+
+        
+        except IntegrityError:
+            return JsonResponse({"error": "Cause not found."}, status=400)
+
+    else:
+        return JsonResponse({"error": "PUT method required."}, status=400)
 
 
 # Causes Page
@@ -364,9 +413,9 @@ def new_cause(request):
     ]
 
     if request.user.is_authenticated:
-        if request.user.monthly_payment == False:
+        if request.user.monthly_donation == False:
             messages.info(request, "You have not made your monthly donation. Please do so to create a Cause")
-            return redirect("payment")
+            return redirect("donate")
         else:
             if request.method == "POST":
 
@@ -519,44 +568,6 @@ def new_cause(request):
     else:
         messages.info(request, "You must be logged in to create a Cause.")
         return redirect("login")
-
-
-# Vote of Unvote
-# Vote of Unvote
-# Vote of Unvote
-@csrf_exempt
-@login_required
-def vote(request, cause_id):
-    if request.method == "PUT":
-        try:
-            cause = Cause.objects.get(id=cause_id)
-            voted = User.objects.filter(voters__id=cause.id, id=request.user.id)
-            if request.user.monthly_vote == True:
-                if voted:
-                    cause.voters.remove(request.user)
-                    cause.votes -= 1
-                    cause.save()
-                    request.user.monthly_vote = False
-                    request.user.save()
-                    return JsonResponse({"success": "Unvoted successfully"}, status=201)
-
-                else:
-                    return JsonResponse({"error": "You have already voted on another Cause."}, status=400)
-
-            else:
-                cause.voters.add(request.user)
-                cause.votes += 1
-                cause.save()
-                request.user.monthly_vote = True
-                request.user.save()
-                return JsonResponse({"success": "Voted successfully"}, status=201)
-
-        
-        except IntegrityError:
-            return JsonResponse({"error": "Cause not found."}, status=400)
-
-    else:
-        return JsonResponse({"error": "PUT method required."}, status=400)
 
 
 # Comment on a Cause
