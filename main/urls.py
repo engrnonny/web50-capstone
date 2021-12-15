@@ -18,5 +18,6 @@ urlpatterns =[
     path("causes/v/<int:cause_id>", views.vote, name="vote"),
     path("causes/c/<int:cause_id>", views.comment, name="comment"),
     path("contact", views.contact, name="contact"),
+    path("cancel", views.cancel, name="cancel"),
     path("test", views.test, name="test"),
 ]

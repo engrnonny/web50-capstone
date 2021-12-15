@@ -11,58 +11,8 @@
         <h1>
             Test
         </h1>
-        <form action="{% url 'test' %}" enctype="multipart/form-data" method="POST">
-			{% csrf_token %}
-            <div>
-                <label for="file-upload" class="form-label">
-                    Cause file
-                </label>
-                <input alt="Cause files" aria-describedby="fileUploadHelp" class="form-control" id="file-upload" name="file-upload" type="file">
-                <small id="fileUploadHelp" class="form-text">
-                    Upload file (document, picture, video, etc.) as supporting evidence of the Cause
-                </small>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <label class="form-check-label" for="file-purpose">
-                        Purpose
-                    </label>
-                    <select aria-describedby="filePurposeHelp"  class="form-log form-control" id="file-purpose" name="file-purpose" list="purpose">
-                        <option>--select--</option>
-                        {% for file_purpose in file_purposes %}
-                            <option value="{{ file_purpose }}">{{ file_purpose }}</option>
-                        {% endfor %}
-                    </select>
-                    <small id="filePurposeHelp" class="form-text">
-                        What would the file be used for?
-                    </small>
-                </div>
-                <div class="col">
-                    <label class="form-check-label" for="file-type">
-                        File Type
-                    </label>
-                    <select aria-describedby="fileTypeHelp"  class="form-log form-control" id="file-type" name="file-type" list="type">
-                        <option>--select--</option>
-                        {% for file_type in file_types %}
-                            <option value="{{ file_type }}">{{ file_type }}</option>
-                        {% endfor %}
-                    </select>
-                    <small id="fileTypeHelp" class="form-text">
-                        What is the type of the file?
-                    </small>
-                </div>
-            </div>
-            <div>
-                <label for="file-description" class="form-label">
-                    Description of File
-                </label>
-                <input aria-describedby="fileDescriptionHelp" class="form-control" id="file-description" name="file-description" type="text">
-                <small id="fileDescriptionHelp" class="form-text">
-                    Give brief description of the content of the file.
-                </small>
-            </div>
-            <input type="submit" value="Test Upload">
-        </form>
+        <a class="btn btn-danger" href="{% url 'cancel' %}">Cancel</a>
+
     </main>
 {% endblock %}
 

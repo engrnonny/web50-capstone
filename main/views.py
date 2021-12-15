@@ -18,6 +18,10 @@ from .models import *
 import datetime
 import json
 
+#  Important Variables
+month = datetime.datetime.now().month
+year = datetime.datetime.now().year
+
 # Homepage
 # Homepage
 # Homepage
@@ -25,8 +29,6 @@ def index(request):
     filtered_causes = Cause.objects.filter(status="Approved").order_by("-votes")[:2]
     causes = []
     
-    month = datetime.datetime.now().month
-    year = datetime.datetime.now().year
     for cause in filtered_causes:
         try:
             profile_pic = Cause_file.objects.get(cause=cause, file_purpose="Profile Picture")
@@ -39,7 +41,7 @@ def index(request):
             pass
             
         try: 
-            monthly_info = Info.objects.get(month=12, year=2021)
+            monthly_info = Info.objects.get(month=month, year=year)
         except Error:
             if datetime.datetime.now().day == 1:
                 monthly_info = Info(month=month, year=year)
@@ -138,18 +140,18 @@ def register(request):
                 return redirect("register")
             
             else: 
-                try:
-                    test_phone = int(request.POST["reg-phone"])
-                    if len(test_phone) < 11 or len(test_phone) > 11:
-                        messages.info(request, "Please enter the 11 digits of your phone number")
-                        return redirect("register")
-                    
-                    if test_phone < 0:
-                        messages.info(request, "Please enter positive 11 digits of your phone number")
-                        return redirect("register")
+                test_phone = request.POST["reg-phone"]
 
-                except Error: 
-                    messages.info(request, "Please enter your phone number in numbers only")
+                if not int(test_phone):
+                    messages.info(request, "Please enter your phone number in digits only")
+                    return redirect("register")
+
+                if len(test_phone) < 11 or len(test_phone) > 11:
+                    messages.info(request, "Please enter the 11 digits of your phone number")
+                    return redirect("register")
+                
+                if int(test_phone) < 0:
+                    messages.info(request, "Please enter positive 11 digits of your phone number")
                     return redirect("register")
 
             if not request.POST["reg-email"]:
@@ -291,11 +293,33 @@ def donate(request):
 # Payment Portal
 @login_required
 def pay(request):
+
     user = request.user
+    user.total_contribution += 100
+    user.save()
     user.monthly_donation = True
     user.save()
-    messages.info(request, "Payment successful. You can now vote for a Cause.")
-    return redirect("causes")
+
+    try: 
+        monthly_info = Info.objects.get(month=month, year=year)
+        monthly_info.total_amount += 100
+        monthly_info.save()
+        messages.info(request, "Payment successful. Please vote for a Cause")
+        return redirect("causes")
+
+    except Error:
+
+        if datetime.datetime.now().day == 1:
+            monthly_info = Info(month=month, year=year)
+            monthly_info.save()
+            monthly_info.total_amount += 100
+            monthly_info.save()
+            messages.info(request, "Payment successful. Please vote for a Cause")
+            return redirect("causes")
+
+        else:
+            messages.info(request, "Info Object could not be created. Please contact the admin with this message.")
+            return redirect("contact")
 
 
 # Vote of Unvote
@@ -609,13 +633,17 @@ def contact(request):
     return render(request, "main/contact.html")
 
 
+def cancel(request):
+    return HttpResponseRedirect(request.session['previous'])
+
 
 # Test Page
 # Test Page
 # Test Page
 def test(request):
-    month = datetime.datetime.now().day
-    print(month)
+    request.session['previous'] = request.META.get('HTTP_REFERER', '../')
+    monthly_info = Info.objects.get(month=month, year=year)
+    print(monthly_info.month)
     
     return render(request, "main/test.html")
 
