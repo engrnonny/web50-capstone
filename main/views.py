@@ -15,6 +15,7 @@ from django.urls import reverse
 from django.utils.text import slugify
 from django.views.decorators.csrf import csrf_exempt
 from .models import *
+import datetime
 import json
 
 # Homepage
@@ -23,6 +24,9 @@ import json
 def index(request):
     filtered_causes = Cause.objects.filter(status="Approved").order_by("-votes")[:2]
     causes = []
+    
+    month = datetime.datetime.now().month
+    year = datetime.datetime.now().year
     for cause in filtered_causes:
         try:
             profile_pic = Cause_file.objects.get(cause=cause, file_purpose="Profile Picture")
@@ -33,12 +37,21 @@ def index(request):
             causes.append(new_object)
         except Error:
             pass
+            
+        try: 
+            monthly_info = Info.objects.get(month=12, year=2021)
+        except Error:
+            if datetime.datetime.now().day == 1:
+                monthly_info = Info(month=month, year=year)
+                monthly_info.save()
+            else:
+                messages.info(request, "Info Object could not be created. Please contact the admin with this message.")
+                return redirect("contact")
 
     context = {
-        'causes': causes
+        'causes': causes,
+        'monthly_info': monthly_info
     }
-
-    print(causes[0]["profile_pic"])
     return render(request, "main/index.html", context)
 
 
@@ -590,6 +603,8 @@ def contact(request):
 # Test Page
 # Test Page
 def test(request):
+    month = datetime.datetime.now().day
+    print(month)
     
     return render(request, "main/test.html")
 

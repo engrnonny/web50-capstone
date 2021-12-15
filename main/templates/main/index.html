@@ -10,12 +10,14 @@
             <h1>
                 Home!
             </h1>
-            <h2 class="card">
+            <h3 class="card">
                 Jumbotron
-            </h2>
-            <h2 class="card">
-                Brief About MAG
-            </h2>
+            </h3>
+            <div class="card fs-5">
+                MAG (Make Africa Great) is a non-profit organization that is dedicated to the development of Africans and their countries.
+            </div>
+
+            <!-- CAROUSEL -->
             <div class="card">
 
                 <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
@@ -24,16 +26,22 @@
                         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
                         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
                     </div>
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                        <img src="..." class="d-block w-100" alt="...">
+                    <div class="carousel-inner text-center" role="listbox">
+                        {% for cause in causes %}
+                        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                            <a href="{% url 'cause' cause.cause.slug %}">
+                                <img src="{{ cause.profile_pic.file_upload.url }}" class="d-block w-25" alt="{{ cause.cause.name }}">
+                                <span>
+                                    <h5>
+                                        &#x20A6;{{ cause.cause.cost }}
+                                    </h5>
+                                    <p>
+                                        {{ cause.cause.name }}
+                                    </p>
+                                </span>
+                            </a>
                         </div>
-                        <div class="carousel-item">
-                        <img src="..." class="d-block w-100" alt="...">
-                        </div>
-                        <div class="carousel-item">
-                        <img src="..." class="d-block w-100" alt="...">
-                        </div>
+                        {% endfor %}
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -45,29 +53,20 @@
                     </button>
                 </div>
 
-                {% if causes %}
-                    {% for cause in causes %}
-                    <span>
-                        <a href="{% url 'cause' cause.cause.slug %}">
-                            {{cause.cause.name}}
-                        </a>
-                        <img src="{{ cause.profile_pic.file_upload.url }}" alt="{{ cause.cause.name }}" height="100rem" width="100rem">
-                    </span>
-                    {% endfor %}
-                {% endif %}
             </div>
+
             <div class="row">
-                <h2 class="card col">
-                    Account Total
-                </h2>
-                <h2 class="card col">
+                <div class="card col fs-3 fw-bold">
+                    Account Total: &#x20A6;{{ monthly_info.total_amount }}
+                </div>
+                <h3 class="card col">
                     Vertical Carousel of latest account activity
-                </h2>
+                </h3>
             </div>
             <div class="card">
-                <h2>
+                <h3>
                     Why join MAG
-                </h2>
+                </h3>
                 <a class="btn btn-primary" href="{% url 'register' %}">
                     Become a member
                 </a>

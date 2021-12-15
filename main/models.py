@@ -99,6 +99,12 @@ class Comment(models.Model):
 class Message(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     date_added = models.DateTimeField(auto_now_add=True)
+
+class Info(models.Model):
+    date_added = models.DateTimeField(auto_now_add=True)
+    month = models.IntegerField()
+    year = models.IntegerField()
+    total_amount = models.FloatField(default=0.00)
     
 
 class Test(models.Model):
