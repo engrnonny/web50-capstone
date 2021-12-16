@@ -7,14 +7,14 @@
 {% block body %}
     {% if not user.is_authenticated %}
     <main id="register-page">
-        <h1>
+        <h1 class="text-center">
             Register
         </h1>
         <form action="{% url 'register' %}" autocomplete="on" enctype="multipart/form-data" method="post">
             {% csrf_token %}
-            <h2>
+            <h3 class="my-3">
                 Become an Angel
-            </h2>
+            </h3>
 
             <div class="mb-3 row">
 
@@ -23,7 +23,7 @@
                     <label for="reg-firstname" class="form-label">
                         First Name
                     </label>
-                    <input type="text" class="form-control" id="reg-firstname" aria-describedby="firstNameHelp" name="reg-firstname" placeholder="Adaeze" required>
+                    <input aria-describedby="firstNameHelp" autofocus class="form-control" id="reg-firstname" name="reg-firstname" placeholder="Adaeze" required type="text">
                     <small id="firstNameHelp" class="form-text">
                         Your first name.
                     </small>
@@ -104,14 +104,14 @@
             
             <div>
                 
-                <div class="row">
+                <div class="mb-3 row">
 
                     <!-- Gender Selection -->
                     <div class="col">
-                        <label class="form-check-label" for="reg-gender">
+                        <label class="form-label" for="reg-gender">
                             Gender
                         </label>
-                        <select aria-describedby="genderHelp"  class="form-log form-control" id="reg-gender" name="reg-gender" list="gender" placeholder="Gender">
+                        <select aria-describedby="genderHelp"  class="form-control" id="reg-gender" name="reg-gender" list="gender" placeholder="Gender">
                             <option value=""></option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
@@ -133,7 +133,7 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="mb-3 row">
                     
                     <!-- Country -->
                     <div class="col">
@@ -158,7 +158,7 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="mb-3 row">
                     
                     <!-- LGA -->
                     <div class="col">
@@ -185,7 +185,7 @@
                 </div>
                 
                 <!-- Address -->
-                <div>
+                <div class="mb-3">
                     <label for="reg-address" class="form-label">
                         Address
                     </label>
@@ -195,7 +195,7 @@
                     </small>
                 </div>
 
-                <div class="row">
+                <div class="mb-3 row">
                     
                     <!-- Occupation -->
                     <div class="col">
@@ -222,9 +222,9 @@
                 </div>
 
                 <!-- Bio -->
-                <div>
+                <div class="mb-3">
                     <label for="reg-bio" class="form-label">
-                        bio
+                        Bio
                     </label>
                     <textarea aria-describedby="bioHelp" class="form-control" id="reg-bio" name="reg-bio" placeholder="I am a Civil Engineer with a deep passion to help humanity" type="text"></textarea>
                     <small id="bioHelp" class="form-text">
@@ -233,7 +233,7 @@
                 </div>
 
                 <!-- Profile Picture -->
-                <div>
+                <div class="mb-3">
                     <label for="reg-profile-pic" class="form-label">
                         Profile Picture
                     </label>
@@ -251,7 +251,7 @@
             </button>
 
         </form>
-        <p>or</p>
+        <div class="my-3">or</div>
         <div>
             <a class="btn btn-primary" href="{% url 'login' %}">
                 Login

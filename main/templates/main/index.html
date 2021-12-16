@@ -7,18 +7,20 @@
 {% block body %}
         <!--  This is the homepage -->
         <main id="home-page">
-            <h1>
-                Home!
+            <h1 class="text-center">
+                Make Africa Great
             </h1>
-            <h3 class="card">
+
+            <!-- <h3>
                 Jumbotron
-            </h3>
-            <div class="card fs-5">
-                MAG (Make Africa Great) is a non-profit organization that is dedicated to the development of Africans and their countries.
+            </h3> -->
+
+            <div class="card fs-6 lh-lg mb-4 p-2">
+                MAG (Make Africa Great) is a non-profit organization that is dedicated to the development of African countries and their people. Members make monthly donation (&#x20A6;100) and these donations are used to carry out Causes. Causes are projects that can help people or the society, and are submitted by a registered MAG member. Upon approval, MAG members cast a single vote on their preferred Cause. The Causes with the highest votes, and which falls under the total money donated that month, gets to be executed. Causes could be anything from a dilapidated school, to road construction, to hiring legal counsels for the wrongfully accused, etc.
             </div>
 
             <!-- CAROUSEL -->
-            <div class="card">
+            <div class="card mb-4 p-2">
 
                 <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-indicators">
@@ -55,19 +57,34 @@
 
             </div>
 
-            <div class="row">
+            <div class="mb-4 p-2 row">
                 <div class="card col fs-3 fw-bold">
                     Account Total: &#x20A6;{{ monthly_info.total_amount }}
                 </div>
-                <h3 class="card col">
-                    Vertical Carousel of latest account activity
-                </h3>
+                <div class="card col fs-3">
+                    Latest account activity
+                </div>
             </div>
-            <div class="card">
-                <h3>
-                    Why join MAG
+
+            <div class="card mb-4 p-2">
+                <h3 class="text-center">
+                    Why join MAG?
                 </h3>
-                <a class="btn btn-primary" href="{% url 'register' %}">
+                <div>
+                    <p>
+                        Become a member today and be part of a system that helps shapes the future of Africa.
+                    </p>
+                    <p>
+                        Membership is FREE.  
+                    </p>
+                    <p>
+                        A very affordable monthly donation of &#x20A6;100 allows you to fully participate in changing lives. It is not mandatory.
+                    </p>
+                    <p>
+                        There is a ranking system where members can grow in levels.
+                    </p>
+                </div>
+                <a class="btn btn-outline-primary" href="{% url 'register' %}">
                     Become a member
                 </a>
 
