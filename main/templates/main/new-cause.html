@@ -7,32 +7,30 @@
 {% block body %}
     {% if user.is_authenticated %}
     <main id="new-cause-page">
-        <h1>
+        <h1 class="text-center">
             New Cause
         </h1>
-        <form action="{% url 'new-cause' %}" enctype="multipart/form-data" method="post">
+        <form action="{% url 'new-cause' %}" enctype="multipart/form-data" class="mb-3" method="post">
+
             {% csrf_token %}
-            <h2>
-                Start a New Cause
-            </h2>
 
             <!-- Name -->
-            <div>
+            <div class="mb-3">
                 <label class="form-label" for="cause-name">
                     Name
                 </label>
-                <input aria-describedby="nameHelp" class="form-control" id="cause-name" maxlength="128" name="cause-name" placeholder="Save the Children of Ikorodu Primary School from poor education"  type="text">
+                <input aria-describedby="nameHelp" class="form-control" id="cause-name" maxlength="128" name="cause-name" placeholder="Ex: Save the Children of Ikorodu Primary School from poor education"  type="text">
                 <small id="nameHelp" class="form-text">
                     The name of the cause (10 words or fewer)
                 </small>
             </div>
 
             <!-- Brief Description -->
-            <div>
+            <div class="mb-3">
                 <label class="form-label" for="cause-brief-description">
                     Brief Description
                 </label>
-                <textarea aria-describedby="briefDescriptionHelp" class="form-control" cols="20" id="cause-brief-description" name="cause-brief-description" placeholder="The aim of this Cause is to save the students of the Ikorodu Primary School from very poor and inadequate educational environment and materials."  rows="5" wrap="hard"></textarea>
+                <textarea aria-describedby="briefDescriptionHelp" class="form-control" cols="20" id="cause-brief-description" name="cause-brief-description" placeholder="Ex: The aim of this Cause is to save the students of the Ikorodu Primary School from very poor and inadequate educational environment and materials."  rows="5" wrap="hard"></textarea>
                 <small id="briefDescriptionHelp" class="form-text">
                     Briefly describe the cause (50 words or fewer)
                 </small>
@@ -68,14 +66,14 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div class="mb-3 row">
                 
                 <!-- Country -->
                 <div class="col">
                     <label for="cause-country" class="form-label">
                         Country
                     </label>
-                    <input aria-describedby="countryHelp" class="form-control" id="cause-country" name="cause-country" placeholder="Nigeria"  type="text">
+                    <input aria-describedby="countryHelp" class="form-control" id="cause-country" name="cause-country" placeholder="Ex: Nigeria"  type="text">
                     <small class="form-text" id="countryHelp">
                         Country Cause is located in
                     </small>
@@ -86,21 +84,21 @@
                     <label class="form-label" for="cause-state">
                         State
                     </label>
-                    <input aria-describedby="stateHelp" class="form-control" id="cause-state" name="cause-state" placeholder="Lagos"  type="text">
+                    <input aria-describedby="stateHelp" class="form-control" id="cause-state" name="cause-state" placeholder="Ex: Lagos"  type="text">
                     <small class="form-text" id="stateHelp">
                         State Cause is located in
                     </small>
                 </div>
             </div>
 
-            <div class="row">
+            <div class="mb-3 row">
                             
                 <!-- City -->
                 <div class="col">
                     <label class="form-label" for="cause-city">
                         City/Town
                     </label>
-                    <input aria-describedby="cityHelp" class="form-control" id="cause-city" name="cause-city" placeholder="Victoria Island"   type="text">
+                    <input aria-describedby="cityHelp" class="form-control" id="cause-city" name="cause-city" placeholder="Ex: Victoria Island"   type="text">
                     <small class="form-text" id="cityHelp">
                         City or Town Cause is located in
                     </small>
@@ -109,11 +107,11 @@
             </div>
             
             <!-- Address -->
-            <div>
+            <div class="mb-3">
                 <label class="form-label" for="cause-address">
                     Address
                 </label>
-                <input aria-describedby="addressHelp" class="form-control" id="cause-address" name="cause-address" placeholder="No 1, First Street" type="text">
+                <input aria-describedby="addressHelp" class="form-control" id="cause-address" name="cause-address" placeholder="Ex: No 1, First Street" type="text">
                 <small id="addressHelp" class="form-text">
                     House number and Street name of Cause (if any)
                 </small>
@@ -124,19 +122,19 @@
                 <label class="form-label" for="cause-detail-description">
                     Detail Description
                 </label>
-                <textarea aria-describedby="detailDescriptionHelp" class="form-control" cols="20" id="cause-detail-description" name="cause-detail-description"  rows="7.5" wrap="hard"></textarea>
+                <textarea aria-describedby="detailDescriptionHelp" class="form-control" cols="20" id="cause-detail-description" name="cause-detail-description" placeholder="Ex: The Ikorodu primary school building is heavily dilapidated. The condition is causing the student to learn in an inhospitable environment. The building's inability to keep out the weather leaves the children vulnerable to illnesses. There is heavy humanitarian need for a renovation of the building." rows="7.5" wrap="hard"></textarea>
                 <small class="form-text" id="detailDescriptionHelp">
                     Give a detail description of the Cause
                 </small>
             </div>
             
             <!-- Cost Breakdown -->
-            <div>
+            <div class="mb-3">
                 <label class="form-label" for="cause-cost-breakdown">
                     Cost Breakdown
                 </label>
                 <textarea aria-describedby="costBreakdownHelp" class="form-control" cols="20" id="cause-cost-breakdown" name="cause-cost-breakdown" placeholder="
-                Books (for 200 pupils) - 2,000,000
+                Ex: Books (for 200 pupils) - 2,000,000
                 Construction of chairs and desks (100 pieces) - 1,000,000
                 Mechanical works (new toilets) - 200,000
                 New school bus - 3,000,000
@@ -157,9 +155,9 @@
                     <label class="form-label" for="cause-expiration">
                         Expiry Date
                     </label>
-                    <input aria-describedby="expirationHelp" class="form-control" id="cause-expiration" name="cause-expiration" type="number">
+                    <input aria-describedby="expirationHelp" class="form-control" id="cause-expiration" name="cause-expiration" placeholder="Ex: 10" type="number">
                     <small class="form-text" id="expirationHelp">
-                        In case of emergency, how long before the Cause MUST be undertaken
+                        In case of emergency, how long (in days) before the Cause can no longer be undertaken
                     </small>
                 </div>
 
@@ -168,7 +166,7 @@
                     <label class="form-label" for="cause-duration">
                         Duration
                     </label>
-                    <input type="number" class="form-control" id="cause-duration" aria-describedby="durationHelp" name="cause-duration" placeholder="1000" >
+                    <input type="number" class="form-control" id="cause-duration" aria-describedby="durationHelp" name="cause-duration" placeholder="Ex: 1000">
                     <small id="durationHelp" class="form-text">
                         How long would it take to complete the Cause (in days)
                     </small>
@@ -176,7 +174,7 @@
             </div>
 
             <!-- File Upload -->
-            <div>
+            <div class="mb-3">
                 <label for="file-upload" class="form-label">
                     Cause file
                 </label>
@@ -186,7 +184,7 @@
                 </small>
             </div>
 
-            <div class="row">
+            <div class="mb-3 row">
 
                 <!-- File Purpose -->
                 <div class="col">
@@ -222,7 +220,7 @@
             </div>
 
             <!-- File Description -->
-            <div>
+            <div class="mb-3">
                 <label for="file-description" class="form-label">
                     Description of File
                 </label>

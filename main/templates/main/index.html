@@ -21,6 +21,9 @@
 
             <!-- CAROUSEL -->
             <div class="card mb-4 p-2">
+                <div>
+                    Most Popular Causes
+                </div>
 
                 <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-indicators">
@@ -31,15 +34,15 @@
                     <div class="carousel-inner text-center" role="listbox">
                         {% for cause in causes %}
                         <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                            <a href="{% url 'cause' cause.cause.slug %}">
+                            <a class="align-items-center d-flex flex-column text-decoration-none" href="{% url 'cause' cause.cause.slug %}">
                                 <img src="{{ cause.profile_pic.file_upload.url }}" class="d-block w-25" alt="{{ cause.cause.name }}">
                                 <span>
-                                    <h5>
-                                        &#x20A6;{{ cause.cause.cost }}
-                                    </h5>
-                                    <p>
+                                    <div>
                                         {{ cause.cause.name }}
-                                    </p>
+                                    </div>
+                                    <div>
+                                        &#x20A6;{{ cause.cause.cost }}
+                                    </div>
                                 </span>
                             </a>
                         </div>

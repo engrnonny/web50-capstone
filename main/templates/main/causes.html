@@ -6,24 +6,34 @@
 
 {% block body %}
     <main id="">
-        <h1>
+        <h1 class="text-center">
             Causes
         </h1>
         <div>
             Start a new Cause!
-            <div>
+            <span>
                 <a class="btn btn-primary" href="{% url 'new-cause' %}">
                     Create
                 </a>
-            </div>
+            </span>
         </div>
+        
         <br>
         <div>
         {% for cause in causes %}
-            <div>
-                <a class="btn btn-primary" href="{% url 'cause' cause.slug %}">
-                    {{ cause.name }}
-                </a>
+            <div class="align-items-center card d-flex flex-column">
+                <img src="{{ cause.profile_pic.file_upload.url }}" class="d-block w-25" alt="{{ cause.cause.name }}">
+                <div>
+                    <a class="text-decoration-none" href="{% url 'cause' cause.cause.slug %}">
+                        {{ cause.cause.name }}
+                    </a>
+                    <div>
+                        &#x20A6;{{ cause.cause.cost }}
+                    </div>
+                    <div>
+                        Votes: {{ cause.cause.votes }}
+                    </div>
+                </div>
             </div>
             <br>
         {% endfor %}

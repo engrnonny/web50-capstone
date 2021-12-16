@@ -6,119 +6,110 @@
 
 {% block body %}
     <main>
-        <h1>
-            Hi {{user.username}}!
-        </h1>
-        {% if user.profile_pic %}
-        <div>
-            <img src="{{ user.profile_pic.url }}" alt="{{user.username}} user picture" height="100rem" width="100rem">            
+        <div class="row">
+            <h1 class="col">
+                Hi {{user.username}}!
+            </h1>
+            {% if user.profile_pic %}
+                <span class="col">
+                    <img src="{{ user.profile_pic.url }}" alt="{{user.username}} user picture" height="100rem" width="100rem">            
+                </span>
+            {% endif %}
         </div>
-        {% endif %}
-        <div>
-            <span>
-                First Name: 
-            </span>
-            <span>
-                {{user.first_name}}
-            </span>
-        </div>
-        <div>
-            <span>
-                Last Name: 
-            </span>
-            <span>
-                {{user.last_name}}
-            </span>
-        </div>
-        <div>
-            <span>
+        <div class="card mt-3">
+            <div class="card-body row">
+                <span class="col">
+                    First Name: {{user.first_name}} 
+                </span>
+                <span class="col">
+                    <a class="btn btn-outline-primary btn-sm edit-btn">edit</a>
+                </span>
+            </div>
+            <div class="card-body">
+                Last Name: {{user.last_name}}
+            </div>
+            <div class="card-body">
                 Email Address: 
-            </span>
-            <span>
-                {{user.email}}
-            </span>
-        </div>
-        <div>
-            <span>
+                <span>
+                    {{user.email}}
+                </span>
+            </div>
+            <div class="card-body">
                 Phone Number: 
-            </span>
-            <span>
-                {{user.phone}}
-            </span>
-        </div>
-        <div>
-            <span>
+                <span>
+                    {{user.phone}}
+                </span>
+            </div>
+            <div class="card-body">
                 Gender: 
-            </span>
-            <span>
-                {{user.gender}}
-            </span>
-        </div>
-        <div>
-            <span>
+                <span>
+                    {{user.gender}}
+                </span>
+            </div>
+            <div class="card-body">
                 Date of Birth: 
-            </span>
-            <span>
-                {{user.birthday}}
-            </span>
-        </div>
-        <div>
-            <span>
-                Biography: 
-            </span>
-            <span>
-                {{user.bio}}
-            </span>
-        </div>
-        <div>
-            <span>
-                Address: 
-            </span>
-            <span>
-                {% if user.address %}
-                    {{user.address}}, 
-                {% endif %}
-
-                {% if user.city %}
-                    {{user.city}}, 
-                {% endif %}
-
-                {% if user.lga %}
-                    {{user.lga}} Local Government Area, 
-                {% endif %}
-
-                {% if user.state %}
-                    {{user.state}} State, 
-                {% endif %}
-
-                {% if user.country %}
-                    {{user.country}}, 
-                {% endif %}
-            </span>
-        </div>
-        <div>
-            <span>
-                Occupation: 
-            </span>
-            <span>
-                {{user.occupation}}
-            </span>
-        </div>
-        <div>
-            <span>
-                Linkedin user: 
-            </span>
-            <span>
-                {{user.linkedin}}
-            </span>
-        </div>
-        <div>
-            <span>
-                Joined MAG on: 
-            </span>
-            <span>
-                {{user.date_joined}}
-            </span>
+                <span>
+                    {{user.birthday}}
+                </span>
+            </div>
+            <div class="card-body">
+                <span>
+                    Biography: 
+                </span>
+                <span>
+                    {{user.bio}}
+                </span>
+            </div>
+            <div class="card-body">
+                <span>
+                    Address: 
+                </span>
+                <span>
+                    {% if user.address %}
+                        {{user.address}}, 
+                    {% endif %}
+    
+                    {% if user.city %}
+                        {{user.city}}, 
+                    {% endif %}
+    
+                    {% if user.lga %}
+                        {{user.lga}} Local Government Area, 
+                    {% endif %}
+    
+                    {% if user.state %}
+                        {{user.state}} State, 
+                    {% endif %}
+    
+                    {% if user.country %}
+                        {{user.country}}, 
+                    {% endif %}
+                </span>
+            </div>
+            <div class="card-body">
+                <span>
+                    Occupation: 
+                </span>
+                <span>
+                    {{user.occupation}}
+                </span>
+            </div>
+            <div class="card-body">
+                <span>
+                    Linkedin user: 
+                </span>
+                <span>
+                    {{user.linkedin}}
+                </span>
+            </div>
+            <div class="card-body">
+                <span>
+                    Joined MAG on: 
+                </span>
+                <span>
+                    {{user.date_joined}}
+                </span>
+            </div>
         </div>
     </main>
 {% endblock %}

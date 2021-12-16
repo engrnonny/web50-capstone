@@ -364,7 +364,20 @@ def vote(request, cause_id):
 # Causes Page
 # Causes Page
 def causes(request):
-    causes = Cause.objects.all()
+    cause_list = Cause.objects.all()
+    causes = []
+    
+    for cause in cause_list:
+        try:
+            profile_pic = Cause_file.objects.get(cause=cause, file_purpose="Profile Picture")
+            new_object = {
+                'cause': cause,
+                'profile_pic': profile_pic
+            }
+            causes.append(new_object)
+        except Error:
+            pass
+
     context = {
         'causes': causes
     }

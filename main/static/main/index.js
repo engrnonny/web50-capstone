@@ -1,7 +1,14 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {    
     
+    var edit_btns = document.querySelectorAll('.edit-btn');
+    for(var i = 0; i < edit_btns.length; i++){
+        edit_btns[i].addEventListener('click', (e) => edit_profile(e));
+    }   
+
+    document.querySelector('#post-comment').addEventListener('click', () => post_comment()); 
+
     document.querySelector('#vote').addEventListener('click', () => vote());
-    document.querySelector('#post-comment').addEventListener('click', () => post_comment());
+
 });
 
 
@@ -28,6 +35,15 @@ document.addEventListener('DOMContentLoaded', function() {
     
 //     return false;
 // }
+
+
+// Edit Profile
+// Edit Profile
+// Edit Profile
+function edit_profile(e) {
+    const element = e.target.parentElement.parentElement.firstChild
+    console.log(element)
+}
 
 
 // Post Comment function
