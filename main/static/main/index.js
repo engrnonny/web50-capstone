@@ -1,9 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {    
-    
-    var edit_btns = document.querySelectorAll('.edit-btn');
-    for(var i = 0; i < edit_btns.length; i++){
-        edit_btns[i].addEventListener('click', (e) => edit_profile(e));
-    }   
 
     document.querySelector('#post-comment').addEventListener('click', () => post_comment()); 
 
@@ -37,15 +32,6 @@ document.addEventListener('DOMContentLoaded', function() {
 // }
 
 
-// Edit Profile
-// Edit Profile
-// Edit Profile
-function edit_profile(e) {
-    const element = e.target.parentElement.parentElement.firstChild
-    console.log(element)
-}
-
-
 // Post Comment function
 // Post Comment function
 // Post Comment function
@@ -62,14 +48,23 @@ function post_comment() {
             .then(result => {
             if ("success" in result) {
                 let parentElement = document.getElementById('comments')
-                let theFirstChild = parentElement.firstChild
-                let new_comment = document.createElement('div');
-                parentElement.insertBefore(new_comment, theFirstChild);
-                new_comment.innerHTML = `
+                let theFirstChild = parentElement.firstElement
+                console.log(theFirstChild)
+                if (theFirstChild) {
+                    let new_comment = document.createElement('div');
+                    parentElement.insertBefore(new_comment, theFirstChild);
+                    new_comment.innerHTML = `
+                        <span>${result['username']}:</span> <span class="float-right">${comment}</span>
+                        <br>
+                        <br>`;                    
+                }
+
+                else {
+                    parentElement.innerHTML = `
                     <span>${result['username']}:</span> <span class="float-right">${comment}</span>
                     <br>
                     <br>`;
-            
+                }
                 console.log("Successful!")
 
             }

@@ -11,105 +11,115 @@
                 Hi {{user.username}}!
             </h1>
             {% if user.profile_pic %}
-                <span class="col">
-                    <img src="{{ user.profile_pic.url }}" alt="{{user.username}} user picture" height="100rem" width="100rem">            
-                </span>
+                <img class="col input-field-file" id="profile-pic-
+                field" src="{{ user.profile_pic.url }}" alt="{{user.username}} user picture" height="100rem" width="100rem">  
             {% endif %}
         </div>
-        <div class="card mt-3">
-            <div class="card-body row">
-                <span class="col">
-                    First Name: {{user.first_name}} 
-                </span>
-                <span class="col">
-                    <a class="btn btn-outline-primary btn-sm edit-btn">edit</a>
+        <div class="card mb-4 mt-3">
+            <div class="card-body">
+                <strong>First Name:</strong>
+                <span class="col input-field" id="first-name-field"> {{user.first_name}} 
                 </span>
             </div>
             <div class="card-body">
-                Last Name: {{user.last_name}}
+                <strong>Last Name:</strong>
+                <span class="col input-field" id="last-name-field"> {{user.last_name}}
+                </span> 
             </div>
             <div class="card-body">
-                Email Address: 
+                <strong>Email Address: </strong>
                 <span>
                     {{user.email}}
                 </span>
             </div>
             <div class="card-body">
-                Phone Number: 
-                <span>
-                    {{user.phone}}
+                <strong>Phone Number: </strong>
+                    <span class="input-field" id="phone-field">
+                        {{user.phone}}
+                    </span>
+            </div>
+            <div class="card-body">
+                <strong>
+                    Address: 
+                </strong>
+                <span class="input-field"  id="address-field">
+                {% if user.address %}
+                    {{user.address}}, 
+                {% endif %}
+                </span>
+                
+                <span class="input-field" id="city-field">
+                {% if user.city %}
+                    {{user.city}}, 
+                {% endif %}
+                </span>
+    
+                <span class="input-field" id="lga-field">    
+                {% if user.lga %}
+                    {{user.lga}} Local Government Area, 
+                {% endif %}
+                </span>
+
+                <span class="input-field" id="state-field">    
+                {% if user.state %}
+                    {{user.state}} State, 
+                {% endif %}
+                </span>
+
+                <span class="input-field" id="country-field">    
+                {% if user.country %}
+                    {{user.country}}
+                {% endif %}
                 </span>
             </div>
             <div class="card-body">
-                Gender: 
-                <span>
+                <strong>Gender: </strong>
+                <span class="input-field" id="gender-field">
                     {{user.gender}}
                 </span>
             </div>
             <div class="card-body">
-                Date of Birth: 
-                <span>
+                <strong>Date of Birth: </strong>
+                <span class="input-field" id="birthday-field">
                     {{user.birthday}}
                 </span>
             </div>
             <div class="card-body">
-                <span>
+                <strong>
                     Biography: 
-                </span>
-                <span>
+                </strong>
+                <span class="input-field" id="bio-field">
                     {{user.bio}}
                 </span>
             </div>
             <div class="card-body">
-                <span>
-                    Address: 
-                </span>
-                <span>
-                    {% if user.address %}
-                        {{user.address}}, 
-                    {% endif %}
-    
-                    {% if user.city %}
-                        {{user.city}}, 
-                    {% endif %}
-    
-                    {% if user.lga %}
-                        {{user.lga}} Local Government Area, 
-                    {% endif %}
-    
-                    {% if user.state %}
-                        {{user.state}} State, 
-                    {% endif %}
-    
-                    {% if user.country %}
-                        {{user.country}}, 
-                    {% endif %}
-                </span>
-            </div>
-            <div class="card-body">
-                <span>
+                <strong>
                     Occupation: 
-                </span>
+                </strong>
                 <span>
                     {{user.occupation}}
                 </span>
             </div>
             <div class="card-body">
-                <span>
+                <strong>
                     Linkedin user: 
-                </span>
+                </strong>
                 <span>
                     {{user.linkedin}}
                 </span>
             </div>
             <div class="card-body">
-                <span>
+                <strong>
                     Joined MAG on: 
-                </span>
+                </strong>
                 <span>
                     {{user.date_joined}}
                 </span>
             </div>
+            <a class="btn btn-outline-primary btn-sm" href="{% url 'user-profile-edit' %}">
+                edit
+            </a>
         </div>
+        
     </main>
 {% endblock %}

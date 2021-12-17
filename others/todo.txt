@@ -33,6 +33,8 @@ BACKEND:
 
         Function to update User Profile Paid attribute once payment has been successfully made, increase the grand total collected, and notify on homepage that the User has just made payment.
 
+        Delete files that have been changed (like Profile Picture) from physical memory also.
+
 
 FRONTEND:
 
@@ -54,6 +56,8 @@ FRONTEND:
 
         Create a button to add more <input> fields to upload more files in New-Cause page.
 
+        Alert users when space is inserted in their Username during Registration and Profile Editing.
+
 
 FULLSTACK:
 
@@ -65,4 +69,4 @@ SECURITY:
 
     BACKEND:
 
-        Check forms' fields that the appropriate data, length of data, type of data, etc is passed.
+        Check forms' fields that the appropriate data, length of data, type of data, etc is passed. Remove spaces from Username.

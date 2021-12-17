@@ -76,11 +76,11 @@ def login_view(request):
         if request.method == "POST":
             login_user_id = request.POST["login-user-id"]
             password = request.POST["login-password"]
-            user_id = User.objects.filter(
-                Q(username=login_user_id) |
-                Q(email=login_user_id)
-            )[0]
-            if user_id:
+            try:
+                user_id = User.objects.filter(
+                    Q(username=login_user_id) |
+                    Q(email=login_user_id)
+                )[0]
                 user = authenticate(request, username=user_id.username, password=password)
 
                 if user is not None:
@@ -89,9 +89,9 @@ def login_view(request):
                 else:
                     messages.info(request, "Login unsuccessful. Incorrect username/email or password")
                     return redirect("login")
-            else:
+            except IndexError:
                 messages.info(request, "Incorrect information")
-                return redirect("index")
+                return redirect("login")
         else:
             return render(request, "main/login.html")
 
@@ -114,7 +114,7 @@ def register(request):
 
     else:
         if request.method == "POST":
-            
+
             if not request.POST["reg-firstname"]:
                 messages.info(request, "Please enter your First Name")
                 return redirect("register")
@@ -167,13 +167,13 @@ def register(request):
                 return redirect("register")
 
             else:
-                if len(request.POST["reg-password"] ) < 8:
+                if len(request.POST["reg-password"]) < 8:
                     messages.info(request, "Password is too short")
                     return redirect("register")
                     
                 elif request.POST["reg-password"] != request.POST["reg-password-confirm"]:
-                        messages.info(request, "Passwords do not match")
-                        return redirect("register")
+                    messages.info(request, "Passwords do not match")
+                    return redirect("register")
                 
                 else:
                     first_name = request.POST["reg-firstname"]
@@ -267,18 +267,158 @@ def register(request):
 # User Profile Page
 # User Profile Page
 # User Profile Page
-@login_required
 def user_profile(request, slug):
-    try:
-        user = User.objects.get(username=slug)
-        context = {
-            'user': user            
-        }
-        return render(request, "main/user-profile.html", context)
+    if request.user.is_authenticated:
+        try:
+            user = User.objects.get(username=slug)
+            context = {
+                'user': user            
+            }
+            return render(request, "main/user-profile.html", context)
+                
+        except ObjectDoesNotExist:
+            messages.info(request, f"{slug} does not exist")
+            return redirect("index")
+    else:
+        messages.info(request, "Please login to view profile")
+        return redirect("login")
+
+
+# User Profile Edit
+# User Profile Edit
+# User Profile Edit
+@login_required
+def user_profile_edit(request):
+    if request.method == "POST":
+        
+        if request.POST["edit-firstname"]:
+            request.user.first_name = request.POST["edit-firstname"]
+            request.user.save()
             
-    except ObjectDoesNotExist:
-        messages.info(request, f"{slug} does not exist")
-        return redirect("index")
+
+        if request.POST["edit-lastname"]:
+            request.user.last_name = request.POST["edit-lastname"]
+            request.user.save()
+
+        if request.POST["edit-username"]:
+
+            if User.objects.filter(username=request.POST["edit-username"]).exists():
+                messages.info(request, "Username already exists")
+                return redirect("user-profile-edit")
+            
+            else:
+                request.user.username = request.POST["edit-username"]
+                request.user.save()
+
+        if request.POST["edit-phone"]: 
+
+            if User.objects.filter(phone=request.POST["edit-phone"]).exists():
+                messages.info(request, "Phone number already exists")
+                return redirect("user-profile-edit")
+            
+            else: 
+                test_phone = request.POST["edit-phone"]
+
+                if not int(test_phone):
+                    messages.info(request, "Please enter your phone number in digits only")
+                    return redirect("user-profile-edit")
+
+                elif len(test_phone) < 11 or len(test_phone) > 11:
+                    messages.info(request, "Please enter the 11 digits of your phone number")
+                    return redirect("user-profile-edit")
+                
+                elif int(test_phone) < 0:
+                    messages.info(request, "Please enter positive 11 digits of your phone number")
+                    return redirect("user-profile-edit")
+
+                else:
+                    request.user.phone = request.POST["edit-phone"]
+                    request.user.save()
+
+        if request.POST["edit-email"]:
+            
+            if User.objects.filter(email=request.POST["edit-email"]).exists():
+                messages.info(request, "Email address already exists")
+                return redirect("user-profile-edit")
+            
+            else:
+                request.user.email = request.POST["edit-email"]
+                request.user.save()
+
+        if request.POST["edit-password"]:
+
+            if len(request.POST["edit-password"] ) < 8:
+                messages.info(request, "Password is too short")
+                return redirect("user-profile-edit")
+                
+            if request.POST["edit-password-confirm"]:
+
+                if request.POST["edit-password"] != request.POST["edit-password-confirm"]:
+                    messages.info(request, "Passwords do not match")
+                    return redirect("user-profile-edit")
+                
+                else:
+                    request.user.set_password(request.POST["edit-password"])
+                    request.user.save()
+            
+            else:
+                messages.info(request, "Please enter your password also in Retype Password field")
+                return redirect("user-profile-edit")
+
+        if request.POST["edit-gender"]:
+            gender = request.POST["edit-gender"]
+            if gender == "Male" or gender == "Female":
+                request.user.gender = gender
+                request.user.save()
+            else: 
+                messages.info(request, "Please select Male or Female in the Gender field")
+                return redirect("user-profile-edit")
+
+        if request.POST["edit-birthday"]:
+            request.user.birthday = request.POST["edit-birthday"]
+            request.user.save()
+
+        if request.POST["edit-country"]:
+            request.user.country = request.POST["edit-country"]
+            request.user.save()
+
+        if request.POST["edit-state"]:
+            request.user.state = request.POST["edit-state"]
+            request.user.save()
+
+        if request.POST["edit-lga"]:
+            request.user.lga = request.POST["edit-lga"]
+            request.user.save()
+
+        if request.POST["edit-city"]:
+            request.user.city = request.POST["edit-city"]
+            request.user.save()
+
+        if request.POST["edit-address"]:
+            request.user.address = request.POST["edit-address"]
+            request.user.save()
+
+        if request.POST["edit-occupation"]:
+            request.user.occupation = request.POST["edit-occupation"]
+            request.user.save()
+
+        if request.POST["edit-linkedin"]:
+            request.user.linkedin = request.POST["edit-linkedin"]
+            request.user.save()
+
+        if request.POST["edit-bio"]:
+            request.user.bio = request.POST["edit-bio"]
+            request.user.save()
+
+        if "edit-profile-pic" in request.FILES:
+            request.user.profile_pic = request.FILES["edit-profile-pic"]
+            request.user.save()
+
+        messages.info(request, "Your profile was successfully updated.")
+        return redirect("user-profile", slug=request.user.username)
+    
+    else:
+        return render(request, "main/user-profile-edit.html")
 
 
 # Donation Page
@@ -287,6 +427,7 @@ def user_profile(request, slug):
 @login_required
 def donate(request):
     return render(request, "main/donate.html")
+
 
 # Payment Portal
 # Payment Portal
@@ -654,9 +795,6 @@ def cancel(request):
 # Test Page
 # Test Page
 def test(request):
-    request.session['previous'] = request.META.get('HTTP_REFERER', '../')
-    monthly_info = Info.objects.get(month=month, year=year)
-    print(monthly_info.month)
     
     return render(request, "main/test.html")
 
