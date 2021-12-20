@@ -21,18 +21,25 @@
         <br>
         <div>
         {% for cause in causes %}
-            <div class="align-items-center card d-flex flex-column">
-                <img src="{{ cause.profile_pic.file_upload.url }}" class="d-block w-25" alt="{{ cause.cause.name }}">
-                <div>
-                    <a class="text-decoration-none" href="{% url 'cause' cause.cause.slug %}">
+            <div class="align-items-center border-warning card text-center">
+                <img src="{{ cause.profile_pic.file_upload.url }}" class="card-img-top d-block w-25 img-fluid" alt="{{ cause.cause.name }}">
+                <di class="card-body">
+                    <a class="card-title text-decoration-none" href="{% url 'cause' cause.cause.slug %}">
                         {{ cause.cause.name }}
                     </a>
-                    <div>
+                    <div class="card-text">
                         &#x20A6;{{ cause.cause.cost }}
                     </div>
                     <div>
-                        Votes: {{ cause.cause.votes }}
+                        {% if cause.cause.status == "Awaiting Approval" %}
+                            Awaiting Approval
+                        {% else %}
+                            Votes: {{ cause.cause.votes }}
+                        {% endif %}
                     </div>
+                    {% if cause.cause.expiration %}
+                    <footer class="card-footer text-muted">Expires in {{ cause.cause.expiration }} day(s)</footer>
+                    {% endif %}
                 </div>
             </div>
             <br>

@@ -27,7 +27,7 @@
                 Votes: <span id="vote-count">{{ voters|length }}</span> 
                 <span>
                     {% if user.is_authenticated and request.user.monthly_donation == True %}
-                        <button id="vote">
+                        <button class="btn btn-outline-primary" id="vote">
                         {% if user in voters %}
                             Unvote
                         {% else %}
@@ -156,6 +156,7 @@
             </div>
         {% endif %}
 
+        <br>
         <div>
             <h3>
                 Comments:
@@ -198,14 +199,15 @@
             {% if not comments %}
 
                 <br>
-                <div>
-                    There are no comments for this Cause.
-                </div>
+                <!-- If this line is changed, the changes must be reflected as well in index.js, under post_comment() -->
+                <div id="comments">No comments.</div>
                 <br>
                 <br>
                 <br>
 
             {% else %}
+
+                <br>
 
                 <div id="comments">
 
@@ -223,7 +225,6 @@
 
             {% endif %}
                 
-
 
         </div>
 

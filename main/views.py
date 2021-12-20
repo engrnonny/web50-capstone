@@ -26,7 +26,7 @@ year = datetime.datetime.now().year
 # Homepage
 # Homepage
 def index(request):
-    filtered_causes = Cause.objects.filter(status="Approved").order_by("-votes")[:2]
+    filtered_causes = Cause.objects.filter(status="Approved").order_by("-votes")[:3]
     causes = []
     
     for cause in filtered_causes:

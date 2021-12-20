@@ -101,149 +101,162 @@
                     </small>
                 </div>
             </div>
+
+            <div class="accordion" id="accordionForm">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Optional
+                        </button>
+                    </h2>
+    
+                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionForm">
+                        <div class="accordion-body">
+                            
+                            <div class="mb-3 row">
             
-            <div>
-                
-                <div class="mb-3 row">
-
-                    <!-- Gender Selection -->
-                    <div class="col">
-                        <label class="form-label" for="reg-gender">
-                            Gender
-                        </label>
-                        <select aria-describedby="genderHelp"  class="form-control" id="reg-gender" name="reg-gender" list="gender" placeholder="Gender">
-                            <option value=""></option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                        </select>
-                        <small id="genderHelp" class="form-text">
-                            Are you male or female?
-                        </small>
-                    </div>		
-                    
-                    <!-- Birthday -->
-                    <div class="col">                    
-                        <label class="form-label" for="reg-birthday">
-                            Birthday:
-                        </label>
-                        <input aria-describedby="birthdayHelp" class="form-control" id="reg-birthday" name="reg-birthday" type="date">
-                        <small id="birthdayHelp" class="form-text">
-                            The date you were born.
-                        </small>
+                                <!-- Gender Selection -->
+                                <div class="col">
+                                    <label class="form-label" for="reg-gender">
+                                        Gender
+                                    </label>
+                                    <select aria-describedby="genderHelp"  class="form-control" id="reg-gender" name="reg-gender" list="gender" placeholder="Gender">
+                                        <option value=""></option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                    <small id="genderHelp" class="form-text">
+                                        Are you male or female?
+                                    </small>
+                                </div>		
+                                
+                                <!-- Birthday -->
+                                <div class="col">                    
+                                    <label class="form-label" for="reg-birthday">
+                                        Birthday:
+                                    </label>
+                                    <input aria-describedby="birthdayHelp" class="form-control" id="reg-birthday" name="reg-birthday" type="date">
+                                    <small id="birthdayHelp" class="form-text">
+                                        The date you were born.
+                                    </small>
+                                </div>
+                            </div>
+            
+                            <div class="mb-3 row">
+                                
+                                <!-- Country -->
+                                <div class="col">
+                                    <label for="reg-country" class="form-label">
+                                        Country
+                                    </label>
+                                    <input aria-describedby="countryHelp" class="form-control" id="reg-country" name="reg-country" placeholder="Nigeria" type="text">
+                                    <small id="countryHelp" class="form-text">
+                                        Country of residence
+                                    </small>
+                                </div>
+            
+                                <!-- State -->
+                                <div class="col">
+                                    <label for="reg-state" class="form-label">
+                                        State
+                                    </label>
+                                    <input aria-describedby="stateHelp" class="form-control" id="reg-state" name="reg-state" placeholder="Lagos" type="text">
+                                    <small id="stateHelp" class="form-text">
+                                        State in Country
+                                    </small>
+                                </div>
+                            </div>
+            
+                            <div class="mb-3 row">
+                                
+                                <!-- LGA -->
+                                <div class="col">
+                                    <label for="reg-lga" class="form-label">
+                                        LGA
+                                    </label>
+                                    <input aria-describedby="lgaHelp" class="form-control" id="reg-lga" name="reg-lga" placeholder="Lagos Island" type="text">
+                                    <small id="lgaHelp" class="form-text">
+                                        Your Local Government Area
+                                    </small>
+                                </div>
+                            
+                                <!-- City -->
+                                <div class="col">
+                                    <label for="reg-city" class="form-label">
+                                        City/Town
+                                    </label>
+                                    <input aria-describedby="cityHelp" class="form-control" id="reg-city" name="reg-city" placeholder="Victoria Island" type="text">
+                                    <small id="cityHelp" class="form-text">
+                                        Your City or Town of residence
+                                    </small>
+                                </div>
+            
+                            </div>
+                            
+                            <!-- Address -->
+                            <div class="mb-3">
+                                <label for="reg-address" class="form-label">
+                                    Address
+                                </label>
+                                <input aria-describedby="addressHelp" class="form-control" id="reg-address" name="reg-address" placeholder="No 1, First Street" type="text">
+                                <small id="addressHelp" class="form-text">
+                                    House number and Street name
+                                </small>
+                            </div>
+            
+                            <div class="mb-3 row">
+                                
+                                <!-- Occupation -->
+                                <div class="col">
+                                    <label for="reg-occupation" class="form-label">
+                                        Occupation
+                                    </label>
+                                    <input aria-describedby="occupationHelp" class="form-control" id="reg-occupation" name="reg-occupation" placeholder="Civil Engineer" type="text">
+                                    <small id="occupationHelp" class="form-text">
+                                        What you do for a living
+                                    </small>
+                                </div>
+                            
+                                <!-- Linkedin URL -->
+                                <div class="col">
+                                    <label for="reg-linkedin" class="form-label">
+                                        Linkedin Profile
+                                    </label>
+                                    <input aria-describedby="linkedinHelp" class="form-control" id="reg-linkedin" name="reg-linkedin" placeholder="https://www.linkedin.com/mwlite/in/ewere.njokede" type="url">
+                                    <small id="linkedinHelp" class="form-text">
+                                        Full URL to your Linkedin page
+                                    </small>
+                                </div>
+            
+                            </div>
+            
+                            <!-- Bio -->
+                            <div class="mb-3">
+                                <label for="reg-bio" class="form-label">
+                                    Bio
+                                </label>
+                                <textarea aria-describedby="bioHelp" class="form-control" id="reg-bio" name="reg-bio" placeholder="I am a Civil Engineer with a deep passion to help humanity" type="text"></textarea>
+                                <small id="bioHelp" class="form-text">
+                                    Tell us a little about you
+                                </small>
+                            </div>
+            
+                            <!-- Profile Picture -->
+                            <div class="mb-3">
+                                <label for="reg-profile-pic" class="form-label">
+                                    Profile Picture
+                                </label>
+                                <input alt="Profile Picture" aria-describedby="profilePicHelp" class="form-control" id="reg-profile-pic" name="reg-profile-pic" type="file">
+                                <small id="profilePicHelp" class="form-text">
+                                    A profile picture of you
+                                </small>
+                            </div>
+            
+                        </div>
                     </div>
                 </div>
-
-                <div class="mb-3 row">
-                    
-                    <!-- Country -->
-                    <div class="col">
-                        <label for="reg-country" class="form-label">
-                            Country
-                        </label>
-                        <input aria-describedby="countryHelp" class="form-control" id="reg-country" name="reg-country" placeholder="Nigeria" type="text">
-                        <small id="countryHelp" class="form-text">
-                            Country of residence
-                        </small>
-                    </div>
-
-                    <!-- State -->
-                    <div class="col">
-                        <label for="reg-state" class="form-label">
-                            State
-                        </label>
-                        <input aria-describedby="stateHelp" class="form-control" id="reg-state" name="reg-state" placeholder="Lagos" type="text">
-                        <small id="stateHelp" class="form-text">
-                            State in Country
-                        </small>
-                    </div>
-                </div>
-
-                <div class="mb-3 row">
-                    
-                    <!-- LGA -->
-                    <div class="col">
-                        <label for="reg-lga" class="form-label">
-                            LGA
-                        </label>
-                        <input aria-describedby="lgaHelp" class="form-control" id="reg-lga" name="reg-lga" placeholder="Lagos Island" type="text">
-                        <small id="lgaHelp" class="form-text">
-                            Your Local Government Area
-                        </small>
-                    </div>
-                
-                    <!-- City -->
-                    <div class="col">
-                        <label for="reg-city" class="form-label">
-                            City/Town
-                        </label>
-                        <input aria-describedby="cityHelp" class="form-control" id="reg-city" name="reg-city" placeholder="Victoria Island" type="text">
-                        <small id="cityHelp" class="form-text">
-                            Your City or Town of residence
-                        </small>
-                    </div>
-
-                </div>
-                
-                <!-- Address -->
-                <div class="mb-3">
-                    <label for="reg-address" class="form-label">
-                        Address
-                    </label>
-                    <input aria-describedby="addressHelp" class="form-control" id="reg-address" name="reg-address" placeholder="No 1, First Street" type="text">
-                    <small id="addressHelp" class="form-text">
-                        House number and Street name
-                    </small>
-                </div>
-
-                <div class="mb-3 row">
-                    
-                    <!-- Occupation -->
-                    <div class="col">
-                        <label for="reg-occupation" class="form-label">
-                            Occupation
-                        </label>
-                        <input aria-describedby="occupationHelp" class="form-control" id="reg-occupation" name="reg-occupation" placeholder="Civil Engineer" type="text">
-                        <small id="occupationHelp" class="form-text">
-                            What you do for a living
-                        </small>
-                    </div>
-                
-                    <!-- Linkedin URL -->
-                    <div class="col">
-                        <label for="reg-linkedin" class="form-label">
-                            Linkedin Profile
-                        </label>
-                        <input aria-describedby="linkedinHelp" class="form-control" id="reg-linkedin" name="reg-linkedin" placeholder="https://www.linkedin.com/mwlite/in/ewere.njokede" type="url">
-                        <small id="linkedinHelp" class="form-text">
-                            Full URL to your Linkedin page
-                        </small>
-                    </div>
-
-                </div>
-
-                <!-- Bio -->
-                <div class="mb-3">
-                    <label for="reg-bio" class="form-label">
-                        Bio
-                    </label>
-                    <textarea aria-describedby="bioHelp" class="form-control" id="reg-bio" name="reg-bio" placeholder="I am a Civil Engineer with a deep passion to help humanity" type="text"></textarea>
-                    <small id="bioHelp" class="form-text">
-                        Tell us a little about you
-                    </small>
-                </div>
-
-                <!-- Profile Picture -->
-                <div class="mb-3">
-                    <label for="reg-profile-pic" class="form-label">
-                        Profile Picture
-                    </label>
-                    <input alt="Profile Picture" aria-describedby="profilePicHelp" class="form-control" id="reg-profile-pic" name="reg-profile-pic" type="file">
-                    <small id="profilePicHelp" class="form-text">
-                        A profile picture of you
-                    </small>
-                </div>
-
             </div>
+
             
             <br>
             <button type="submit" class="btn btn-primary">

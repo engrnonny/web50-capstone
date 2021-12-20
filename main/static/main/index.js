@@ -47,24 +47,31 @@ function post_comment() {
         .then(response => response.json())
             .then(result => {
             if ("success" in result) {
-                let parentElement = document.getElementById('comments')
-                let theFirstChild = parentElement.firstElement
-                console.log(theFirstChild)
-                if (theFirstChild) {
+                document.querySelector('#comment').value = ''
+
+                if (document.querySelector('#comments').innerHTML.trim() == 'No comments.') {
+                    console.log(1)
+                    let comments = document.getElementById('comments')
+                    comments.innerHTML = `
+                    <div>
+                        <span>${result['username']}:</span> <span class="float-right">${comment}</span>
+                        <br>
+                        <br>
+                    </div>`
+                }
+
+                else {
+                    console.log(2)
+                    let parentElement = document.getElementById('comments')
+                    let theFirstChild = parentElement.firstChild
                     let new_comment = document.createElement('div');
                     parentElement.insertBefore(new_comment, theFirstChild);
                     new_comment.innerHTML = `
                         <span>${result['username']}:</span> <span class="float-right">${comment}</span>
                         <br>
-                        <br>`;                    
+                        <br>`;
                 }
-
-                else {
-                    parentElement.innerHTML = `
-                    <span>${result['username']}:</span> <span class="float-right">${comment}</span>
-                    <br>
-                    <br>`;
-                }
+            
                 console.log("Successful!")
 
             }
@@ -73,8 +80,7 @@ function post_comment() {
                 document.querySelector('#to-text-error-message').innerHTML = result['error']
     
             }
-            console.log(result);
-            })
+        })
 
             .catch(error => {
                 console.log(error);
@@ -87,7 +93,8 @@ function post_comment() {
 // Vote Function
 function vote() {
     let cause_id = document.querySelector('#cause-id').innerHTML.trim();
-    fetch(`/causes/v/${cause_id}`, {
+    console.log(cause_id)
+    fetch(`/causes/v/${cause_id}/`, {
         method: 'PUT',
         body: JSON.stringify({
             cause_id: cause_id
@@ -114,10 +121,17 @@ function vote() {
                 }
             }
 
-            // else if ("error" in result) {
-            //     document.querySelector('#js-error').style.display = 'block';
-            //     document.querySelector('#js-error').innerHTML = result['error']
-            // }
+            else if ("error" in result) {
+                document.querySelector('#js-error').style.display = 'block';
+                document.querySelector('#js-error').innerHTML =`
+                <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-body">
+                        ${result['error']} 
+                        <span><button aria-label="Close" class="btn-close" data-bs-dismiss="toast" type="button"></button></span>
+                    </div>
+                </div>`
+                console.log(result['error']);
+            }
         })
             .catch(error => {
                 console.log(error);

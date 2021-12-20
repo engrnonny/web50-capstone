@@ -12,77 +12,82 @@
     <body>
 
         <!-- NAVBAR -->
-        <nav class="navbar navbar-expand navbar-light bg-light">
-            <div class="container-fluid">
-                <a class="home-btn navbar-brand" href="{% url 'index' %}">MAG</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-btn nav-link" href="{% url 'about' %}">About</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                Account
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <div class="container">
+            <nav class="navbar navbar-expand navbar-light bg-light fixed-top">
+                <div class="container-fluid">
+                    <a class="home-btn navbar-brand" href="{% url 'index' %}">MAG</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-btn nav-link" href="{% url 'about' %}">About</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    Account
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-                                {% if user.is_authenticated %}
-                                    <li><a class="dropdown-item" href="{% url 'user-profile' user.username %}">{{ user.username }}</a></li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li><a class="dropdown-item" href="{% url 'logout' %}">Log out</a></li>
+                                    {% if user.is_authenticated %}
+                                        <li><a class="dropdown-item" href="{% url 'user-profile' user.username %}">{{ user.username }}</a></li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li><a class="dropdown-item" href="{% url 'logout' %}">Log out</a></li>
 
-                                {% else %}
-                                    <li><a class="dropdown-item nav-btn" href="{% url 'login' %}">Login</a></li>
-                                    <li><a class="dropdown-item nav-btn" href="{% url 'register' %}">Register</a></li>
-                                {% endif %}
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'causes' %}">Causes</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-btn nav-link" href="{% url 'contact' %}">Contact</a>
-                        </li>
-                    <!-- </ul>
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form> -->
+                                    {% else %}
+                                        <li><a class="dropdown-item nav-btn" href="{% url 'login' %}">Login</a></li>
+                                        <li><a class="dropdown-item nav-btn" href="{% url 'register' %}">Register</a></li>
+                                    {% endif %}
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'causes' %}">Causes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-btn nav-link" href="{% url 'contact' %}">Contact</a>
+                            </li>
+                        <!-- </ul>
+                        <form class="d-flex">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit">Search</button>
+                        </form> -->
+                    </div>
                 </div>
-            </div>
-        </nav>
-
+            </nav>
+        </div>
+<br>
+<br>
         <div id="warnings">
         <!--
         Warning message for Users who haven't made monthly contributions 
         -->    
         {% if user.is_authenticated and request.user.monthly_donation == False %}
-            <div class="card">
-                You have not made your donation for this month. Please donate to clear this message. 
-                <a class="btn btn-primary" href="{% url 'donate' %}">
+            <div>
+                You have not donated this month. Please donate to clear this message.
+                <a class="btn btn-outline-primary" href="{% url 'donate' %}">
                     Donate
                 </a>
-            </div>
+            </div> 
         {% endif %}
 
         <br>
+
         <!--
         Warning message for Users who haven't casted monthly vote 
         -->  
         {% if user.is_authenticated and request.user.monthly_vote == False %}
-            <div class="card" id="vote-warning">
-                You have not casted your vote for this month. Please cast your vote to clear this message.
+        <br>
+            <div id="vote-warning">
+                You have not voted this month. Please vote for a Cause to clear this message. 
                 {% if request.user.monthly_donation == True %}
-                    <a class="btn btn-primary" href="{% url 'causes' %}">
-                        Vote
-                    </a>
+                <a class="btn btn-primary btn-sm" href="{% url 'causes' %}">
+                    Vote
+                </a>
                 {% endif %}
             </div>
         {% endif %}
@@ -106,9 +111,10 @@
         <!--
         Popup messages - JavaScript
         -->
-        <span id="js-error">
-        </span>
+        <div hidden id="js-error">
+        </div>
 
+        <br>
 
         <div class="mx-3">
             {% block body %}
