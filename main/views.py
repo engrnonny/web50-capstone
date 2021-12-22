@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.messages.api import error
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.paginator import Paginator
 from django.db import Error, IntegrityError
 from django.db.models import Q
 from django.db.utils import load_backend
@@ -519,8 +520,13 @@ def causes(request):
         except Error:
             pass
 
+    paginator = Paginator(causes, 10) 
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     context = {
-        'causes': causes
+        'causes': causes,
+        'page_obj': page_obj
     }
     return render(request, "main/causes.html", context)
 

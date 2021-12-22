@@ -57,9 +57,13 @@ EXAMPLE 2: GITHUB DOWNLOAD:
 
 This capstone project MAG (Make Africa Great) is a fundraising app that allows users to create, donate to, and vote for a Cause. A Cause is a project that affects humans and their communities. It could be anything from a bad road, to skill acquisition for the underprivileged. 
 
-**NOTE: MAG has real world application and it is my intent to continue working on it long after my training.**
 
-### **Distinctiveness and Complexities:**
+### **Why:**
+
+No one man can save the entire world. In fact, no one man can save a nation. But if given the right tools to unite under, the people of a nation could save themselves. Say there are 100 kids in Nigeria who need heart surgeries, at 40,000,000 naira ($95,000) per surgery. There are people who have 4,000,000,000 naira ($9,500,000) but that amount of money is harder to give. However, if 4,000,000 people give 1,000 naira ($2.50), then this goal can be achieved. We don't need to wait for politicians and the ultra wealthy to come to our aid. The people can help the people. MAG is a platform I propose to use to give the people a chance at solving their own problems. MAG can help change the situation of things in African nations. From giving academic scholarships, to combating child trafficking, and providing startup grants for female entrepreneurs, etc, MAG has the potential of solving a lot of problems in the African continent.
+
+
+### **Distinctiveness and Complexity:**
 
 The most distinctive feature of this project is probably that Django template language was used to achieved much of the functions that should originally have be achieved with JavaScript. For example, Django template language was used to render different HTML elements all through various pages of the app, depending on whether the user is authenticated, has made monthly donation, has voted, etc. I just think Django's security is better that JavaScript. However the most complex feature of this project would have to be the manner at which images and files of a Cause are uniquely saved into the database and directories, based on the Cause's ID, and whether or not the Cause already has a dedicated directory. 
 
@@ -70,12 +74,7 @@ Others include;
 4. The Homepage at any given time shows the top 3 Causes with the highest votes.
 
 
-### **Why:**
-
-No one man can save the entire world. In fact, no one man can save a nation. But if given the right tools to unite under, the people of a nation could save themselves. Say there are 100 kids in Nigeria who need heart surgeries, at 40,000,000 naira ($95,000) per surgery. There are people who have 4,000,000,000 naira ($9,500,000) but that amount of money is harder to give. However, if 4,000,000 people give 1,000 naira ($2.50), then this goal can be achieved. We don't need to wait for politicians and the ultra wealthy to come to our aid. The people can help the people. MAG is a platform I propose to use to give the people a chance at solving their own problems. MAG can help change the situation of things in African nations. From giving academic scholarships, to combating child trafficking, and providing startup grants for female entrepreneurs, etc, MAG has the potential of solving a lot of problems in the African continent.
-
-
-### **Files:**
+### **Files Created:**
 
 Below are the files that were created for the purpose of this project. This does not include default project files.
 
@@ -142,5 +141,25 @@ py manage.py createsuperuser
 4. Launch the Django server. If set up correctly, server will launch on http://127.0.0.1:8000/.
 
 ```
-py manange.py runserver
+py manage.py runserver
+
+
+### **Specification:**
+
+Using Python, JavaScript, HTML, and CSS, the implementation of a non-profit fundraising app that allows users to donate, create a Cause, vote on a Cause, and comment on a Cause. The following requirements were fulfilled:
+
+* New User: New users can register. Upon successful registration, User is redirected to Login page.
+    * Some fields in the Registration form should be optional.
+    * User cannot have the same Username, Email Address, and Phone Number with another Registered User.
+    * New Users are not be able to Vote or Comment on a Cause. They are also not be to create a cause. 
+    * Registration link would redirect to User's profile, if User is logged in.
+
+* Causes:  The “Causes” link in the navigation bar takes the user to a page where they can see all Causes.
+    * Each Cause .
+    * New Users are not be able to Vote or Comment on a Cause. They are also not be to create a cause. 
+    * Registration link would redirect to User's profile, if User is logged in.
+
+
 ```
+
+
