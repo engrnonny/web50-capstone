@@ -5,16 +5,18 @@
 {% endblock %}
 
 {% block body %}
-    <main id="">
+    <main id="payment-page">
         <h1>
             Payment Portal
         </h1>
+        <br>
         <div>
-            100 is about to be charged to your account.
+            &#x20A6;100 is about to be charged to your account.
         </div>
+        <br>
         <div>
             <a class="btn btn-primary" href="{% url 'pay' %}">Pay</a>
-            <a class="btn btn-danger" href="{% url 'pay' %}">Cancel</a>
+            <a class="btn btn-danger" href="{% url 'index' %}">Cancel</a>
         </div>
     </main>
 {% endblock %}

@@ -62,12 +62,13 @@
         </div>
 <br>
 <br>
+<br>
         <div id="warnings">
         <!--
         Warning message for Users who haven't made monthly contributions 
         -->    
         {% if user.is_authenticated and request.user.monthly_donation == False %}
-            <div>
+            <div class="bg-danger text-white">
                 You have not donated this month. Please donate to clear this message.
                 <a class="btn btn-outline-primary" href="{% url 'donate' %}">
                     Donate
@@ -75,14 +76,13 @@
             </div> 
         {% endif %}
 
-        <br>
 
         <!--
         Warning message for Users who haven't casted monthly vote 
         -->  
         {% if user.is_authenticated and request.user.monthly_vote == False %}
         <br>
-            <div id="vote-warning">
+            <div class="bg-danger text-white" id="vote-warning">
                 You have not voted this month. Please vote for a Cause to clear this message. 
                 {% if request.user.monthly_donation == True %}
                 <a class="btn btn-primary btn-sm" href="{% url 'causes' %}">

@@ -51,7 +51,7 @@ class Cause(models.Model):
     detail_description = models.TextField()
     cost = models.FloatField()
     cost_breakdown = models.TextField()
-    expiration = models.IntegerField(blank=True)
+    expiration = models.IntegerField(blank=True, null=True)
     investigated = models.BooleanField(default=False)
     investigator = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, on_delete=models.SET_NULL, null=True, related_name = 'investigator')
     investigation_note = models.CharField(blank=True, max_length=255)

@@ -1,53 +1,3 @@
-Requirements
-The most common cause for failure of the final project is not spending enough effort on this next instruction. Read it completely. Your README.md file should be minimally multiple paragraphs in length, and should provide a comprehensive documentation of what you did and, if applicable, why you did it.
-
-In a README.md in your project’s main directory, include a writeup describing your project, and specifically your file MUST include all of the following:
-Under its own header within the README called Distinctiveness and Complexity: Why you believe your project satisfies the distinctiveness (distinguishes from other projects in the course) and complexity requirements, mentioned above.
-What’s contained in each file you created.
-How to run your application.
-Any other additional information the staff should know about your project.
-Though there is not a hard requirement here, a README.md in the neighborhood of 500 words is likely a solid target, assuming the other requirements are also satisfied.
-
-
-EXAMPLES BELOW:
-EXAMPLES BELOW:
-EXAMPLES BELOW:
-
-EXAMPLE 1: PROJECT 4 (NETWORK):
-EXAMPLE 1: PROJECT 4 (NETWORK):
-EXAMPLE 1: PROJECT 4 (NETWORK):
-
-Specification
-Using Python, JavaScript, HTML, and CSS, complete the implementation of a social network that allows users to make posts, follow other users, and “like” posts. You must fulfill the following requirements:
-
-New Post: Users who are signed in should be able to write a new text-based post by filling in text into a text area and then clicking a button to submit the post.
-The screenshot at the top of this specification shows the “New Post” box at the top of the “All Posts” page. You may choose to do this as well, or you may make the “New Post” feature a separate page.
-All Posts: The “All Posts” link in the navigation bar should take the user to a page where they can see all posts from all users, with the most recent posts first.
-Each post should include the username of the poster, the post content itself, the date and time at which the post was made, and the number of “likes” the post has (this will be 0 for all posts until you implement the ability to “like” a post later).
-Profile Page: Clicking on a username should load that user’s profile page. This page should:
-Display the number of followers the user has, as well as the number of people that the user follows.
-Display all of the posts for that user, in reverse chronological order.
-For any other user who is signed in, this page should also display a “Follow” or “Unfollow” button that will let the current user toggle whether or not they are following this user’s posts. Note that this only applies to any “other” user: a user should not be able to follow themselves.
-Following: The “Following” link in the navigation bar should take the user to a page where they see all posts made by users that the current user follows.
-This page should behave just as the “All Posts” page does, just with a more limited set of posts.
-This page should only be available to users who are signed in.
-Pagination: On any page that displays posts, posts should only be displayed 10 on a page. If there are more than ten posts, a “Next” button should appear to take the user to the next page of posts (which should be older than the current page of posts). If not on the first page, a “Previous” button should appear to take the user to the previous page of posts as well.
-See the Hints section for some suggestions on how to implement this.
-Edit Post: Users should be able to click an “Edit” button or link on any of their own posts to edit that post.
-When a user clicks “Edit” for one of their own posts, the content of their post should be replaced with a textarea where the user can edit the content of their post.
-The user should then be able to “Save” the edited post. Using JavaScript, you should be able to achieve this without requiring a reload of the entire page.
-For security, ensure that your application is designed such that it is not possible for a user, via any route, to edit another user’s posts.
-“Like” and “Unlike”: Users should be able to click a button or link on any post to toggle whether or not they “like” that post.
-Using JavaScript, you should asynchronously let the server know to update the like count (as via a call to fetch) and then update the post’s like count displayed on the page, without requiring a reload of the entire page.
-Hints
-For examples of JavaScript fetch calls, you may find some of the routes in Project 3 useful to reference.
-You’ll likely need to create one or more models in network/models.py and/or modify the existing User model to store the necessary data for your web application.
-Django’s Paginator class may be helpful for implementing pagination on the back-end (in your Python code).
-Bootstrap’s Pagination features may be helpful for displaying pages on the front-end (in your HTML).
-
-EXAMPLE 2: GITHUB DOWNLOAD:
-EXAMPLE 2: GITHUB DOWNLOAD:
-EXAMPLE 2: GITHUB DOWNLOAD:
 
 ---
 
@@ -55,13 +5,15 @@ EXAMPLE 2: GITHUB DOWNLOAD:
 
 ### **About:**
 
-This capstone project MAG (Make Africa Great) is a fundraising app that allows users to create, donate to, and vote for a Cause. A Cause is a project that affects humans and their communities. It could be anything from a bad road, to skill acquisition for the underprivileged. 
+This capstone project MAG (Make Africa Great) is a non-profit fundraising app that allows registered users to create, donate to, and vote for a Cause. A Cause is a project that affects humans and their communities. It could be anything from a bad road, to skill acquisition for the underprivileged. 
 
+---
 
 ### **Why:**
 
 No one man can save the entire world. In fact, no one man can save a nation. But if given the right tools to unite under, the people of a nation could save themselves. Say there are 100 kids in Nigeria who need heart surgeries, at 40,000,000 naira ($95,000) per surgery. There are people who have 4,000,000,000 naira ($9,500,000) but that amount of money is harder to give. However, if 4,000,000 people give 1,000 naira ($2.50), then this goal can be achieved. We don't need to wait for politicians and the ultra wealthy to come to our aid. The people can help the people. MAG is a platform I propose to use to give the people a chance at solving their own problems. MAG can help change the situation of things in African nations. From giving academic scholarships, to combating child trafficking, and providing startup grants for female entrepreneurs, etc, MAG has the potential of solving a lot of problems in the African continent.
 
+---
 
 ### **Distinctiveness and Complexity:**
 
@@ -70,9 +22,10 @@ The most distinctive feature of this project is probably that Django template la
 Others include;
 1. Most of the functions performed by JavaScript, particular on <form> elements, have a django back up function in case JavaScript is turned off on a client device.
 2. Bootstrap was solely used for the appearance of the app. No single CSS line of code was written.
-3. Django User model was redesigned to include more fields.
+3. Django User model was redesigned to include more attributes.
 4. The Homepage at any given time shows the top 3 Causes with the highest votes.
 
+---
 
 ### **Files Created:**
 
@@ -92,9 +45,8 @@ Below are the files that were created for the purpose of this project. This does
 /main/templates/main/new-cause.html - HTML file to create a new Cause.
 /main/templates/main/register.html - Registration page HTML file.
 /main/templates/main/test.html - Test page HTML file (Where some functionalities are tested so as not to break anything).
-/main/templates/main/user-profile-edit.html - HTML file where Users can edit their profile information.
+/main/templates/main/user-profile-edit.html - User profile edit page HTML file (where Users can edit their profile information).
 /main/templates/main/user-profile.html - User profile page HTML file.
-/main/templates/main/about.html - About page HTML file.
 
 /media/main/causes/ - Directory were Cause files are saved.
 /media/main/users/profile-pics/ - Directory were user profile pictures are saved.
@@ -103,15 +55,13 @@ Below are the files that were created for the purpose of this project. This does
 
 /.gitignore - A git ignore file.
 
-/README.md - Read me file for the project.
+/README.md - Readme file for this project.
 
 /requirements.txt - A list of required packages for this project
 
 ```
 
 ---
-
-<br>
 
 ### **How to run application:**
 
@@ -145,34 +95,47 @@ py manage.py runserver
 
 ```
 
+---
+
 ### **Specification:**
 
-Using Python, JavaScript, HTML, and CSS, the implementation of a non-profit fundraising app that allows users to donate, create a Cause, vote on a Cause, and comment on a Cause. The following requirements were fulfilled:
+Using Python, JavaScript, HTML, and CSS, this is the implementation of a non-profit fundraising app that allows users to donate, create a Cause, vote on a Cause, and comment on a Cause. The following requirements were fulfilled:
 
-* New User: New users can register. Upon successful registration, User is redirected to Login page.
-    * Some fields in the Registration form should be optional.
-    * User cannot have the same Username, Email Address, and Phone Number with another Registered User.
-    * New Users are not be able to Vote or Comment on a Cause. They are also not be to create a cause.  
-    * Registration link would redirect to User's profile, if User is logged in.
-    * There are irremovable prompts to remind the User that they have not made Monthly donation and voted on a Cause.
+* New User: New user is able to register by filling a form. 
+    * New User cannot have the same Username, Email Address, and Phone Number with another Registered User.
+    * Some fields in the Registration form are optional.
+    * Upon successful registration, User is redirected to Login page.
+    * There are irremovable prompts to remind the new User that they have not made Monthly donation and/or voted on a Cause.
+    * Registration link would redirect to User's profile, if User is already logged in.
 
-* Edit User: Logged users 
+* Login User: Users can log in with either their email or username. 
+    * Login link would redirect to User's profile, if User is already logged in.
 
-* Causes:  The “Causes” link in the navigation bar takes the user to a page where they can see all Causes.
-    * Each Cause item displays the Cause's name, cost and total number of votes. Total number of votes is substituted for "Awaiting Approval", if the Cause has not been approved.
-    * The Clause name when clicked redirects to a new page showing details of the Cause. 
-    * Only 10 Causes are displayed on the page at a time. If there are more than ten posts, a “Next” button appears to take the user to the next page of Causes (which should be older than the current page of Causes). If not on the first page, a “Previous” button appears to take the user to the previous page of Causes as well.
+* Edit User: Logged in users are able to click on an "Edit" button in their profile page to edit their profile.
+    * When the "edit" button is clicked, the user is taken to an Edit page, with a form that is pre-filled with the current details of the User.
+    * The User is able to change the details of a single field or as many fields as possible.
+    * When completed, the User is redirected to the User's profile page and changes (if any) are reflected.
 
-* Cause:  Wherever the name of a Cause is shown, clicking on it redirects to a page showing details of that Cause.
+* Causes: The "Causes" link in the navigation bar takes the User to a page where they can see all Causes.
+    * Each Cause item displays the Cause's name, cost, expiration days (if any) and total number of votes. Total number of votes is substituted for "Awaiting Approval", if the Cause has not been approved.
+    * Only 10 Causes are displayed on the page at a time. If there are more than ten Causes, a "Next" button appears to take the user to the next page of Causes (which should be older than the current page of Causes). If not on the first page, a "Previous" button appears to take the user to the previous page of Causes as well.
+    * The Clause's name when clicked redirects to a new page showing details of the Cause. 
+
+* Cause:  Wherever the name of a Cause is shown, clicking on it redirects to a Cause page showing details of that Cause.
     * Using JavaScript, a logged in User is able to comment on a Cause without requiring a reload of the entire page.
-    * Only 10 Causes are displayed on the page at a time. If there are more than ten posts, a “Next” button appears to take the user to the next page of Causes (which should be older than the current page of Causes). If not on the first page, a “Previous” button appears to take the user to the previous page of Causes as well.
+    * If the Cause already has comments, they are shown. Otherwise it is stated that there are "no comments".
 
-* Pay: 
+* Donate: A function to emulate donating.
+    * There is a "donate" button that redirects to a donate page.
+    * Clicking on "pay" button in the donate page would set the User's account monthly donation status to True, and remove the payment prompt. Thus emulating a payment portal.
+    * Upon successful payment, the Total Amount displayed in the Homepage is updated.
 
-* "Vote" and "Unvote": Users who have made monthly donations are able to click on a button to Vote or Unvote a Cause.
-    * When the User clicks on the "vote" button, JavaScript is used to asynchronously let the server know to update the vote count and then update the Cause's vote count displayed and change the "vote" button" to "unvote" on the page. Likewise when te User clicks on the "unvote" button, the vote count should reduce.
-    * If the User has not voted for a Cause, the irremovable prompt for monthly vote is removed, else the User would be unable to vote.
+* Create Cause: A logged in User, who has made monthly donation, is able to create a new Cause.
+    * Uploaded files of New Cause are uniquely saved in the /media directory, under a new directory, based on the Cause's ID. Therefore effectively having all the files of a Cause in a single directory.
+    * On successful cause creation, the User is redirected to the newly created Cause page.
 
-* Create Cause
+* "Vote" and "Unvote": A "Vote" button is made visible for the User who has made monthly donation, and thus the User is able to Vote or Unvote a Cause.
+    * When the User clicks on the "vote" button, JavaScript is used to asynchronously let the server know to update the vote count and then update the Cause's vote count displayed, by 1, and change the "vote" button" to "unvote" on the page. Likewise when the User clicks on the "unvote" button, the vote count and the Cause's vote count displayed are both decreased by 1, with the "unvote" button changing to "vote".
+    * If the User has not voted for a Cause and clicks on the "vote" button, the irremovable prompt for monthly vote is removed, using JavaScript.
 
-
+---

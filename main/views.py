@@ -506,7 +506,7 @@ def vote(request, cause_id):
 # Causes Page
 # Causes Page
 def causes(request):
-    cause_list = Cause.objects.all()
+    cause_list = Cause.objects.all().order_by("name")
     causes = []
     
     for cause in cause_list:
@@ -565,10 +565,11 @@ def new_cause(request):
         'Economic Growth',
         'Education',
         'Environmental Sanitation',
-        'Food,'
+        'Food',
         'Health',
         'Human Rights',
         'Infrastructure',
+        'Security',
         'Skill Acquisition'
     ]
 
@@ -658,7 +659,7 @@ def new_cause(request):
                 
                 if request.POST["cause-expiration"]:
                     try:
-                        cost = int(request.POST["cause-expiration"])
+                        expiration = int(request.POST["cause-expiration"])
                     except: 
                         messages.info(request, "Please enter the expiration time of the the Cause in numbers only (in days)")
                         return redirect("new-cause")
@@ -670,7 +671,7 @@ def new_cause(request):
 
                 else:
                     try:
-                        cost = int(request.POST["cause-duration"])
+                        duration = int(request.POST["cause-duration"])
                     except: 
                         messages.info(request, "Please enter the duration the Cause would take to be completed in numbers only (in days)")
                         return redirect("new-cause")
@@ -716,9 +717,9 @@ def new_cause(request):
                     city = request.POST["cause-city"]
                     address = request.POST["cause-address"]
                     duration = request.POST["cause-duration"]
+                    expiration = request.POST["cause-expiration"]
                     detail_description = request.POST["cause-detail-description"]
                     cost_breakdown = request.POST["cause-cost-breakdown"]
-                    expiration = request.POST["cause-expiration"]
                     cause_slug = slugify(name)
                     file_type = request.POST["file-type"]
                     file_purpose = request.POST["file-purpose"]
@@ -726,11 +727,15 @@ def new_cause(request):
                     file_upload = request.FILES["file-upload"]
 
                     try:
-                        cause = Cause(name=name.title(), category=category, brief_description=brief_description, country=country.title(), state=state.title(), city=city.title(), address=address, duration=duration, cost=cost, detail_description=detail_description, cost_breakdown=cost_breakdown, expiration=expiration, status="Awaiting Approval", creator=request.user, slug=cause_slug)
+                        cause = Cause(name=name.title(), category=category, brief_description=brief_description, country=country.title(), state=state.title(), city=city.title(), address=address, duration=duration, cost=cost, detail_description=detail_description, cost_breakdown=cost_breakdown, status="Awaiting Approval", creator=request.user, slug=cause_slug)
                         cause.save()
 
                         cause_file = Cause_file(cause=cause, file_type=file_type, file_purpose=file_purpose, file_description=file_description, file_upload=file_upload)
                         cause_file.save()
+
+                        if expiration:
+                            cause.expiration = expiration
+                            cause.save()
                         
                         messages.info(request, "Cause successfully created")
 
