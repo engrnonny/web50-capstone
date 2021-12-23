@@ -143,6 +143,7 @@ py manage.py createsuperuser
 ```
 py manage.py runserver
 
+```
 
 ### **Specification:**
 
@@ -151,15 +152,27 @@ Using Python, JavaScript, HTML, and CSS, the implementation of a non-profit fund
 * New User: New users can register. Upon successful registration, User is redirected to Login page.
     * Some fields in the Registration form should be optional.
     * User cannot have the same Username, Email Address, and Phone Number with another Registered User.
-    * New Users are not be able to Vote or Comment on a Cause. They are also not be to create a cause. 
+    * New Users are not be able to Vote or Comment on a Cause. They are also not be to create a cause.  
     * Registration link would redirect to User's profile, if User is logged in.
+    * There are irremovable prompts to remind the User that they have not made Monthly donation and voted on a Cause.
+
+* Edit User: Logged users 
 
 * Causes:  The “Causes” link in the navigation bar takes the user to a page where they can see all Causes.
-    * Each Cause .
-    * New Users are not be able to Vote or Comment on a Cause. They are also not be to create a cause. 
-    * Registration link would redirect to User's profile, if User is logged in.
+    * Each Cause item displays the Cause's name, cost and total number of votes. Total number of votes is substituted for "Awaiting Approval", if the Cause has not been approved.
+    * The Clause name when clicked redirects to a new page showing details of the Cause. 
+    * Only 10 Causes are displayed on the page at a time. If there are more than ten posts, a “Next” button appears to take the user to the next page of Causes (which should be older than the current page of Causes). If not on the first page, a “Previous” button appears to take the user to the previous page of Causes as well.
 
+* Cause:  Wherever the name of a Cause is shown, clicking on it redirects to a page showing details of that Cause.
+    * Using JavaScript, a logged in User is able to comment on a Cause without requiring a reload of the entire page.
+    * Only 10 Causes are displayed on the page at a time. If there are more than ten posts, a “Next” button appears to take the user to the next page of Causes (which should be older than the current page of Causes). If not on the first page, a “Previous” button appears to take the user to the previous page of Causes as well.
 
-```
+* Pay: 
+
+* "Vote" and "Unvote": Users who have made monthly donations are able to click on a button to Vote or Unvote a Cause.
+    * When the User clicks on the "vote" button, JavaScript is used to asynchronously let the server know to update the vote count and then update the Cause's vote count displayed and change the "vote" button" to "unvote" on the page. Likewise when te User clicks on the "unvote" button, the vote count should reduce.
+    * If the User has not voted for a Cause, the irremovable prompt for monthly vote is removed, else the User would be unable to vote.
+
+* Create Cause
 
 
